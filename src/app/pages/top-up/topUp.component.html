@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<div class="flex justify-center font-ibm w-full bg-[#F4F4F9]">
+	<div class="flex flex-col md:flex-row w-full md:m-[30px] md:justify-center">
+		<div class="flex flex-col my-[30px] md:my-[0px]">
+			<div class="flex rounded-[30px] justify-center md:mb-[18px] md:mr-[40px]">
+				<!-- Your SVG content -->
+				<ng-container *ngIf="card.role == 'business'; else elseTemplate">
+					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+						<div class="flex flex-col justify-between w-full h-full">
+							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
+							<div class="flex divide-x divide-white">
+								<div class="w-[239px]">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+									<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+								</div>
+								<div class="w-14 pl-4">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Coupons</p>
+									<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.coupon}}</p>
+								</div>
+							</div>
+							<div class="flex justify-between h-[22px] items-center">
+								<div class="flex">
+									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+								</div>
+								<div>
+									<img class="w-[100px]" [src]="text_card()" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+				<ng-template #elseTemplate>
+					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+						<div class="flex flex-col justify-between w-full h-full">
+							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
+							<div>
+								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+								<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+							</div>
+							<div class="flex justify-between h-[22px] items-center">
+								<div class="flex">
+									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+								</div>
+								<div>
+									<img class="w-[100px]" [src]="text_card()" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-template>
+	  		</div>
+			<div class=" hidden md:block">
+				<button class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
+				<mat-icon class="text-[#990033]" svgIcon="heroicons_mini:chevron-left"></mat-icon>
+				<p class="flex font-medium items-center text-lg mt-[2px]">BACK</p>
+				</button>
+			</div>
+		</div>
+		<div class="bg-white rounded-xl px-[13px] py-[20px] h-[100%] md:rounded-xl md:p-[30px] md:h-fit">
+			<div class="flex justify-between">
+				<p class="text-[#002755] text-[23px] font-medium md:w-min-[331px]">Top-up</p>
+				<div class="flex items-center">
+					<p class="text-[#84776E] text-[12px] font-normal">Secure by K-Payment Gateway</p>
+					<img class="w-[32px] h-[32px]" src="../../../../assets/images/logo/Logo_bank.svg"  alt="Logo">
+				</div>
+			</div>
+			<p class="text-[#32373D] text-[16px] font-normal mb-[12px]">Select method</p>
+			<div class="grid grid-cols-1 gap-[10px] md:w-[535px]">
+				<button (click)="select('promptpay')" class="flex items-center justify-between border-[#990033] border-[1px] rounded-[10px] p-[12px] text-left text-[16px] font-normal text-[#000000]">
+					<div class="flex items-center gap-[10px]">
+						<img src="../../../../assets/images/logo/Logo_Promptpay.svg" alt="Logo_Promptpay" class="w-[30px]">
+						Promptpay
+					</div>
+					<img src="../../../../assets/images/logo/next.svg" alt="next" class="w-[24px]">
+				</button>
+				<button (click)="select('credit_debit')" class="flex items-center justify-between border-solid border-[#990033] border-[1px] rounded-[10px] p-[12px] text-left text-[16px] font-normal text-[#000000]">
+					<div class="flex items-center gap-[10px]">
+						<img src="../../../../assets/images/logo/Logo_credit_debit.svg" alt="Logo_credit_debit" class="w-[30px]">
+						Credit/Debit Card
+					</div>
+					<img src="../../../../assets/images/logo/next.svg" alt="next" class="w-[24px]">
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

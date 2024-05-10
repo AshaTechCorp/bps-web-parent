@@ -1,0 +1,274 @@
+<app-navbar></app-navbar>
+<div *ngIf="role === 'staff'" class="flex justify-center font-ibm font-medium w-full bg-[#F4F4F9]">
+  <!-- Admin card HTML content here -->
+  <div class="flex flex-col items-center md:items-start md:flex-row w-full md:m-[30px] md:justify-center">
+    <div class="flex flex-col rounded-[20px] mt-5 md:mt-0 md:mr-[40px]">
+      <!-- Your SVG content -->
+      <ng-container *ngIf="card.role == 'business'; else elseTemplate">
+        <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+          <div class="flex flex-col justify-between w-full h-full">
+            <div class="flex flex-row items-center">
+              <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
+            </div>
+            <div class="flex divide-x divide-white">
+              <div class="w-[239px]">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+                <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+              </div>
+              <div class="w-14 pl-4">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Coupons</p>
+                <p class="text-[34px] font-medium text-[#FFFFFF]">12</p>
+              </div>
+            </div>
+            <div class="flex justify-between h-[22px] items-center">
+              <div class="flex">
+                <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+              </div>
+              <div>
+                <img class="w-[100px]" [src]="text_card()" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+          <div class="flex flex-col justify-between w-full h-full">
+            <div class="flex flex-row items-center">
+                <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
+                <img class="h-[14px] w-[14px]" src="../../../../assets/images/logo/card/toggle_list_icon.svg" alt="">
+            </div>
+            <div>
+              <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+              <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+            </div>
+            <div class="flex justify-between h-[22px] items-center">
+              <div class="flex">
+                <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+              </div>
+              <div>
+                <img class="w-[100px]" [src]="text_card()" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <div class="rounded-t-[20px] md:rounded-[20px] bg-white w-full h-[100%] md:h-fit md:w-[595px] mt-5 md:mt-0">
+        <div class="grid grid-cols-3 mt-4 py-4">
+          <div class="grid col-span-1 justify-center">
+            <button (click) = gototopup()>
+              <!-- Your button content -->
+              <div class="flex w-16 h-16 bg-[#990033] rounded-full items-center justify-center">
+                <img src="assets/images/button/top_up.svg" alt="">
+              </div>
+              <p class="p-2">Top-up</p>
+            </button>
+          </div>
+          <div class="grid col-span-1 justify-center">
+            <button (click) = gotohistory()>
+              <!-- Your button content -->
+              <div class="flex w-16 h-16 bg-[#990033] rounded-full items-center justify-center">
+                <img src="assets/images/button/history.svg" alt="">
+              </div>
+              <p class="p-2">History</p>
+            </button>
+          </div>
+          <div class="grid col-span-1 justify-center">
+            <button>
+              <!-- Your button content -->
+              <div class="flex w-16 h-16 bg-[#990033] rounded-full items-center justify-center">
+                <img src="assets/images/button/coupon.svg" alt="">
+              </div>
+              <p class="p-2">Coupon</p>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center px-8 text-base text-[#84776E] bg-[#DED7D1] w-full h-10">Lasted 5 Transactions</div>
+          <ng-container *ngIf="transactions.length === 0">
+            <div class="flex justify-center md:py-16 py-28">
+              <div class="flex flex-col items-center">
+                <img class="w-8" src="assets/images/transactions/not_found.svg">
+                <p class="font-normal text-[#32373D]">Transaction not found</p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let item of transactions.slice(0, 5); let i=index" class="flex flex-col divide-y divide-black">
+            <div>
+              <div class="px-4">
+                <ng-container *ngIf="i != 0">
+                  <div class="border-b border-[#DED7D1] w-full"></div>
+                </ng-container>
+              </div>
+              <div class="flex items-center justify-between p-4">
+                <div>
+                  <p class="text-xl text-[#002755]">{{item.type}}</p>
+                  <p class="text-xs font-normal text-[#84776E]">{{item.date}} {{item.time}}</p>
+                </div>
+                <div>
+                  <p class="text-xl" [ngStyle]="{'color': item.type === 'Paid' ? '#FF5252' : '#4CAF50'}">{{item.balance | number:'1.2-2'}}</p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="role === 'parent'" class="flex justify-center font-ibm font-medium w-full bg-[#F4F4F9]">
+  <!-- User card HTML content here -->
+  <div class="flex flex-col items-center md:items-start md:flex-row w-full md:m-[30px] md:justify-center">
+    <div class="flex flex-col rounded-[20px] mt-5 md:mt-0 md:mr-[40px]">
+      <!-- Your SVG content -->
+      <ng-container *ngIf="card.role == 'business'; else elseTemplate">
+        <div class="flex flex-col items-center">
+          <div class="relative w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px] mb-3" [style.background-image]="'url(' + bg_card() + ')'">
+          <img (click)="change_left()" class="{{display_left}} cursor-pointer absolute h-[40px] w-[40px] top-1/2 left-0 -translate-x-1/2 -translate-y-1/2" src="assets/images/logo/card/button_previousCard.svg" alt="">
+          <img (click)="change_right()" class="{{display_right}} absolute h-[40px] w-[40px] top-1/2 right-0 translate-x-1/2 -translate-y-1/2"src="assets/images/logo/card/button_nextCard.svg" alt="">
+          <div class="flex flex-col justify-between w-full h-full">
+            <div class="flex flex-row items-center">
+              <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
+              <div class="relative">
+                <img (click)="toggle_popup()" class="h-[14px] w-[14px]" src="../../../../assets/images/logo/card/toggle_list_icon.svg" alt="">
+                <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 {{translate_y}}">
+                  <p class="text-[16px] text-[#002755] font-medium px-4 pt-4">Select student ({{cards.length}})</p>
+                  <div class="divide-y max-h-[150px] overflow-y-scroll pl-4 pr-4">
+                    <ng-container *ngFor="let item of cards; let i = index">
+                      <div class="flex py-2" (click)="change_card(i)">
+                        <img class="w-[42px] h-[42px] mr-[10px]" src="assets/images/logo/card/people_mock.svg " alt="">
+                        <div class="flex flex-col mr-[42px]">
+                          <p class="whitespace-nowrap text-[18px] text-[#32373D] font-medium">{{item.name}}</p>
+                          <p class="text-[12px] text-[#84776E] font-normal">฿ {{item.balance | number: '1.2-2'}}</p>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex divide-x divide-white">
+              <div class="w-[239px]">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+                <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+              </div>
+              <div class="w-14 pl-4">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Coupons</p>
+                <p class="text-[34px] font-medium text-[#FFFFFF]">12</p>
+              </div>
+            </div>
+            <div class="flex justify-between h-[22px] items-center">
+              <div class="flex">
+                <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+              </div>
+              <div>
+                <img class="w-[100px]" [src]="text_card()" alt="">
+              </div>
+            </div>
+          </div>
+          </div>
+          <img class="w-[66px] h-[6px]" src="{{slice_src}}" alt="">
+        </div>
+
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="flex flex-col items-center">
+          <div class="relative w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px] mb-3" [style.background-image]="'url(' + bg_card() + ')'">
+            <img (click)="change_left()" class="{{display_left}} absolute h-[40px] w-[40px] top-1/2 left-0 -translate-x-1/2 -translate-y-1/2" src="assets/images/logo/card/button_previousCard.svg" alt="">
+            <img (click)="change_right()" class="{{display_right}} absolute h-[40px] w-[40px] top-1/2 right-0 translate-x-1/2 -translate-y-1/2"src="assets/images/logo/card/button_nextCard.svg" alt="">
+            <div class="flex flex-col justify-between w-full h-full">
+              <div class="flex flex-row items-center">
+                  <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
+                  <div class="relative">
+                    <img (click)="toggle_popup()" class="h-[14px] w-[14px]" src="../../../../assets/images/logo/card/toggle_list_icon.svg" alt="">
+                    <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 {{translate_y}}">
+                      <p class="text-[16px] text-[#002755] font-medium px-4 pt-4">Select student ({{cards.length}})</p>
+                      <div class="divide-y max-h-[150px] overflow-y-scroll pl-4 pr-4">
+                        <ng-container *ngFor="let item of cards; let i = index">
+                          <div class="flex py-2" (click)="change_card(i)">
+                            <img class="w-[42px] h-[42px] mr-[10px]" src="assets/images/logo/card/people_mock.svg " alt="">
+                            <div class="flex flex-col mr-[42px]">
+                              <p class="whitespace-nowrap text-[18px] text-[#32373D] font-medium">{{item.name}}</p>
+                              <p class="text-[12px] text-[#84776E] font-normal">฿ {{item.balance | number: '1.2-2'}}</p>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div>
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+                <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+              </div>
+              <div class="flex justify-between h-[22px] items-center">
+                <div class="flex">
+                  <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+                  <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+                </div>
+                <div>
+                  <img class="w-[100px]" [src]="text_card()" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <img class="w-[66px] h-[6px]" src="{{slice_src}}" alt="">
+        </div>
+      </ng-template>
+    </div>
+    <div class="rounded-t-[20px] md:rounded-[20px] bg-white w-full h-[100%] md:h-fit md:w-[595px] mt-5 md:mt-0">
+        <div class="grid grid-cols-3 mt-4 py-4">
+          <div class="grid col-span-1 justify-center">
+            <button (click) = gototopup()>
+              <!-- Your button content -->
+              <div class="flex w-16 h-16 bg-[#990033] rounded-full items-center justify-center">
+                <img src="assets/images/button/top_up.svg" alt="">
+              </div>
+              <p class="p-2">Top-up</p>
+            </button>
+          </div>
+          <div class="grid col-span-1 justify-center">
+            <button (click) = gotohistory()>
+              <!-- Your button content -->
+              <div class="flex w-16 h-16 bg-[#990033] rounded-full items-center justify-center">
+                <img src="assets/images/button/history.svg" alt="">
+              </div>
+              <p class="p-2">History</p>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center px-8 text-base text-[#84776E] bg-[#DED7D1] w-full h-10">Lasted 5 Transactions</div>
+          <ng-container *ngIf="transactions.length === 0">
+            <div class="flex justify-center md:py-16 py-28">
+              <div class="flex flex-col items-center">
+                <img class="w-8" src="assets/images/transactions/not_found.svg">
+                <p class="font-normal text-[#32373D]">Transaction not found</p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let item of transactions.slice(0, 5); let i=index ">
+            <div class="px-4">
+              <ng-container *ngIf="i != 0">
+                <div class="border-b border-[#DED7D1] w-full"></div>
+              </ng-container>
+            </div>
+            <div class="flex items-center justify-between p-4">
+              <div>
+                <p class="text-xl text-[#002755]">{{item.type}}</p>
+                <p class="text-xs font-normal text-[#84776E]">{{item.date}} {{item.time}}</p>
+              </div>
+              <div>
+                <p class="text-xl" [ngStyle]="{'color': item.type === 'Paid' ? '#FF5252' : '#4CAF50'}">{{item.balance | number:'1.2-2'}}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+    </div>
+  </div>
+
+ </div>

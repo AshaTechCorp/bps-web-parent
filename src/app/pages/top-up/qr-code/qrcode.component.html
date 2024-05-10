@@ -1,0 +1,85 @@
+<app-navbar></app-navbar>
+<div class="flex justify-center font-ibm w-full bg-[#F4F4F9]">
+	<div class="flex flex-col md:flex-row w-full md:m-[30px] md:justify-center">
+		<div class="flex flex-col my-[30px] md:my-[0px]">
+			<div class="flex rounded-[30px] justify-center md:mb-[18px] md:mr-[40px]">
+				<!-- Your SVG content -->
+				<ng-container *ngIf="card.role == 'business'; else elseTemplate">
+					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+						<div class="flex flex-col justify-between w-full h-full">
+							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
+							<div class="flex divide-x divide-white">
+								<div class="w-[239px]">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+									<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+								</div>
+								<div class="w-14 pl-4">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Coupons</p>
+									<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.coupon}}</p>
+								</div>
+							</div>
+							<div class="flex justify-between h-[22px] items-center">
+								<div class="flex">
+									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+								</div>
+								<div>
+									<img class="w-[100px]" [src]="text_card()" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+				<ng-template #elseTemplate>
+					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+						<div class="flex flex-col justify-between w-full h-full">
+							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
+							<div>
+								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+								<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
+							</div>
+							<div class="flex justify-between h-[22px] items-center">
+								<div class="flex">
+									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+								</div>
+								<div>
+									<img class="w-[100px]" [src]="text_card()" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-template>
+	  		</div>
+			<div class=" hidden md:block">
+				<button class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
+					<mat-icon class="text-[#990033]" svgIcon="heroicons_mini:chevron-left"></mat-icon>
+					<p class="flex font-medium items-center text-lg mt-[2px]">BACK</p>
+				</button>
+			</div>
+		</div>
+
+		<div class="bg-white rounded-t-[20px] py-[20px] h-[100%] md:rounded-[20px] md:py-[30px] md:h-fit md:w-[595px]">
+			<div class="flex justify-between px-[16px] md:px-[30px]">
+				<p class="text-[#002755] text-[23px] font-medium md:w-min-[331px]">Top-up</p>
+				<div class="flex items-center">
+					<p class="text-[#84776E] text-[12px] font-normal">Secure by K-Payment Gateway</p>
+					<img class="w-[32px] h-[32px]" src="../../../../assets/images/logo/Logo_bank.svg"  alt="Logo">
+				</div>
+			</div>
+			<p class="text-[#32373D] text-[16px] font-normal mb-[16px] px-[16px] md:px-[30px]">Method: Promptpay</p>
+			<div class="grid grid-cols-1 justify-center">
+				<div class="bg-[#1A3761] bg-repeat-x md:bg-no-repeat flex justify-center">
+					<img src="../../../../../assets/images/logo/Logo_qr_header.png" alt="header" class="h-[38px] w-[96px]">
+				</div>
+				<img src="../../../../../assets/images/logo/image 4 (1).svg" alt="header" class="h-[240px] mb-2">
+				<p class="text-[23px] text-[#4CAF50] font-medium text-center mb-2">฿{{amountTopup | number: '1.2-2'}}</p>
+				<p class="text-[20px] text-[#32373D] font-medium text-center mb-2">{{cardName}}</p>
+				<div class="text-center">
+					<span class="text-[16px] text-[#FF5252] font-normal">* </span><span class="text-[16px] text-[#32373D] font-normal">Open Mobile Banking application for</span>
+					<p class="text-[16px] text-[#32373D] font-medium">Scan QR Code or Screen Capture to top up.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

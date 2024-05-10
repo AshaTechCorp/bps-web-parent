@@ -1,0 +1,40 @@
+<div class="flex flex-col w-full h-screen">
+  <nav class="bg-white h-78 px-4 py-1 w-full">
+    <div class="flex items-center justify-between mx-auto">
+      <div class="relative flex h-16 items-center justify-between">
+        <div class="flex items-center justify-start">
+          <div class="flex flex-shrink-0 items-center">
+            <img class="h-8 w-auto" src="assets/images/logo/schooney_logo.svg" alt="Your Logo">
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="flex">
+          <button class="mx-2 language-button">TH</button>
+          <p class="mx-2">|</p>
+          <button class="mx-2 language-button">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="h-full flex justify-center items-center">
+    @if (!loginDisplay) {
+    <div class="flex justify-center items-center">
+      @if (!loginDisplay) {
+        <button class="flex justify-center items-center rounded-full w-[187px] h-[52px] border-2 border-[#990033] text-lg text-[#8A2938] font-narmal" [matMenuTriggerFor]="loginMenu">LOG IN</button>
+        }
+        <mat-menu #loginMenu="matMenu">
+          <button mat-menu-item (click)="loginRedirect()">Login using Redirect</button>
+          <button mat-menu-item (click)="loginPopup()">Login using Popup</button>
+        </mat-menu>
+    </div>
+    }
+
+    @if (loginDisplay) {
+    <div>
+        ไปหน้า SELECT CARD
+    </div>
+    }
+  </div>
+
+</div>

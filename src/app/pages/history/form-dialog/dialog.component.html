@@ -1,0 +1,86 @@
+<div class="w-full">
+  <!-- Transaction Details Header -->
+  <div class="flex justify-between items-center mb-4">
+    <p class="font-medium text-[#002755] text-xl">Transaction Details</p>
+    <mat-icon class="text-[#32373D] hover:cursor-pointer" svgIcon="heroicons_mini:x-mark" (click)="onClose()"></mat-icon>
+  </div>
+  <div class="border-b border-[#DED7D1]"></div>
+
+  <!-- Transaction Details Content -->
+  <ng-template [ngIf]="data_type === 'Paid'" [ngIfElse]="topUpTemplate">
+    <!-- Paid Transaction Template -->
+    <div class="flex justify-between">
+      <!-- Left Content -->
+      <div class="flex py-4 items-center">
+        <div>
+          <img class="w-[50px]" src="assets/images/transactions/paid.svg">
+        </div>
+        <div class="flex flex-col items-start px-2">
+          <p class="text-lg font-medium">Restaurant Name</p>
+          <p class="text-md font-normal text-[#32373D]">{{data_date}} {{data_time}}</p>
+        </div>
+      </div>
+      <!-- Right Content -->
+      <div class="flex p-4 items-center justify-end">
+        <p class="text-xl" [style.color]="'#FF5252'">{{data_balance | number:'1.2-2'}}</p>
+      </div>
+    </div>
+    <div class="border-b border-[#DED7D1]"></div>
+    <!-- Payment Method -->
+    <div class="flex justify-between py-4">
+      <p>Payment Method</p>
+      <p>Card</p>
+    </div>
+    <!-- Grid Headers -->
+    <div class="grid grid-cols-7 w-full p-2 bg-[#DED7D1] text-[#84776E]">
+      <p class="col-span-3">Order</p>
+      <p class="col-span-2 grid justify-items-end">Amount</p>
+      <p class="col-span-2 grid justify-items-end">Total (Baht)</p>
+    </div>
+    <!-- Transaction Items -->
+    <ng-container *ngFor="let item of data_list; let k=index">
+      <div class="grid grid-cols-7 w-full p-2">
+        <p class="col-span-3">{{item.order}}</p>
+        <p class="col-span-2 grid justify-items-end">{{item.amount}}</p>
+        <p class="col-span-2 grid justify-items-end">{{item.total}}</p>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <!-- Top-Up Transaction Template -->
+  <ng-template #topUpTemplate>
+    <div class="flex justify-between">
+      <div class="flex py-4 items-center">
+        <div>
+          <img class="w-[50px]" src="assets/images/transactions/top_up.svg">
+        </div>
+        <div class="flex flex-col items-start px-2">
+          <p class="text-lg font-medium">Top-Up</p>
+          <p class="text-md font-normal text-[#32373D]">{{data_date}} {{data_time}}</p>
+        </div>
+      </div>
+      <div class="flex p-4 items-center justify-end">
+        <p class="text-xl" [style.color]="'#4CAF50'">{{data_balance | number:'1.2-2'}}</p>
+      </div>
+    </div>
+    <div class="border-b border-[#DED7D1]"></div>
+    <!-- Top-Up Method -->
+    <div class="flex justify-between">
+      <div class="flex py-4 items-center">
+        <div class="flex flex-col items-start px-2">
+          <p class="text-lg font-normal text-[#32373D]">Top-up via</p>
+        </div>
+      </div>
+      <div class="flex py-4 items-center">
+        <div class="flex flex-col items-start px-2">
+          <p class="text-lg font-normal text-[#32373D]">Offline</p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+
+
+
+
