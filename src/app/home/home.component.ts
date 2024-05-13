@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((result: EventMessage) => {
         console.log(result);
-        this._router.navigate(['/select'])
+        // this._router.navigate(['/select'])
 
         const payload = result.payload as AuthenticationResult;
         this.authService.instance.setActiveAccount(payload.account);
@@ -88,11 +88,9 @@ export class HomeComponent implements OnInit {
 
     if (this.msalGuardConfig.authRequest){
       this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
-      console.log('222');
 
     } else {
       this.authService.loginRedirect();
-      console.log('333');
     }
   }
 
@@ -104,7 +102,6 @@ export class HomeComponent implements OnInit {
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
           // this._router.navigate(['/select']);
-          console.log('1');
 
         });
     } else {
@@ -112,7 +109,6 @@ export class HomeComponent implements OnInit {
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
           // this._router.navigate(['/select']);
-          console.log('2');
 
         });
     }
