@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment.development';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,25 @@ export class TopUpService {
     //// เพิ่ม object เพิ่มเติมตามต้องการ
   ];
 
-  constructor() {}
+  constructor(private _httpClient: HttpClient) {}
+
+  get_test_card() {
+    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry?card=2617800948')
+    .pipe( (response: any) => {
+        return (response);
+      }
+    );
+  }
+
+  creat_QR(data: any): Observable<any> {
+    //const token = localStorage.getItem('accessToken');
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU1OTQ1NzgsImV4cCI6MTcxNTY4MDk3OH0.oaOr0Babded4EyJDhzvKHP_lyzVqhXkYAZeTFSWKVe0"
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+
+    return this._httpClient.post<any>(environment.baseurl + '/api/transaction/qrpayment/request', data, { headers: headers });
+  }
 
   getAllCard() {
     return this.cards

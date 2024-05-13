@@ -35,11 +35,16 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QRcodeComponent implements OnInit {
-  users: any[] = []
-  card: any
-  time : any
-  cardName : any
+    users: any[] = []
+    card: any
+    time : any
+    cardName : any
+    form : FormGroup = this._fb.group({
+        amount: 100, 
+        card: '2617800948'
+    })
 	amountTopup: any
+    img_qr: any;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -48,6 +53,16 @@ export class QRcodeComponent implements OnInit {
     ) {
     }
     ngOnInit(): void {
+        this.form = this._fb.group({
+            amount: 100, 
+            card: '2617800948'
+        })
+        console.log(this.form.value);
+        this._topup.creat_QR(this.form.value).subscribe((resp : any) => {
+            console.log(resp);
+            this.img_qr = resp.qrCodeUrl
+        })
+        
 		this.card = this._topup.getCardData()
         this.cardName = this.card.name
         this.amountTopup = this._topup.getTopUp()
