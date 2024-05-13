@@ -31,8 +31,8 @@ export class TopUpService {
   }
 
   getSelectIndex(){
-    // return parseInt(localStorage.getItem('card-Data')) ?? 1;
-    return 1;
+    return parseInt(localStorage.getItem('card-Data') ?? '0');
+    // return 1;
   }
 
   getCardData() {

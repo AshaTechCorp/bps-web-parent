@@ -49,7 +49,7 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
 }
 
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return { 
+  return {
     interactionType: InteractionType.Redirect,
     authRequest: {
       scopes: [...environment.apiConfig.scopes]
@@ -60,7 +60,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), 
+    provideRouter(routes),
     importProvidersFrom(BrowserModule, MatButtonModule, MatToolbarModule, MatListModule, MatMenuModule),
     provideNoopAnimations(),
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
