@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular17-standalone-sample": {
+    "bps-parent-web": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular17-standalone-sample",
+            "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -40,8 +40,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -84,13 +84,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular17-standalone-sample:build:production"
+              "buildTarget": "bps-parent-web:build:production"
             },
             "e2e": {
-              "buildTarget": "angular17-standalone-sample:build:e2e"
+              "buildTarget": "bps-parent-web:build:e2e"
             },
             "dev": {
-              "buildTarget": "angular17-standalone-sample:build:dev"
+              "buildTarget": "bps-parent-web:build:dev"
             }
           },
           "defaultConfiguration": "dev"
@@ -98,7 +98,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular17-standalone-sample:build"
+            "buildTarget": "bps-parent-web:build"
           }
         },
         "test": {
