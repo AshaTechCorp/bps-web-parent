@@ -27,7 +27,7 @@
           </mat-menu>
 
           @if (loginDisplay) {
-            <button class="flex justify-center items-center rounded-full w-[100px] h-[44px] border-2 border-[#990033] text-md text-[#8A2938] font-medium" [matMenuTriggerFor]="logoutMenu">LOG OUT</button>
+            <button class="flex justify-center items-center rounded-full w-[100px] h-[44px] border-2 border-[#990033] text-md text-[#8A2938] font-normal" [matMenuTriggerFor]="logoutMenu">LOG OUT</button>
           }
           <mat-menu #logoutMenu="matMenu">
             <button mat-menu-item (click)="logout()">Logout using Redirect</button>

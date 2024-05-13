@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink} from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { MsalService, MsalModule, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { AuthenticationResult, InteractionStatus, PopupRequest, RedirectRequest, EventMessage, EventType } from '@azure/msal-browser';
@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private authService: MsalService,
-    private msalBroadcastService: MsalBroadcastService) { }
+    private msalBroadcastService: MsalBroadcastService,
+    private _router:Router
+  ) { }
 
   ngOnInit(): void {
     this.authService.handleRedirectObservable().subscribe();
@@ -40,6 +42,8 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((result: EventMessage) => {
         console.log(result);
+        this._router.navigate(['/select'])
+
         const payload = result.payload as AuthenticationResult;
         this.authService.instance.setActiveAccount(payload.account);
       });
@@ -54,6 +58,12 @@ export class HomeComponent implements OnInit {
         this.checkAndSetActiveAccount();
       })
 
+  }
+
+  gotoselect(){
+    console.log('SELECT');
+
+    this._router.navigate(['/select'])
   }
 
   setLoginDisplay() {
@@ -78,8 +88,11 @@ export class HomeComponent implements OnInit {
 
     if (this.msalGuardConfig.authRequest){
       this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
+      console.log('222');
+
     } else {
       this.authService.loginRedirect();
+      console.log('333');
     }
   }
 
@@ -90,12 +103,18 @@ export class HomeComponent implements OnInit {
       this.authService.loginPopup({...this.msalGuardConfig.authRequest} as PopupRequest)
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
+          // this._router.navigate(['/select']);
+          console.log('1');
+
         });
-      } else {
-        this.authService.loginPopup()
-          .subscribe((response: AuthenticationResult) => {
-            this.authService.instance.setActiveAccount(response.account);
-      });
+    } else {
+      this.authService.loginPopup()
+        .subscribe((response: AuthenticationResult) => {
+          this.authService.instance.setActiveAccount(response.account);
+          // this._router.navigate(['/select']);
+          console.log('2');
+
+        });
     }
   }
 
