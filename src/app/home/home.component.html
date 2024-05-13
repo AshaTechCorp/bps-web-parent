@@ -17,24 +17,19 @@
       </div>
     </div>
   </nav>
-  <div class="h-full flex justify-center items-center">
-    @if (!loginDisplay) {
+  <div class="h-full flex flex-col justify-center items-center mb-0 md:mb-[196px]">
+    <div class="flex flex-col md:flex-row items-center py-8">
+      <img class="" src="assets/images/logo/patana_logo.svg" alt="">
+      <div class="flex flex-col items-center md:items-start px-4">
+        <p class="text-3xl font-medium text-[#002755]">Log In</p>
+        <p class="text-[#616161]">Bangkok Patana School</p>
+      </div>
+    </div>
     <div class="flex justify-center items-center">
-      @if (!loginDisplay) {
-        <button class="flex justify-center items-center rounded-full w-[187px] h-[52px] border-2 border-[#990033] text-lg text-[#8A2938] font-narmal" [matMenuTriggerFor]="loginMenu">LOG IN</button>
-        }
-        <mat-menu #loginMenu="matMenu">
-          <button mat-menu-item (click)="loginRedirect()">Login using Redirect</button>
-          <button mat-menu-item (click)="loginPopup()">Login using Popup</button>
-        </mat-menu>
+      <button class="flex justify-center items-center rounded-full w-[351px] h-[52px] md:w-[490px] md:h-[52px] border-2 border-[#32373D] text-md font-normal" (click)="loginPopup()">
+        <img src="assets/images/logo/microsoft.svg" alt="">
+        <p class="ps-2">Continue with Microsoft</p>
+      </button>
     </div>
-    }
-
-    <!-- @if (loginDisplay) {
-    <div>
-        ไปหน้า SELECT CARD
-    </div>
-    } -->
   </div>
-
 </div>
