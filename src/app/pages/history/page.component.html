@@ -121,7 +121,6 @@
     </div>
   </div>
 </div>
-
 <!-- User : Staff -->
 
 <div *ngIf="role === 'staff'" class="flex justify-center items-start font-ibm font-medium w-full bg-[#F4F4F9]  h-[calc(100vh-72px)]">
@@ -183,7 +182,7 @@
           </button>
         </div>
       </div>
-      <div class="rounded-xl bg-white w-full h-[100%] min-[960px]:w-[595px] min-[960px]:min-w-0 min-[960px]:mt-0 mt-8 max- h-[calc(100vh-72px)]" >
+      <div class="rounded-xl bg-white w-full h-fit min-[960px]:w-[595px] min-[960px]:min-w-0 min-[960px]:mt-0 mt-8 max-h-[calc(100vh-72px)]" >
         <div class="grid grid-cols-2 min-[960px]:flex border-b-2 w-full h-[52px] mb-[10px]">
           <div class="flex flex-col h-[52px] col-span-1 min-[960px]:w-[180px] justify-center items-center border-b-2" [ngClass]="{'border-[#990033]': !showTransactions}" (click)="toggleTransactions()">
             <p class="font-normal hover:cursor-pointer" [ngClass]="{'font-semibold': !showTransactions, 'text-[#990033]': !showTransactions}">Transaction</p>
@@ -228,7 +227,7 @@
                   <div class="p-4">
                     <div class="flex items-center">
                       <div class="w-[14px] h-[14px] rounded-full mb-[2px]" [ngStyle]="{'background': transaction.type === 'Paid' ? '#FF5252' : '#4CAF50'}"></div>
-                      <p class="px-2 text-lg">{{transaction.type}}</p>
+                      <p class="px-2 text-lg text-[#002755]">{{transaction.type}}</p>
                     </div>
                     <p class="text-md font-normal text-[#84776E]">{{transaction.time}}</p>
                   </div>
@@ -288,7 +287,7 @@
                   <div class="p-4">
                     <div class="flex items-center">
                       <div class="w-[14px] h-[14px] rounded-full mb-[2px]" [ngStyle]="{'background': transaction.type === 'Paid' ? '#FF5252' : '#4CAF50'}"></div>
-                      <p class="px-2 text-lg">{{transaction.type}}</p>
+                      <p class="px-2 text-lg text-[#002755]">{{transaction.type}}</p>
                     </div>
                     <p class="text-md font-normal text-[#84776E]">{{transaction.time}}</p>
                   </div>

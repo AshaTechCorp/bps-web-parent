@@ -60,12 +60,6 @@ export class HomeComponent implements OnInit {
 
   }
 
-  gotoselect(){
-    console.log('SELECT');
-
-    this._router.navigate(['/select'])
-  }
-
   setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
   }
@@ -101,14 +95,13 @@ export class HomeComponent implements OnInit {
       this.authService.loginPopup({...this.msalGuardConfig.authRequest} as PopupRequest)
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
-          // this._router.navigate(['/select']);
-
+           this._router.navigate(['/select']);
         });
     } else {
       this.authService.loginPopup()
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
-          // this._router.navigate(['/select']);
+           this._router.navigate(['/select']);
 
         });
     }
