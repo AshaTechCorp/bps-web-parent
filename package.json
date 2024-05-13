@@ -1,10 +1,11 @@
 {
-  "name": "angular17-standalone-sample",
-  "version": "0.0.0",
+  "name": "bps-parent-web",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run postinstall:msal-angular && ng build",
+    "build:prod": "ng build --configuration ",
     "postinstall:msal-angular": "node ../sample-scripts/useMsalAngularTarball.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
