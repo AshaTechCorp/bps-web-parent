@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="flex justify-center font-ibm w-full bg-[#F4F4F9]">
-	<div class="flex flex-col md:flex-row w-full md:m-[30px] md:justify-center">
-		<div class="flex flex-col my-[30px] md:my-[0px]">
-			<div class="flex rounded-[30px] justify-center md:mb-[18px] md:mr-[40px]">
+<div class="flex justify-center font-ibm w-full bg-[#F4F4F9]  h-[calc(100vh-72px)]">
+	<div class="flex flex-col min-[1030px]:flex-row w-full min-[1030px]:m-[30px] min-[1030px]:justify-center">
+		<div class="flex flex-col my-[30px] min-[1030px]:my-[0px]">
+			<div class="flex rounded-[30px] justify-center min-[1030px]:mb-[18px] min-[1030px]:mr-[40px]">
 				<!-- Your SVG content -->
 				<ng-container *ngIf="card.role == 'business'; else elseTemplate">
 					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
@@ -53,7 +53,7 @@
 	  		</div>
 		</div>
 
-		<div class="relative flex flex-col bg-white rounded-t-[20px] h-[100%] md:rounded-[20px] md:p-[30px] md:w-[595px] md:h-[476px] justify-center">
+		<div class="relative flex flex-col bg-white rounded-t-[20px] h-[100%] min-[1030px]:rounded-[20px] min-[1030px]:p-[30px] min-[1030px]:w-[595px] min-[1030px]:h-[476px] justify-center">
 			<div class="">
 				<div class="grid grid-cols-1 justify-center mb-[20px]">
 					<div class="flex justify-center mb-[20px]">
@@ -69,7 +69,7 @@
 				</div>
 			</div>
 			<div class="flex justify-center mb-[18px]">
-				<button (click)="backto()" class="text-[16px] w-full mx-[13px] py-[14px] bg-[#990033] rounded-[30px] text-white font-medium text-center md:w-[300px]">BACK TO HOME</button>
+				<button (click)="backto()" class="text-[16px] w-full mx-[13px] py-[14px] bg-[#990033] rounded-[30px] text-white font-medium text-center min-[1030px]:w-[300px]">BACK TO HOME</button>
 			</div>
 		</div>
 	</div>

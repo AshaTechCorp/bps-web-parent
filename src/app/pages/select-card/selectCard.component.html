@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="flex flex-col flex-auto min-w-0 items-center font-ibm font-medium tracking-[0.25px] bg-[#F4F4F9]">
+<div class="flex flex-col flex-auto min-w-0 items-center font-ibm font-medium tracking-[0.25px] bg-[#F4F4F9]  min-h-[calc(100vh-72px)]">
     <div class="px-[10px] min-[390px]:px-[15px] min-[420px]:px-[30px] my-[30px] bg-white rounded-[20px]">
 		<p class="text-[34px] py-[20px] font-medium text-center text-[#002755] p-0 m-0">Select Card</p>
-		<div class="grid grid-cols-1 gap-[30px] md:grid-cols-2 pb-[30px]">
+		<div class="grid grid-cols-1 gap-[30px] min-[960px]:grid-cols-2 pb-[30px]">
 			<ng-container *ngFor="let item of cards; let i=index">
 				<ng-container *ngIf="item.role == 'business'; else elseTemplate">
 					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card(i) + ')'">

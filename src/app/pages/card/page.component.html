@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div *ngIf="role === 'staff'" class="flex justify-center font-ibm font-medium w-full bg-[#F4F4F9]">
+<div *ngIf="role === 'staff'" class="flex justify-center font-ibm font-medium w-full bg-[#F4F4F9] h-[calc(100vh-72px)]">
   <!-- Admin card HTML content here -->
-  <div class="flex flex-col items-center md:items-start md:flex-row w-full md:m-[30px] md:justify-center">
-    <div class="flex flex-col rounded-[20px] mt-5 md:mt-0 md:mr-[40px]">
+  <div class="flex flex-col items-center min-[1030px]:items-start min-[1030px]:flex-row w-full min-[1030px]:m-[30px] min-[1030px]:justify-center">
+    <div class="flex flex-col rounded-[20px] mt-5 min-[1030px]:mt-0 min-[1030px]:mr-[40px]">
       <!-- Your SVG content -->
       <ng-container *ngIf="card.role == 'business'; else elseTemplate">
         <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
@@ -56,7 +56,7 @@
         </div>
       </ng-template>
     </div>
-    <div class="rounded-t-[20px] md:rounded-[20px] bg-white w-full h-[100%] md:h-fit md:w-[595px] mt-5 md:mt-0">
+    <div class="rounded-t-[20px] min-[1030px]:rounded-[20px] bg-white w-full h-[100%] min-[1030px]:h-fit min-[1030px]:w-[595px] mt-5 min-[1030px]:mt-0">
         <div class="grid grid-cols-3 mt-4 py-4">
           <div class="grid col-span-1 justify-center">
             <button (click) = gototopup()>
@@ -89,7 +89,7 @@
         <div>
           <div class="flex items-center px-8 text-base text-[#84776E] bg-[#DED7D1] w-full h-10">Lasted 5 Transactions</div>
           <ng-container *ngIf="transactions.length === 0">
-            <div class="flex justify-center md:py-16 py-28">
+            <div class="flex justify-center min-[1030px]:py-16 py-28">
               <div class="flex flex-col items-center">
                 <img class="w-8" src="assets/images/transactions/not_found.svg" alt="Not found">
                 <p class="font-normal text-[#32373D]">Transaction not found</p>
@@ -119,10 +119,10 @@
   </div>
 </div>
 
-<div *ngIf="role === 'parent'" class="flex justify-center font-ibm font-medium w-full bg-[#F4F4F9]">
+<div *ngIf="role === 'parent'" class="flex justify-center font-ibm font-medium w-full bg-[#F4F4F9] h-[calc(100vh-72px)]">
   <!-- User card HTML content here -->
-  <div class="flex flex-col items-center md:items-start md:flex-row w-full md:m-[30px] md:justify-center">
-    <div class="flex flex-col rounded-[20px] mt-5 md:mt-0 md:mr-[40px]">
+  <div class="flex flex-col items-center min-[1030px]:items-start min-[1030px]:flex-row w-full min-[1030px]:m-[30px] min-[1030px]:justify-center">
+    <div class="flex flex-col rounded-[20px] mt-5 min-[1030px]:mt-0 min-[1030px]:mr-[40px]">
       <!-- Your SVG content -->
       <ng-container *ngIf="card.role == 'business'; else elseTemplate">
         <div class="flex flex-col items-center">
@@ -134,15 +134,17 @@
               <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
               <div class="relative">
                 <img (click)="toggle_popup()" class="h-[14px] w-[14px] cursor-pointer" src="../../../../assets/images/logo/card/toggle_list_icon.svg" alt="">
-                <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 {{translate_y}}">
+                <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 translate-y-[105%]">
                   <p class="text-[16px] text-[#002755] font-medium px-4 pt-4">Select student ({{cards.length}})</p>
-                  <div class="divide-y max-h-[150px] overflow-y-scroll pl-4 pr-4">
+                  <div class="divide-y max-h-[180px] overflow-y-scroll pl-4 pr-4">
                     <ng-container *ngFor="let item of cards; let i = index">
-                      <div class="flex py-2" (click)="change_card(i)">
-                        <img class="w-[42px] h-[42px] mr-[10px]" src="assets/images/logo/card/people_mock.svg " alt="">
-                        <div class="flex flex-col mr-[42px]">
-                          <p class="whitespace-nowrap text-[18px] text-[#32373D] font-medium">{{item.name}}</p>
-                          <p class="text-[12px] text-[#84776E] font-normal">฿ {{item.balance | number: '1.2-2'}}</p>
+                      <div class="flex py-2 cursor-pointer" (click)="change_card(i)">
+                        <div>
+                          <img class="w-[42px] h-[42px] mr-[10px]" src="assets/images/logo/card/people_mock.svg " alt="">
+                          <div class="flex flex-col mr-[42px]">
+                            <p class="whitespace-nowrap text-[18px] text-[#32373D] font-medium">{{item.name}}</p>
+                            <p class="text-[12px] text-[#84776E] font-normal">฿ {{item.balance | number: '1.2-2'}}</p>
+                          </div>
                         </div>
                       </div>
                     </ng-container>
@@ -185,9 +187,9 @@
                   <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
                   <div class="relative">
                     <img (click)="toggle_popup()" class="h-[14px] w-[14px] cursor-pointer" src="../../../../assets/images/logo/card/toggle_list_icon.svg" alt="">
-                    <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 {{translate_y}}">
+                    <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 translate-y-[105%]">
                       <p class="text-[16px] text-[#002755] font-medium px-4 pt-4">Select student ({{cards.length}})</p>
-                      <div class="divide-y max-h-[150px] overflow-y-scroll pl-4 pr-4">
+                      <div class="divide-y max-h-[180px] overflow-y-scroll pl-4 pr-4">
                         <ng-container *ngFor="let item of cards; let i = index">
                           <div class="flex py-2" (click)="change_card(i)">
                             <img class="w-[42px] h-[42px] mr-[10px]" src="assets/images/logo/card/people_mock.svg " alt="">
@@ -220,7 +222,7 @@
         </div>
       </ng-template>
     </div>
-    <div class="rounded-t-[20px] md:rounded-[20px] bg-white w-full h-[100%] md:h-fit md:w-[595px] mt-5 md:mt-0">
+    <div class="rounded-t-[20px] min-[1030px]:rounded-[20px] bg-white w-full h-[100%] min-[1030px]:h-fit min-[1030px]:w-[595px] mt-5 min-[1030px]:mt-0">
         <div class="grid grid-cols-3 mt-4 py-4">
           <div class="grid col-span-1 justify-center">
             <button (click) = gototopup()>
@@ -244,7 +246,7 @@
         <div>
           <div class="flex items-center px-8 text-base text-[#84776E] bg-[#DED7D1] w-full h-10">Lasted 5 Transactions</div>
           <ng-container *ngIf="transactions.length === 0">
-            <div class="flex justify-center md:py-16 py-28">
+            <div class="flex justify-center min-[1030px]:py-16 py-28">
               <div class="flex flex-col items-center">
                 <img class="w-8" src="assets/images/transactions/not_found.svg" alt="Not found">
                 <p class="font-normal text-[#32373D]">Transaction not found</p>

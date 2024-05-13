@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="flex justify-center font-ibm w-full bg-[#F4F4F9]">
-	<div class="flex flex-col md:flex-row w-full md:m-[30px] md:justify-center">
-		<div class="flex flex-col my-[30px] md:my-[0px]">
-			<div class="flex rounded-[30px] justify-center md:mb-[18px] md:mr-[40px]">
+<div class="flex justify-center font-ibm w-full bg-[#F4F4F9]  h-[calc(100vh-72px)]">
+	<div class="flex flex-col min-[1030px]:flex-row w-full min-[1030px]:m-[30px] min-[1030px]:justify-center">
+		<div class="flex flex-col my-[30px] min-[1030px]:my-[0px]">
+			<div class="flex rounded-[30px] justify-center min-[1030px]:mb-[18px] min-[1030px]:mr-[40px]">
 				<!-- Your SVG content -->
 				<ng-container *ngIf="card.role == 'business'; else elseTemplate">
 					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
@@ -51,23 +51,23 @@
 					</div>
 				</ng-template>
 	  		</div>
-			<div class=" hidden md:block">
+			<div class=" hidden min-[1030px]:block">
 				<button class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
 				<mat-icon class="text-[#990033]" svgIcon="heroicons_mini:chevron-left"></mat-icon>
 				<p class="flex font-medium items-center text-lg mt-[2px]">BACK</p>
 				</button>
 			</div>
 		</div>
-		<div class="bg-white rounded-xl px-[13px] py-[20px] h-[100%] md:rounded-xl md:p-[30px] md:h-fit">
+		<div class="bg-white rounded-xl px-[13px] py-[20px] h-[100%] min-[1030px]:rounded-xl min-[1030px]:p-[30px] min-[1030px]:h-fit">
 			<div class="flex justify-between">
-				<p class="text-[#002755] text-[23px] font-medium md:w-min-[331px]">Top-up</p>
+				<p class="text-[#002755] text-[23px] font-medium min-[1030px]:w-min-[331px]">Top-up</p>
 				<div class="flex items-center">
 					<p class="text-[#84776E] text-[12px] font-normal">Secure by K-Payment Gateway</p>
 					<img class="w-[32px] h-[32px]" src="../../../../assets/images/logo/Logo_bank.svg"  alt="Logo">
 				</div>
 			</div>
 			<p class="text-[#32373D] text-[16px] font-normal mb-[12px]">Select method</p>
-			<div class="grid grid-cols-1 gap-[10px] md:w-[535px]">
+			<div class="grid grid-cols-1 gap-[10px] min-[1030px]:w-[535px]">
 				<button (click)="select('promptpay')" class="flex items-center justify-between border-[#990033] border-[1px] rounded-[10px] p-[12px] text-left text-[16px] font-normal text-[#000000]">
 					<div class="flex items-center gap-[10px]">
 						<img src="../../../../assets/images/logo/Logo_Promptpay.svg" alt="Logo_Promptpay" class="w-[30px]">

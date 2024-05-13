@@ -44,7 +44,7 @@ export class CardComponent implements OnInit {
     card: any
     transactions:any[] = []
     cards: any[] = []
-    translate_y: any
+    //translate_y: string = 'translate-y-[119px]'
     display_popup: string = 'hidden'
     display_left: any
     display_right: any
@@ -61,7 +61,6 @@ export class CardComponent implements OnInit {
     ngOnInit(): void {
         this.card = this._topup.getCardData()
         this.cards = this._topup.getAllCard()
-        this.translate_y_popup()
         this.buttonL()
         this.buttonR()
         this.slice_card()
@@ -176,14 +175,19 @@ export class CardComponent implements OnInit {
             return ""
     }
 
-    translate_y_popup(){
-        if (this.cards.length == 1)
-            this.translate_y = 'translate-y-[119px]'
-        else if (this.cards.length == 2)
-            this.translate_y = 'translate-y-[181px]'
-        else if (this.cards.length > 2)
-            this.translate_y = 'translate-y-[200px]'
-    }
+    //translate_y_popup(){
+    //    const len = this._topup.getAllCard().length
+    //    console.log('len'+len);
+    //    if (len == 1)
+    //        this.translate_y = 'translate-y-[110%]'
+    //    else if (len == 2)
+    //        this.translate_y = 'translate-y-[171px]'
+    //    else if (len > 2)
+    //        this.translate_y = 'translate-y-[230px]'
+    //    else
+    //        this.translate_y = 'translate-y-[0px]'
+    //    console.log(this.translate_y); 
+    //}
 
     clickForUpdateTime(){
       const date = DateTime.local()
