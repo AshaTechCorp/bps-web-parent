@@ -34,7 +34,7 @@
             "production": {
               "optimization": {
                 "styles": {
-                  "inlineCritical": false // Causes setAttribute errors
+                  "inlineCritical": false
                 }
               },
               "budgets": [

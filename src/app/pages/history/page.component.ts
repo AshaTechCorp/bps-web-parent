@@ -80,7 +80,9 @@ constructor(
     this.setDefaultMonthYear();
 
 
-    this.role = this._userService.get_role()
+    //this.role = this._userService.get_role()
+    this.role = 'parent'
+    this.card = this._topup.getCardData()
 
     this.total = this._historyService.get_total()
 
