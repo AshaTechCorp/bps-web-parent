@@ -83,17 +83,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  loginRedirect() {
-    console.log('REDIRECT');
-
-    if (this.msalGuardConfig.authRequest){
-      this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
-
-    } else {
-      this.authService.loginRedirect();
-    }
-  }
-
   loginPopup() {
     console.log('POPUP');
 
@@ -101,15 +90,13 @@ export class HomeComponent implements OnInit {
       this.authService.loginPopup({...this.msalGuardConfig.authRequest} as PopupRequest)
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
-          // this._router.navigate(['/select']);
-
+           this._router.navigate(['/select']);
         });
     } else {
       this.authService.loginPopup()
         .subscribe((response: AuthenticationResult) => {
           this.authService.instance.setActiveAccount(response.account);
-          // this._router.navigate(['/select']);
-
+           this._router.navigate(['/select']);
         });
     }
   }
