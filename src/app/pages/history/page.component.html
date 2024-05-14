@@ -233,9 +233,11 @@
                     </div>
                     <p class="text-md font-normal text-[#84776E]">{{transaction.time}}</p>
                   </div>
-                  <div class="flex flex-col items-end p-4">
+                  <div class="flex flex-col items-end justify-between p-4">
                     <p [ngStyle]="{'color': transaction.type === 'Paid' ? '#FF5252' : '#4CAF50'}">{{transaction.balance | number:'1.2-2'}}</p>
-                    <mat-icon class="text-[#32373D] hover:cursor-pointer" (click)="openDialogOrBottomSheet(i, j)" svgIcon="heroicons_mini:chevron-right"></mat-icon>
+                    <button class="flex w-[18px] items-center justify-center hover:cursor-pointer " (click)="openDialogOrBottomSheet(i, j)">
+                      <img src="assets/images/logo/seedetail.svg" alt="">
+                    </button>
                   </div>
                 </div>
               </ng-container>
@@ -247,7 +249,7 @@
           <div class="flex justify-between items-center px-4">
             <p class="font-medium text-[#002755] text-[20px] min-[404px]:text-[24px]">Transactions History</p>
             <div class="">
-              <select class="block w-auto bg-white px-2 py-2" [(ngModel)]="selectedDate">
+              <select class="block w-auto bg-white px-2 py-2 hover:cursor-pointer" [(ngModel)]="selectedDate">
                 <option *ngFor="let monthYear of monthsYears" [value]="monthYear">{{ monthYear }}</option>
               </select>
             </div>
@@ -293,9 +295,11 @@
                     </div>
                     <p class="text-md font-normal text-[#84776E]">{{transaction.time}}</p>
                   </div>
-                  <div class="flex flex-col items-end p-4">
+                  <div class="flex flex-col items-end justify-between p-4">
                     <p [ngStyle]="{'color': transaction.type === 'Paid' ? '#FF5252' : '#4CAF50'}">{{transaction.balance | number:'1.2-2'}}</p>
-                    <mat-icon class="text-[#32373D] hover:cursor-pointer" (click)="openDialogOrBottomSheet(i, j)" svgIcon="heroicons_mini:chevron-right"></mat-icon>
+                    <button class="flex w-[18px] items-center justify-center hover:cursor-pointer " (click)="openDialogOrBottomSheet(i, j)">
+                      <img src="assets/images/logo/seedetail.svg" alt="">
+                    </button>
                   </div>
                 </div>
               </ng-container>

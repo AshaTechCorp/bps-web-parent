@@ -81,7 +81,7 @@ constructor(
 
 
     //this.role = this._userService.get_role()
-    this.role = 'parent'
+    this.role = 'staff'
     this.card = this._topup.getCardData()
 
     this.total = this._historyService.get_total()
