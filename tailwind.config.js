@@ -1,12 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: [
+    "./src/**/*.{html,ts}",
+  ],
   theme: {
-    
-    extend: {},
+    extend: {
+      fontFamily: {
+        'ibm': ['"IBM Plex Sans Thai"', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
-}
-//min-[1030px] card topup
-//min-[960px] select
+};
