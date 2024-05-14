@@ -1,7 +1,7 @@
 :host {
   display: block;
 
-  ::ng-deep .mat-dialog-container {
-    border-radius: 20px; 
+  .mat-mdc-dialog-panel {
+    border-radius: 20px;
   }
 }
