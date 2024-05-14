@@ -106,11 +106,11 @@ constructor(
   }
 
   text_card(): string{
-    if (this.role == "student")
+    if (this.card.role == "student")
         return "assets/images/logo/card/student.svg"
-    else if (this.role == "business")
+    else if (this.card.role == "business")
         return "assets/images/logo/card/business.svg"
-    else if (this.role == "academic")
+    else if (this.card.role == "academic")
         return "assets/images/logo/card/academic.svg"
     else
         return ""
