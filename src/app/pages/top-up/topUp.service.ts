@@ -36,8 +36,14 @@ export class TopUpService {
     const checkInterval = 3000; // 3 วินาที
     const checkTimeout = 180000; // 3 นาที
 
+    //const token = localStorage.getItem('accessToken');
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU1OTQ1NzgsImV4cCI6MTcxNTY4MDk3OH0.oaOr0Babded4EyJDhzvKHP_lyzVqhXkYAZeTFSWKVe0"
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+
     return interval(checkInterval).pipe(
-      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/transaction/qrpayment/' + id).pipe(
+      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/transaction/qrpayment/' + id, { headers: headers }).pipe(
         catchError(error => {
           console.error('API call failed:', error);
           return of(null);
