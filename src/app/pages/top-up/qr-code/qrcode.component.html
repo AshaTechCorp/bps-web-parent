@@ -74,7 +74,7 @@
 				</div>
 				<div class="flex flex-col items-center">
 					<img class="w-[241px] h-auto mt-2" src="assets/images/logo/Logo_header_promptpay.png"  alt="Logo">
-					<img class="w-[177px]" src="https://payment.schooney.tech/qrCode/2024-5-13/000000000000430_raw.png" alt="QR code">
+					<img class="w-[177px]" [src]="img_qr" alt="QR code">
 				</div>
 				<p class="text-[23px] text-[#4CAF50] font-medium text-center mb-2">฿{{amountTopup | number: '1.2-2'}}</p>
 				<p class="text-[20px] text-[#32373D] font-medium text-center mb-2">{{cardName}}</p>

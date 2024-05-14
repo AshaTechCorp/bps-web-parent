@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
-import { Observable } from 'rxjs';
+import { Observable, catchError, interval, of, switchMap, takeWhile, timeout } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,27 @@ export class TopUpService {
     );
   }
 
-  creat_QR(data: any): Observable<any> {
+  check_status(id: number) {
+    const checkInterval = 3000; // 3 วินาที
+    const checkTimeout = 180000; // 3 นาที
+
+    return interval(checkInterval).pipe(
+      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/transaction/qrpayment/' + id).pipe(
+        catchError(error => {
+          console.error('API call failed:', error);
+          return of(null);
+        })
+      )),
+      takeWhile(response => response === null || response.status !== 'complete', true),
+      timeout(checkTimeout),
+      catchError(error => {
+        console.error('Polling timed out:', error);
+        return of(null);
+      })
+    );
+  }
+
+  create_QR(data: any): Observable<any> {
     //const token = localStorage.getItem('accessToken');
     const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU1OTQ1NzgsImV4cCI6MTcxNTY4MDk3OH0.oaOr0Babded4EyJDhzvKHP_lyzVqhXkYAZeTFSWKVe0"
     const headers = new HttpHeaders({
