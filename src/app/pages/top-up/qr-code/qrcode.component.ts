@@ -35,22 +35,48 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QRcodeComponent implements OnInit {
-  users: any[] = []
-  card: any
-  time : any
-  cardName : any
+    users: any[] = []
+    card: any
+    time : any
+    cardName : any
+    form : FormGroup = this._fb.group({
+        amount: 100, 
+        card: '2617800948'
+    })
 	amountTopup: any
+    img_qr: string = '';
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
         private _router: Router,
         private _topup: TopUpService,
+        private cdr: ChangeDetectorRef
     ) {
     }
-    ngOnInit(): void {
+    async ngOnInit(){
+        this.amountTopup = this._topup.getTopUp()
+        this.form = this._fb.group({
+            amount: this.amountTopup,
+            card: '2617800948'
+        })
+        console.log(this.form.value);
+        this._topup.create_QR(this.form.value).subscribe((resp : any) => {
+            console.log(resp);
+            this.img_qr = resp.qrCodeUrl
+            console.log(this.img_qr);
+            this.cdr.markForCheck();
+            //this._topup.check_status(resp.id).subscribe((resp : any) => {
+            //    if (resp && resp.status === 'complete') {
+            //        console.log('Status is complete:', resp);
+            //        this._router.navigate(['/top-up/success'])
+            //      } else {
+            //        console.log('Polling stopped or timed out.');
+            //      }
+            //});
+        });
+        
 		this.card = this._topup.getCardData()
         this.cardName = this.card.name
-        this.amountTopup = this._topup.getTopUp()
         console.log(this.amountTopup);
 
     }

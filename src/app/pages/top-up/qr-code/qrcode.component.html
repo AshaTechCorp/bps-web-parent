@@ -68,11 +68,14 @@
 				</div>
 			</div>
 			<p class="text-[#32373D] text-[16px] font-normal mb-[16px] px-[16px] min-[1030px]:px-[30px]">Method: Promptpay</p>
-			<div class="grid grid-cols-1 justify-center">
+			<div class="grid grid-cols-1 justify-center items-center">
 				<div class="bg-[#1A3761] bg-repeat-x min-[1030px]:bg-no-repeat flex justify-center">
-					<img src="../../../../../assets/images/logo/Logo_qr_header.png" alt="header" class="h-[38px] w-[96px]">
+					<img src="assets/images/logo/Logo_qr_header.png" alt="header" class="h-[38px] w-[96px]">
 				</div>
-				<img src="../../../../../assets/images/logo/image 4 (1).svg" alt="header" class="h-[240px] mb-2">
+				<div class="flex flex-col items-center">
+					<img class="w-[241px] h-auto mt-2" src="assets/images/logo/Logo_header_promptpay.png"  alt="Logo">
+					<img class="w-[177px]" [src]="img_qr" alt="QR code">
+				</div>
 				<p class="text-[23px] text-[#4CAF50] font-medium text-center mb-2">฿{{amountTopup | number: '1.2-2'}}</p>
 				<p class="text-[20px] text-[#32373D] font-medium text-center mb-2">{{cardName}}</p>
 				<div class="text-center">
