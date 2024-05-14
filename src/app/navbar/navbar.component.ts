@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink} from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { MsalService, MsalModule, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
 import { AuthenticationResult, InteractionStatus, PopupRequest, RedirectRequest, EventMessage, EventType } from '@azure/msal-browser';
@@ -22,9 +22,11 @@ export class NavbarComponent {
   loginDisplay = false;
   private readonly _destroying$ = new Subject<void>();
 
+
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private authService: MsalService,
+    private _router: Router,
     private msalBroadcastService: MsalBroadcastService
   ) {}
 
@@ -110,6 +112,10 @@ export class NavbarComponent {
     } else {
       this.authService.logoutRedirect();
     }
+  }
+
+  gotoselectcard(){
+    this._router.navigate(['/select']);
   }
 
   ngOnDestroy(): void {

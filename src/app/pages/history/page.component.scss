@@ -1,3 +1,7 @@
 :host {
   display: block;
+
+  .mat-mdc-dialog-panel {
+    border-radius: 20px;
+  }
 }

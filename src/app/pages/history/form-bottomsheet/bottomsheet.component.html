@@ -1,9 +1,11 @@
-  <div class="custom-bottom-sheet flex h-screen">
+  <div class="custom-bottom-sheet flex h-[70%] mb-24">
     <div class="h-3/4 w-full max-w-md max-h-screen overflow-y-hidden mt-2">
       <!-- Transaction Details Header -->
       <div class="flex justify-between items-center mb-4">
         <p class="font-medium text-[#002755] text-xl">Transaction Details</p>
-        <mat-icon class="text-[#32373D] hover:cursor-pointer" svgIcon="heroicons_mini:x-mark" (click)="onClose()"></mat-icon>
+        <button (click)="onClose()">
+          <img src="assets/images/logo/X.svg" alt="">
+        </button>
       </div>
       <div class="border-b border-[#DED7D1]"></div>
 
