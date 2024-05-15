@@ -9,6 +9,8 @@ import { AuthenticationResult, InteractionStatus, PopupRequest, RedirectRequest,
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component'
 
 @Component({
   selector: 'app-navbar',
@@ -27,6 +29,7 @@ export class NavbarComponent {
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private authService: MsalService,
     private _router: Router,
+    private dialog: MatDialog,
     private msalBroadcastService: MsalBroadcastService
   ) {}
 
@@ -107,11 +110,28 @@ export class NavbarComponent {
   logout(popup?: boolean) {
     if (popup) {
       this.authService.logoutPopup({
-        mainWindowRedirectUri: "/"
+        // mainWindowRedirectUri: "/"
+      }).subscribe(() => {
+        this.openDialog();
       });
-    } else {
-      this.authService.logoutRedirect();
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      disableClose: true,
+      width: '118px',
+      height: '118px',
+    });
+
+    setTimeout(() => {
+      dialogRef.close();
+    }, 3000);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result:', result);
+      this._router.navigate(['/']);
+    });
   }
 
   gotoselectcard(){

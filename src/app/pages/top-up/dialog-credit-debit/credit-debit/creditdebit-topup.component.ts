@@ -14,6 +14,7 @@ import { DateTime } from 'luxon';
 import { TopUpService } from '../../topUp.service';
 import { CreditDebitDialog } from '../creditdebit.component';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
+import { DialogComponent } from 'src/app/dialog/dialog.component';
 
 @Component({
     selector: 'app-credit-debit',
@@ -156,13 +157,28 @@ export class CreditdebitTopupComponent implements OnInit {
 		this._router.navigate(['/top-up'])
 	}
 
-    nextto(){
-        this._topup.setTopUp(this.form.value.amount)
-		console.log(this.form.value.amount);
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      disableClose: true,
+      width: '118px',
+      height: '118px',
+    });
 
-		this.openDialogEdit(this.form.value.amount)
+    setTimeout(() => {
+      dialogRef.close();
+    }, 3000);
 
-		//this._router.navigate(['/top-up/success'])
-    }
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result:', result);
+      this._router.navigate(['/select'])
+    });
+  }
+
+  nextto(){
+    this._topup.setTopUp(this.form.value.amount)
+    console.log(this.form.value.amount);
+    this.openDialogEdit(this.form.value.amount)
+  }
 }
 
