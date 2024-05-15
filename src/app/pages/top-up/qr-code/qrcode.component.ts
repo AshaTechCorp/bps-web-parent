@@ -44,7 +44,8 @@ export class QRcodeComponent implements OnInit {
         card: '2617800948'
     })
 	amountTopup: any
-    img_qr: string = '';
+    img_qr: string = 'assets/images/logo/loading_payment.gif';
+    
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
