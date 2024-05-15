@@ -37,7 +37,7 @@ export class TopUpService {
     const checkTimeout = 180000; // 3 นาที
 
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU1OTQ1NzgsImV4cCI6MTcxNTY4MDk3OH0.oaOr0Babded4EyJDhzvKHP_lyzVqhXkYAZeTFSWKVe0"
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU3NDE1OTIsImV4cCI6MTcxNTgyNzk5Mn0.hZTM_pi83deo-yDKdv9qZsdjXedIPZseIDVpq4cvCGY"
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
@@ -60,7 +60,7 @@ export class TopUpService {
 
   create_QR(data: any): Observable<any> {
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU1OTQ1NzgsImV4cCI6MTcxNTY4MDk3OH0.oaOr0Babded4EyJDhzvKHP_lyzVqhXkYAZeTFSWKVe0"
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU3NDE1OTIsImV4cCI6MTcxNTgyNzk5Mn0.hZTM_pi83deo-yDKdv9qZsdjXedIPZseIDVpq4cvCGY"
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
@@ -73,29 +73,33 @@ export class TopUpService {
   }
 
   setCardData(id: number) {
-    localStorage.setItem('card-Data', id.toString());
+    sessionStorage.setItem('card-Data', JSON.stringify(this.cards[id]));
     this.select_index = id
   }
 
+  setCardFromData(index: number, data: any) {
+    sessionStorage.setItem('card-Data', JSON.stringify(data));
+    this.select_index = index
+  }
+
   getSelectIndex(){
-    return parseInt(localStorage.getItem('card-Data') ?? '0');
+    return (this.select_index ?? 0);
     // return 1;
   }
 
   getCardData() {
-    const resp = localStorage.getItem('card-Data');
+    const resp = sessionStorage.getItem('card-Data');
     if (resp === null) {
       console.log('error func getCardData()');
-      return null;
+      this.setCardFromData(0,this.cards[0])
+      return this.cards[0];
     } else {
-      const parsedResp = parseInt(resp);
-      if (isNaN(parsedResp)) {
-        console.log('error func getCardData()');
-        return null;
-      } else {
-        return this.cards[parsedResp];
+      //const parsedResp = parseInt(resp);
+      const parsedResp = JSON.parse(resp);
+      console.log(parsedResp);
+        //return this.cards[parsedResp];
+        return parsedResp;
       }
-    }
   }
 
   setUpdateCard(data: any){

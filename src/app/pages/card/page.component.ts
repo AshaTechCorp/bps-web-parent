@@ -115,7 +115,7 @@ export class CardComponent implements OnInit {
 
     change_left(){
         const index = this._topup.getSelectIndex() - 1
-        console.log(index);
+        console.log('this._topup.getSelectIndex() - 1 = ' + index);
         this._topup.setCardData(index)
         this.buttonL()
         this.buttonR()
@@ -125,7 +125,7 @@ export class CardComponent implements OnInit {
 
     change_right(){
         const index = this._topup.getSelectIndex() + 1
-        console.log(index);
+        console.log('this._topup.getSelectIndex() + 1 = ' + index);
         this._topup.setCardData(index)
         this.buttonL()
         this.buttonR()
