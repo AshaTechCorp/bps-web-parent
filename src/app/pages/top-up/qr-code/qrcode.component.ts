@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { DateTime } from 'luxon';
 import { TopUpService } from '../topUp.service';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
+import { DialogComponent } from 'src/app/dialog/dialog.component';
 
 @Component({
     selector: 'app-qr-code',
@@ -40,7 +41,7 @@ export class QRcodeComponent implements OnInit {
     time : any
     cardName : any
     form : FormGroup = this._fb.group({
-        amount: 100, 
+        amount: 100,
         card: '2617800948'
     })
 	amountTopup: any
@@ -74,7 +75,7 @@ export class QRcodeComponent implements OnInit {
             //      }
             //});
         });
-        
+
 		this.card = this._topup.getCardData()
         this.cardName = this.card.name
         console.log(this.amountTopup);
@@ -112,6 +113,24 @@ export class QRcodeComponent implements OnInit {
         const date = DateTime.local()
         this.card.update = date.toFormat('HH:mm')
         this._topup.setUpdateCard(this.card.update)
+    }
+
+    openDialog(): void {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        disableClose: true,
+        width: '118px',
+        height: '118px',
+      });
+
+      setTimeout(() => {
+        dialogRef.close();
+      }, 3000);
+
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed with result:', result);
+        this._router.navigate(['/select'])
+      });
     }
 
     backto(){
