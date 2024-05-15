@@ -46,7 +46,7 @@ export class QRcodeComponent implements OnInit {
     })
 	amountTopup: any
     img_qr: string = 'assets/images/logo/loading_payment.gif';
-    
+
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -67,14 +67,14 @@ export class QRcodeComponent implements OnInit {
             this.img_qr = resp.qrCodeUrl
             console.log(this.img_qr);
             this.cdr.markForCheck();
-            //this._topup.check_status(resp.id).subscribe((resp : any) => {
-            //    if (resp && resp.status === 'complete') {
-            //        console.log('Status is complete:', resp);
-            //        this._router.navigate(['/top-up/success'])
-            //      } else {
-            //        console.log('Polling stopped or timed out.');
-            //      }
-            //});
+            this._topup.check_status(resp.id).subscribe((resp : any) => {
+               if (resp && resp.status === 'SUCCESS') {
+                   console.log('Status is complete:', resp);
+                   this._router.navigate(['/top-up/success'])
+                 } else {
+                   console.log('Polling stopped or timed out.');
+                 }
+            });
         });
 
 		this.card = this._topup.getCardData()
