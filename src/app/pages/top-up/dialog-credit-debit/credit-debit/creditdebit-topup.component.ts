@@ -82,26 +82,19 @@ export class CreditdebitTopupComponent implements OnInit {
     bg_card(): string{
         const index = this._topup.getSelectIndex()
         if (this.card.role == "student"){
-            if (index % 2 == 1)
-                return "assets/images/logo/card/bg_CardStudentGray.svg"
-            else
-                return "assets/images/logo/card/bg_CardStudentRed.svg"
+            //if (index % 2 == 1)
+            //    return "assets/images/logo/card/bg_CardStudentGray.svg"
+            //else
+            return "assets/images/logo/card/bg_CardStudentRed.svg"
         }
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
-    }
-
-    text_card(): string{
-        if (this.card.role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/academic.svg"
+        else if (this.card.role == "staff")
+            return "assets/images/logo/card/bg_CardStaff.svg"
+        else if (this.card.role == "parent")
+            return "assets/images/logo/card/bg_CardParent.svg"
+        else if (this.card.role == "temporary")
+            return "assets/images/logo/card/bg_CardTemporary.svg"
+        else if (this.card.role == "contracted")
+            return "assets/images/logo/card/bg_CardContracted.svg"
         else
             return ""
     }

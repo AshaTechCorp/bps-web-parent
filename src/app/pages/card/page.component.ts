@@ -68,7 +68,7 @@ export class CardComponent implements OnInit {
 
         console.log(this.cards);
 
-        this.role = 'parent'
+        this.role = 'staff'
 
         this.transactions = this._historyService.get_transactions()
     }
@@ -146,31 +146,26 @@ export class CardComponent implements OnInit {
             this.display_popup = "block"
         else if (this.display_popup == "block")
             this.display_popup = "hidden"
+        this.buttonL()
+        this.buttonR()
     }
 
     bg_card(): string{
         const index = this._topup.getSelectIndex()
         if (this.card.role == "student"){
-            if (index % 2 == 1)
-                return "assets/images/logo/card/bg_CardStudentGray.svg"
-            else
-                return "assets/images/logo/card/bg_CardStudentRed.svg"
+            //if (index % 2 == 1)
+            //    return "assets/images/logo/card/bg_CardStudentGray.svg"
+            //else
+            return "assets/images/logo/card/bg_CardStudentRed.svg"
         }
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
-    }
-
-    text_card(): string{
-        if (this.card.role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/academic.svg"
+        else if (this.card.role == "staff")
+            return "assets/images/logo/card/bg_CardStaff.svg"
+        else if (this.card.role == "parent")
+            return "assets/images/logo/card/bg_CardParent.svg"
+        else if (this.card.role == "temporary")
+            return "assets/images/logo/card/bg_CardTemporary.svg"
+        else if (this.card.role == "contracted")
+            return "assets/images/logo/card/bg_CardContracted.svg"
         else
             return ""
     }
@@ -193,6 +188,7 @@ export class CardComponent implements OnInit {
       const date = DateTime.local()
       this.card.update = date.toFormat('HH:mm')
       this._topup.setUpdateCard(this.card.update)
+    //  this.card = this._topup.getCardData()
     }
 
     gototopup(){

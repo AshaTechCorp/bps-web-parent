@@ -67,23 +67,19 @@ export class SelectCardComponent implements OnInit {
 
     bg_card(i: number): string{
         if (this.cards[i].role == "student"){
+            //if (index % 2 == 1)
+            //    return "assets/images/logo/card/bg_CardStudentGray.svg"
+            //else
             return "assets/images/logo/card/bg_CardStudentRed.svg"
         }
-        else if (this.cards[i].role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.cards[i].role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
-    }
-
-    text_card(i: number): string{
-        if (this.cards[i].role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.cards[i].role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.cards[i].role == "academic")
-            return "assets/images/logo/card/academic.svg"
+        else if (this.cards[i].role == "staff")
+            return "assets/images/logo/card/bg_CardStaff.svg"
+        else if (this.cards[i].role == "parent")
+            return "assets/images/logo/card/bg_CardParent.svg"
+        else if (this.cards[i].role == "temporary")
+            return "assets/images/logo/card/bg_CardTemporary.svg"
+        else if (this.cards[i].role == "contracted")
+            return "assets/images/logo/card/bg_CardContracted.svg"
         else
             return ""
     }
