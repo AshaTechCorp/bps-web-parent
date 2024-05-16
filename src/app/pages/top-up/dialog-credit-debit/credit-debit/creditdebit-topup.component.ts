@@ -169,9 +169,9 @@ export class CreditdebitTopupComponent implements OnInit {
   }
 
   nextto(){
-    this._topup.setTopUp(this.form.value.amount)
+    this._topup.setTopUp(+this.form.value.amount)
     console.log(this.form.value.amount);
-    this.openDialogEdit(this.form.value.amount)
+    this.openDialogEdit(+this.form.value.amount)
   }
 }
 

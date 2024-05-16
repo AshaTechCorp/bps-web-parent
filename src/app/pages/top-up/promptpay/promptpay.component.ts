@@ -130,7 +130,7 @@ export class PromptpayComponent implements OnInit {
 	}
 
     nextto(){
-        this._topup.setTopUp(this.form.value.amount)
+        this._topup.setTopUp(+this.form.value.amount)
 		this._router.navigate(['/top-up/qr-code'])
     }
 }
