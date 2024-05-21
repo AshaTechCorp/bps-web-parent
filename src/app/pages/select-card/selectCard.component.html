@@ -7,7 +7,7 @@
 				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card(i) + ')'">
 					<div class="relative flex flex-col justify-between w-full h-full">
 						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{item.name}}</p>
-						<div class="absolute right-0 top-0" (click)="select(i)" >
+						<div class="absolute right-0 top-0" (click)="select(item.id)" >
 							<img class="h-[45px] hover:cursor-pointer" src="../../../../assets/images/logo/card/button_arrow.svg" alt="">
 						</div>
 						<div>

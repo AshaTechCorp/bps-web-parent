@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '
 import { MatDialog } from '@angular/material/dialog';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { isPlatformBrowser } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 
 import { MatIconModule } from '@angular/material/icon';
@@ -54,6 +54,7 @@ export class HistoryComponent implements OnInit {
 	card: any
   showTransactions: boolean = false;
   k: any;
+  sn: any;
 
   toggleTransactions() {
     this.showTransactions = !this.showTransactions;
@@ -70,9 +71,12 @@ constructor(
   private _topup: TopUpService,
   private _historyService: HistoryService,
   private _userService: UserService,
+  private activityroute: ActivatedRoute,
 
   @Inject(PLATFORM_ID) private platformId: any
-) {}
+) {
+  this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+}
 
 
   ngOnInit(): void {
@@ -82,31 +86,32 @@ constructor(
 
     //this.role = this._userService.get_role()
     this.role = 'staff'
-    this.card = this._topup.getCardData()
+    this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+      this.card = {
+          id: resp.sn, 
+          role: resp.role, 
+          name: resp.name, 
+          balance: parseInt(resp.remain).toLocaleString(), 
+          update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
+      }
+    })
+    console.log('this.card', this.card);
 
     this.total = this._historyService.get_total()
 
     this.history  = this._historyService.get_history()
   }
 
+  decodeBase64(input: string): string {
+    return atob(input);
+  }
+
+  encodeBase64(input: string): string {
+      return btoa(input);
+  }
+
   bg_card(): string{
-    const index = this._topup.getSelectIndex()
-    if (this.card.role == "student"){
-        //if (index % 2 == 1)
-        //    return "assets/images/logo/card/bg_CardStudentGray.svg"
-        //else
-        return "assets/images/logo/card/bg_CardStudentRed.svg"
-    }
-    else if (this.card.role == "staff")
-        return "assets/images/logo/card/bg_CardStaff.svg"
-    else if (this.card.role == "parent")
-        return "assets/images/logo/card/bg_CardParent.svg"
-    else if (this.card.role == "temporary")
-        return "assets/images/logo/card/bg_CardTemporary.svg"
-    else if (this.card.role == "contracted")
-        return "assets/images/logo/card/bg_CardContracted.svg"
-    else
-        return ""
+    return this._topup.get_bg_card(this.card.role)
   }
 
   openDialog(i: number, j: number): void {
@@ -182,7 +187,7 @@ constructor(
   }
 
   backto(){
-    this._router.navigate(['/card'])
+    this._router.navigate(['/card',this.encodeBase64(this.sn)])
   }
 
 }

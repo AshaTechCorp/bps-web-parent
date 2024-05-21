@@ -90,9 +90,12 @@ export class CreditDebitDialog implements OnInit {
 
     nextto(){
         this.onClose()
-        this._router.navigate(['/top-up/success'])
+        this._router.navigate(['/top-up/success',this.encodeBase64(this.data.id)])
     }
-
+    
+    encodeBase64(input: string): string {
+        return btoa(input);
+    }
 
     onClose() {
         this.dialogRef.close()

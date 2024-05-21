@@ -22,6 +22,46 @@ export class TopUpService {
 
   constructor(private _httpClient: HttpClient) {}
 
+  get_bg_card(role: string): string{
+    if (role == "student" || role == "STD"){
+        //if (index % 2 == 1)
+        //    return "assets/images/logo/card/bg_CardStudentGray.svg"
+        //else
+        return "assets/images/logo/card/bg_CardStudentRed.svg"
+    }
+    else if (role == "STF" || role == "staff")
+        return "assets/images/logo/card/bg_CardStaff.svg"
+    else if (role == "PRT" || role == "parent")
+        return "assets/images/logo/card/bg_CardParent.svg"
+    else if (role == "TMP" || role == "temporary")
+        return "assets/images/logo/card/bg_CardTemporary.svg"
+    else if (role == "CTR" || role == "contract")
+        return "assets/images/logo/card/bg_CardContracted.svg"
+    else
+        return ""
+}
+
+  get_family_card(familyCode: any) {
+    return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
+      familyCode: familyCode
+    }})
+    .pipe( (response: any) => {
+        return (response);
+      }
+    );
+  }
+
+  get_card_by_SN(sn: any) {
+    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry',{params:{
+      //card: sn
+      card: 2617766100
+    }})
+    .pipe( (response: any) => {
+        return (response);
+      }
+    );
+  }
+
   get_test_card() {
     return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry?card=2617800948')
     .pipe( (response: any) => {
@@ -35,7 +75,7 @@ export class TopUpService {
     const checkTimeout = 180000; // 3 นาที
 
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU3NDE1OTIsImV4cCI6MTcxNTgyNzk5Mn0.hZTM_pi83deo-yDKdv9qZsdjXedIPZseIDVpq4cvCGY"
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
@@ -58,7 +98,7 @@ export class TopUpService {
 
   create_QR(data: any): Observable<any> {
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTU3NDE1OTIsImV4cCI6MTcxNTgyNzk5Mn0.hZTM_pi83deo-yDKdv9qZsdjXedIPZseIDVpq4cvCGY"
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token
     });
