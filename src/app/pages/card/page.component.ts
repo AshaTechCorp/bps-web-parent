@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,6 +17,7 @@ import { HistoryService } from '../history/page.service';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
 import { UserService } from '../top-up/user.service';
 import { ActivatedRoute } from '@angular/router'
+import { DialogComponent } from 'src/app/dialog/dialog.component';
 
 @Component({
     selector: 'app-card',
@@ -53,6 +54,7 @@ export class CardComponent implements OnInit {
     slice_src: any
     sn: any
     cards_family: any;
+    bgCard!: string;
 
     constructor(
         public dialog: MatDialog,
@@ -65,6 +67,11 @@ export class CardComponent implements OnInit {
         this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
     }
     ngOnInit(): void {
+        const dialogRef = this.dialog.open(DialogComponent, {
+            disableClose: true,
+            width: '118px',
+            height: '118px',
+        });
         this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
             //this.card = resp
             console.log(this.card);
@@ -76,7 +83,11 @@ export class CardComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
-            console.log(this.cards , 'data1');
+            console.log(this.card , 'data1');
+            this.bgCard = this.bg_card()
+            timer(2000).subscribe(() => {
+                dialogRef.close();
+            });
         })
         //this.card = this._topup.getCardData()
         //this.cards = this._topup.getAllCard()
@@ -95,6 +106,7 @@ export class CardComponent implements OnInit {
             }
             this.cards.push(data)
             }
+            console.log(this.cards , 'data2');
         })
         this.buttonL()
         this.buttonR()
@@ -164,6 +176,7 @@ export class CardComponent implements OnInit {
         this.buttonR()
         this.card = this.cards[index]
         this.slice_card()
+        this.bgCard = this.bg_card()
     }
 
     change_right(){
@@ -174,12 +187,14 @@ export class CardComponent implements OnInit {
         this.buttonR()
         this.card = this.cards[index]
         this.slice_card()
+        this.bgCard = this.bg_card()
     }
 
     change_card(index: number){
         this._topup.setCardData(index)
         this.toggle_popup()
         this.card = this.cards[index]
+        this.bgCard = this.bg_card()
         console.log(index);
         this.slice_card()
     }
@@ -194,7 +209,7 @@ export class CardComponent implements OnInit {
     }
 
     bg_card(): string{
-        console.log("this.card.role",this.card.role);
+        console.log("this.card.role 1",this.card.role);
         
         return this._topup.get_bg_card(this.card.role)
     }

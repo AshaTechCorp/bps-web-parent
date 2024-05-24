@@ -35,16 +35,17 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
     ],
 
     templateUrl: './creditdebit-topup.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CreditdebitTopupComponent implements OnInit {
     form: FormGroup;
     users: any[] = []
-	  card: any
+	card: any
     time : any
     currentColor: string[] = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent'];
     currentTextColor: string[] = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]'];
     sn: string;
+    bgCard!: string;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -66,8 +67,9 @@ export class CreditdebitTopupComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
+            this.bgCard = this.bg_card()
+            console.log('this.card', this.card);
         })
-        console.log('this.card', this.card);
     }
 
     decodeBase64(input: string): string {

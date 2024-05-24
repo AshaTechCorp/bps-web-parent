@@ -33,7 +33,7 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
     ],
 
     templateUrl: './success.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PromptpaySuccessComponent implements OnInit {
     users: any[] = []
@@ -45,6 +45,7 @@ export class PromptpaySuccessComponent implements OnInit {
     amount : any
     form : any
     sn: string;
+    bgCard!: string;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -66,10 +67,10 @@ export class PromptpaySuccessComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
+            this.bgCard = this.bg_card()
         })
         console.log('this.card', this.card);
         this.amount = this._topup.getTopUp()
-
     }
 
     decodeBase64(input: string): string {

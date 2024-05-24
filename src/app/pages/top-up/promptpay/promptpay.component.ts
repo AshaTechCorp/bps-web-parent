@@ -33,7 +33,7 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
     ],
 
     templateUrl: './promptpay.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PromptpayComponent implements OnInit {
     orders: any[] = [];
@@ -44,6 +44,7 @@ export class PromptpayComponent implements OnInit {
     currentColor: string[] = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent'];
     currentTextColor: string[] = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]'];
     sn: any;
+    bgCard!: string;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -65,8 +66,12 @@ export class PromptpayComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
-        })
-        console.log('this.card', this.card);
+            this.bgCard = this.bg_card()
+            console.log(this.bgCard);
+            console.log(this.card.role);
+            
+            console.log('this.card', this.card);
+        }) 
     }
 
     decodeBase64(input: string): string {

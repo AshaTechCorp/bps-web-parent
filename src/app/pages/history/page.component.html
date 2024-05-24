@@ -6,17 +6,17 @@
     <div class="flex flex-col justify-center min-[960px]:flex-row w-full mt-[30px]">
       <div class="flex flex-col items-center min-[960px]:items-start rounded-xl min-[960px]:mr-[40px]">
         <!-- Your SVG content -->
-        <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+        <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
           <div class="flex flex-col justify-between w-full h-full">
-            <p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
+            <p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card?.name}}</p>
             <div>
               <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-              <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance}}</p>
+              <p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
             </div>
             <div class="flex justify-between h-[22px] items-center">
               <div class="flex">
                 <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
               </div>
             </div>
           </div>
@@ -41,15 +41,15 @@
         <div class="flex justify-around items-center min-[960px]:min-w-[375px] p-4">
           <div class="flex flex-col w-[260px] min-[960px]:min-w-0 h-[72px] bg-[#DEE6F9] rounded-xl p-3 mr-4">
             <p class="text-sm font-normal text-[#84776E]">Total Top-up</p>
-            <p class="text-[#32373D] text-2xl">฿ {{total[0].balance | number:'1.2-2'}}</p>
+            <p class="text-[#32373D] text-2xl">฿ {{total[0] | number:'1.2-2'}}</p>
           </div>
           <div class="flex flex-col w-[260px] min-[960px]:min-w-0 h-[72px] bg-[#FCE4E1] rounded-xl p-3">
             <p class="text-sm font-normal text-[#84776E]">Total spending</p>
-            <p class="text-[#32373D] text-2xl">฿ {{total[1].balance | number:'1.2-2'}}</p>
+            <p class="text-[#32373D] text-2xl">฿ {{total[1] | number:'1.2-2'}}</p>
           </div>
         </div>
         <div class="overflow-y-scroll max-h-[calc(100vh-536px)] min-[482px]:max-h-[calc(100vh-516px)] min-[960px]:max-h-[calc(100vh-350px)]">
-          <ng-container *ngIf="history.length === 0">
+          <ng-container *ngIf="history?.length === 0">
             <div class="flex items-center h-[32px] w-full bg-[#DED7D1] p-4 text-[#84776E]">
               <p>March 2024</p>
             </div>
@@ -73,7 +73,7 @@
               <div class="flex justify-between">
                 <div class="p-4">
                   <div class="flex items-center">
-                    <div class="w-[14px] h-[14px] rounded-full mb-[2px]" [ngStyle]="{'background': transaction.type === 'Paid' ? '#FF5252' : '#4CAF50'}"></div>
+                    <div class="w-[14px] h-[14px] rounded-full mb-[2px]" [ngStyle]="{'background': transaction.type == 'Paid' ? '#FF5252' : '#4CAF50'}"></div>
                     <p class="px-2 text-lg text-[#002755]">{{transaction.type}}</p>
                   </div>
                   <p class="text-md font-normal text-[#84776E]">{{transaction.time}}</p>

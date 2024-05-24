@@ -32,7 +32,7 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
     ],
 
     templateUrl: './topUp.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TopUpComponent implements OnInit {
     users: any[] = []
@@ -40,6 +40,7 @@ export class TopUpComponent implements OnInit {
 	card: any
     time : any
     sn: string;
+    bgCard!: string;
     constructor(
         public dialog: MatDialog,
         private _router: Router,
@@ -58,8 +59,9 @@ export class TopUpComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
+            this.bgCard = this.bg_card()
+            console.log(this.card);
         })
-        console.log(this.card);
     }
     decodeBase64(input: string): string {
         return atob(input);

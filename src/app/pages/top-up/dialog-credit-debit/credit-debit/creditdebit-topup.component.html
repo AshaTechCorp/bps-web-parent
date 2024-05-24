@@ -4,7 +4,7 @@
 		<div class="flex flex-col my-[30px] min-[1030px]:my-[0px]">
 			<div class="flex rounded-[30px] justify-center min-[1030px]:mb-[18px] min-[1030px]:mr-[40px]">
 				<!-- Your SVG content -->
-				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
 					<div class="flex flex-col justify-between w-full h-full">
 						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
 						<div>

@@ -20,6 +20,25 @@ import { TopUpService } from '../top-up/topUp.service';
 import { HistoryService } from './page.service';
 import { UserService } from '../top-up/user.service';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
+
+//history: {date: string, data: {type:string,balance: number, time: string, list:{payment:string, order:string,amount:number,total:number}
+type History = {
+  date: string
+  data: {
+    time: string, // date แปลง
+    balance: number, // amount
+    type: string,
+    //channel: string,
+    //shopName: string,
+    list: {
+      payment: string //transactions.channel
+      order: string // == itemName
+      amount: number //same
+      total: number //same
+    }[]
+  }[]
+};
+
 @Component({
     selector: 'app-history',
     standalone: true,
@@ -39,7 +58,7 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
 
     templateUrl: './page.component.html',
     //styleUrl: './page.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class HistoryComponent implements OnInit {
   isMobile: boolean = window.innerWidth < 768;
@@ -47,7 +66,8 @@ export class HistoryComponent implements OnInit {
   users: any[] = []
   role: any
   total: any[] = []
-  history: any[] = []
+  //history: any[] = []
+  history: History[] = []
   isPlatformBrowser: boolean = window.innerWidth > 768;
   monthsYears: string[] = [];
   selectedDate: any
@@ -55,13 +75,14 @@ export class HistoryComponent implements OnInit {
   showTransactions: boolean = false;
   k: any;
   sn: any;
+  bgCard: string='';
 
   toggleTransactions() {
     this.showTransactions = !this.showTransactions;
   }
 
   getReversedHistory(): any[] {
-    return this.history.slice().reverse();
+    return this.history?.slice().reverse();
 }
 
 constructor(
@@ -94,12 +115,56 @@ constructor(
           balance: parseInt(resp.remain).toLocaleString(), 
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
+      this.bgCard = this.bg_card()
     })
-    console.log('this.card', this.card);
+    
+    this._historyService.get_transactionsCard().subscribe(
+      (resp: any) => {
+        this.total[0] = resp.totalTopUp
+        this.total[1] = resp.totalSpending
+        const historys = resp.history// ยังไม่เสร็จ
+        if (!this.history){
 
-    this.total = this._historyService.get_total()
+        }
+        for (let i = 0; i < historys.length; i++) {
+          const history = historys[i];
+          let temp_history = {
+            date: DateTime.fromISO(history.date).toLocaleString({ month: 'long', day: '2-digit', year: 'numeric' }),
+            data: []
+          }
+          this.history.push(temp_history)
+          console.log('this.history[i].date',this.history[i].date);
 
-    this.history  = this._historyService.get_history()
+          for (let j = 0; j < history.transactions.length; j++) {
+            const transaction = history.transactions[j];
+            let temp_data ={
+              time: (DateTime.fromISO(transaction.date)).toFormat('HH:mm'),
+              balance: transaction.amount,
+              type: transaction.type,
+              list: []
+            }
+            this.history[i].data.push(temp_data)
+            for (let k = 0; k < transaction.items.length; k++) {
+              console.log('test',i,j,k);
+              const item = transaction.items[k];
+              let temp_list ={
+                payment: transaction.channel,
+                order: item.itemName,
+                amount: item.amount,
+                total: item.total
+              }
+              this.history[i].data[j].list.push(temp_list)
+            }
+            
+          }
+        }
+        console.log('history',this.history);
+        console.log('resp',resp.history);
+      },
+      (error) => {
+        console.error('Error fetching transactions:', error);
+      }
+    );
   }
 
   decodeBase64(input: string): string {
@@ -141,6 +206,8 @@ constructor(
   }
 
   getData(i: number, j: number): any {
+    console.log('test ,',this.history.slice().reverse());
+    
     return {
       history: this.history.slice().reverse(),
       date: this.history.slice().reverse()[i].date,

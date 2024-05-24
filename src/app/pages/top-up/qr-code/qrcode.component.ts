@@ -47,6 +47,7 @@ export class QRcodeComponent implements OnInit {
 	amountTopup: any
   sn: string;
   img_qr: string
+  bgCard!: string;
 
   constructor(
       public dialog: MatDialog,
@@ -69,32 +70,35 @@ export class QRcodeComponent implements OnInit {
           balance: parseInt(resp.remain).toLocaleString(), 
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
-    this.cardName = this.card.name
-  })
+      this.bgCard = this.bg_card()
+      this.cardName = this.card.name
+
+      this.amountTopup = this._topup.getTopUp()
+      this.form = this._fb.group({
+          amount: this.amountTopup,
+          card: '2617800948'
+          //card: this.sn
+          //card: '123123213'
+      })
+      console.log(this.form.value);
+      this._topup.create_QR(this.form.value).subscribe((resp : any) => {
+          console.log(resp);
+          this.img_qr = resp.qrCodeUrl
+          //ปิด dialog
+          console.log(this.img_qr);
+          this._topup.check_status(resp.id).subscribe((resp : any) => {
+              if (resp && resp.status === 'SUCCESS') {
+                  console.log('Status is complete:', resp);
+                  this._router.navigate(['/top-up/success',this.encodeBase64(this.sn)])
+                } else {
+                  console.log('Polling stopped or timed out.');
+                }
+          });
+      });
+    })
     console.log('this.card', this.card);
 
-    this.amountTopup = this._topup.getTopUp()
-    this.form = this._fb.group({
-        amount: this.amountTopup,
-        card: '2617800948'
-        //card: this.sn
-        //card: '123123213'
-    })
-    console.log(this.form.value);
-    this._topup.create_QR(this.form.value).subscribe((resp : any) => {
-        console.log(resp);
-        this.img_qr = resp.qrCodeUrl
-        console.log(this.img_qr);
-        //this.cdr.markForCheck();
-        this._topup.check_status(resp.id).subscribe((resp : any) => {
-            if (resp && resp.status === 'SUCCESS') {
-                console.log('Status is complete:', resp);
-                this._router.navigate(['/top-up/success',this.encodeBase64(this.sn)])
-              } else {
-                console.log('Polling stopped or timed out.');
-              }
-        });
-    });
+    
     console.log(this.amountTopup);
   }
 

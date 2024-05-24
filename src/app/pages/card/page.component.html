@@ -5,12 +5,12 @@
     <div *ngIf="role === 'parent'" class="flex flex-col rounded-[20px] mt-5 min-[1030px]:mt-0 min-[1030px]:mr-[40px]">
       <!-- Your SVG content -->
       <div class="flex flex-col items-center">
-        <div class="relative w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px] mb-3" [style.background-image]="'url(' + bg_card() + ')'">
+        <div class="relative w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px] mb-3" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
           <img (click)="change_left()" class="{{display_left}} cursor-pointer absolute h-[40px] w-[40px] top-1/2 left-0 -translate-x-1/2 -translate-y-1/2" src="assets/images/logo/card/button_previousCard.svg" alt="">
           <img (click)="change_right()" class="{{display_right}} cursor-pointer absolute h-[40px] w-[40px] top-1/2 right-0 translate-x-1/2 -translate-y-1/2"src="assets/images/logo/card/button_nextCard.svg" alt="">
           <div class="flex flex-col justify-between w-full h-full">
             <div class="flex flex-row items-center">
-                <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
+                <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card?.name}}</p>
                 <div class="relative">
                   <img (click)="toggle_popup()" class="h-[14px] w-[14px] cursor-pointer" src="../../../../assets/images/logo/card/toggle_list_icon.svg" alt="">
                   <div class="{{display_popup}} absolute bg-white shadow-lg w-fit min-w-[240px] rounded-[8px] bottom-0 left-0 translate-y-[105%]">
@@ -31,12 +31,12 @@
             </div>
             <div>
               <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-              <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance}}</p>
+              <p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
             </div>
             <div class="flex justify-between h-[22px] items-center">
               <div class="flex">
                 <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+                <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
               </div>
             </div>
           </div>
@@ -46,19 +46,19 @@
     </div>
     <div *ngIf="role === 'staff'" class="flex flex-col rounded-[20px] mt-5 min-[1030px]:mt-0 min-[1030px]:mr-[40px]">
       <!-- Your SVG content -->
-      <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
+      <div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
         <div class="flex flex-col justify-between w-full h-full">
           <div class="flex flex-row items-center">
               <p class="truncate text-[16px] leading-[32px] text-[#FFFFFF] mr-[4px]">{{card.name}}</p>
           </div>
           <div>
             <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-            <p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance}}</p>
+            <p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
           </div>
           <div class="flex justify-between h-[22px] items-center">
             <div class="flex">
               <img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-              <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+              <p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
             </div>
           </div>
         </div>
