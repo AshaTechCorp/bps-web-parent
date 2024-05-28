@@ -122,19 +122,15 @@ constructor(
       (resp: any) => {
         this.total[0] = resp.totalTopUp
         this.total[1] = resp.totalSpending
-        const historys = resp.history// ยังไม่เสร็จ
-        if (!this.history){
-
-        }
+        const historys = resp.history
         for (let i = 0; i < historys.length; i++) {
           const history = historys[i];
           let temp_history = {
-            date: DateTime.fromISO(history.date).toLocaleString({ month: 'long', day: '2-digit', year: 'numeric' }),
+            date: DateTime.fromISO(history.date).toLocaleString({ month: 'long',
+                                                day: '2-digit', year: 'numeric' }),
             data: []
           }
           this.history.push(temp_history)
-          console.log('this.history[i].date',this.history[i].date);
-
           for (let j = 0; j < history.transactions.length; j++) {
             const transaction = history.transactions[j];
             let temp_data ={
@@ -145,7 +141,6 @@ constructor(
             }
             this.history[i].data.push(temp_data)
             for (let k = 0; k < transaction.items.length; k++) {
-              console.log('test',i,j,k);
               const item = transaction.items[k];
               let temp_list ={
                 payment: transaction.channel,
@@ -155,11 +150,8 @@ constructor(
               }
               this.history[i].data[j].list.push(temp_list)
             }
-            
           }
         }
-        console.log('history',this.history);
-        console.log('resp',resp.history);
       },
       (error) => {
         console.error('Error fetching transactions:', error);
