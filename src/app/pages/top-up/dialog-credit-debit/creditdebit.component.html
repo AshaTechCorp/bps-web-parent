@@ -1,10 +1,16 @@
-<p mat-dialog-title class="text-center">Top-Up ( Credit/Debit )</p>
+<span mat-dialog-title class="text-right">Top-Up ( Credit/Debit )
+        <button class="text-[#ff0000] font-medium text-[12px]" (click)="onClose()">cancle</button>
+</span>
 <div class="flex flex-col h-full w-full] relative justify-center">
     <div class="absolute top-0 left-[30px] z-10">
         <p class="font-semibold text-[18px]">Do you want to top up your card?</p>
-        <div class="flex"><p class="font-semibold">Card name :&nbsp;</p>{{card.name}}</div>
+        <div class="flex"><p class="font-semibold">Card name :&nbsp;</p>{{card?.name}}</div>
         <div class="flex"><p class="font-semibold">Amount :&nbsp;</p>{{moneyTopUp}}</div>
     </div>
-    <button class="absolute text-white font-semibold bg-[#ff0000] w-[110px] h-[36px] m-2 left-[118px] z-10">Cancle </button>
+    <div class="absolute z-10 bottom-[70px] left-[69px]">
+        <img class="w-[200px]" src="assets/images/logo/bank-bold.svg" alt="KBank">
+    </div>
     <iframe [src]="getSafeUrl()" width="336px" height="489px" style="border:none;overflow-y: scroll;z-index: 20;"></iframe>
 </div>
+
+
