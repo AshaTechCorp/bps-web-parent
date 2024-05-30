@@ -72,7 +72,7 @@ export class TopUpService {
 
   check_status(id: number) {
     const checkInterval = 3000; // 3 วินาที
-    const checkTimeout = 180000; // 3 นาที
+    const checkTimeout = 600000; // 10 นาที
 
     //const token = localStorage.getItem('accessToken');
     const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
@@ -81,13 +81,13 @@ export class TopUpService {
     });
 
     return interval(checkInterval).pipe(
-      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/transaction/qrpayment/' + id, { headers: headers }).pipe(
+      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/top-up/qrpayment/' + id).pipe(//, { headers: headers }
         catchError(error => {
           console.error('API call failed:', error);
           return of(null);
         })
       )),
-      takeWhile(response => response === null || response.status !== 'complete', true),
+      takeWhile(response => response === null || response.status !== 'SUCCESS', true),
       timeout(checkTimeout),
       catchError(error => {
         console.error('Polling timed out:', error);
@@ -103,7 +103,7 @@ export class TopUpService {
       'Authorization': 'Bearer ' + token
     });
 
-    return this._httpClient.post<any>(environment.baseurl + '/api/transaction/qrpayment/request', data, { headers: headers });
+    return this._httpClient.post<any>(environment.baseurl + '/api/top-up/qrpayment/request-web', data);// ,{ headers: headers }
   }
 
   getAllCard() {

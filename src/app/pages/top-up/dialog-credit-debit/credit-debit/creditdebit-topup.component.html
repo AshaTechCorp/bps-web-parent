@@ -6,15 +6,15 @@
 				<!-- Your SVG content -->
 				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
 					<div class="flex flex-col justify-between w-full h-full">
-						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
+						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card?.name}}</p>
 						<div>
 							<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-							<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance}}</p>
+							<p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
 						</div>
 						<div class="flex justify-between h-[22px] items-center">
 							<div class="flex">
 								<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
+								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
 							</div>
 						</div>
 					</div>
@@ -69,8 +69,31 @@
 				<button (click)="select_amount(1000)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[5]}} {{currentColor[5]}}"> 1,000 </button>
 			</div>
 			<div class="flex justify-end">
-				<button (click)="nextto()" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
+				<script src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"></script>
+				<!--<form method="POST" action="/top-up/success" id='formElement'>
+				</form>-->
+				<div id='formElement'>
+				</div>	
+				<!--<script type="text/javascript"
+						src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+						data-apikey="pkey_prod_9929s93IlIbSmViDgW4eqjcqlnbT3JOWVrXB"
+						data-amount="100.00"
+						data-currency="THB"
+						data-payment-methods="card"
+						data-name="BANGKOK PATANA SCHOOL"
+						data-mid="401012208444001">
+					</script>-->
+					<!--<button (click)="nextto()" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>-->
+				
+				<!--<div _kpayment="" class="payment-container"><iframe _kpayment="" id="kpaymentframe" src="https://kpaymentgateway.kasikornbank.com/ui/v2/index.html" width="100%" height="100%"></iframe></div>-->
+				<!--<div [innerHTML]="htmlStr"></div>-->
+				<!--<form method="POST" action="/top-up/success"  #formElement>
+				</form>-->
+				<!--<iframe src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js" frameborder="0">-->
+					
+				<!--</iframe>-->
 			</div>
 		</div>
 	</div>
 </div>
+
