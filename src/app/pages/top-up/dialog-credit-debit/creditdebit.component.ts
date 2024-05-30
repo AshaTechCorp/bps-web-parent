@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TopUpService } from '../topUp.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
     selector: 'app-product-form',
     standalone: true,
@@ -45,7 +46,8 @@ import { Router } from '@angular/router';
     ]
 })
 export class CreditDebitDialog implements OnInit {
-
+    moneyTopUp: number = this.data.value
+    card:any = this.data.card
     form: FormGroup;
     stores: any[]=[];
     formFieldHelpers: string[] = ['fuse-mat-dense'];
@@ -55,9 +57,11 @@ export class CreditDebitDialog implements OnInit {
         public dialog: MatDialog,
         private FormBuilder: FormBuilder,
         public _router: Router,
+        private sanitizer: DomSanitizer
     )
     {
         console.log(' this.form', this.data);
+        console.log('moneyTopUp ', this.moneyTopUp);
         if(this.data.type === 'EDIT') {
 
             this.form = this.FormBuilder.group({
@@ -76,6 +80,10 @@ export class CreditDebitDialog implements OnInit {
 
     }
 
+    getSafeUrl(): SafeResourceUrl {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`http://localhost:4200/static-html/kb_payment.html?id=${this.moneyTopUp}`);
+      }
+
     ngOnInit(): void {
          if (this.data.type === 'EDIT') {
         //   this.form.patchValue({
@@ -90,9 +98,12 @@ export class CreditDebitDialog implements OnInit {
 
     nextto(){
         this.onClose()
-        this._router.navigate(['/top-up/success'])
+        this._router.navigate(['/top-up/success',this.encodeBase64(this.data.id)])
     }
-
+    
+    encodeBase64(input: string): string {
+        return btoa(input);
+    }
 
     onClose() {
         this.dialogRef.close()

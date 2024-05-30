@@ -1,63 +1,16 @@
-<div class="relative flex-col flex overflow-y-auto overflow-x-hidden h-full">
-    <mat-toolbar class="flex justify-center relative">
-        <div>
-            <span class="font-bold text-[20px]">เพิ่มบัตร Debit/Credit</span>
-        </div>
-        <button mat-icon-button mat-dialog-close class="example-icon absolute top-0 right-0" aria-label="Example icon-button with menu icon">
-            <mat-icon svgIcon="heroicons_outline:x-mark"></mat-icon>
-        </button>
-    </mat-toolbar>
-    <div class="flex justify-between flex-col">
-        <div class="flex justify-center">
-            <form class="flex flex-col pt-2 bg-card"
-                [formGroup]="form">
-                <div class="grid grid-cols-1 w-full gap-6">
-                    <div class="relative h-11 w-full">
-                        <input placeholder="Static" class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
-                        <label class="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                          Name on Card
-                        </label>
-                    </div>
-                    <div class="relative h-11 w-full">
-                        <input placeholder="•••• •••• •••• ••••" class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
-                        <label class="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                          Card Number
-                        </label>
-                    </div>
-                    <div class="grid grid-cols-2 gap-[20px] ">
-                        <div class="relative h-11 w-full]">
-                            <input placeholder="MM / YY" class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
-                            <label class="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                              Card Number
-                            </label>
-                        </div>
-                        <div class="relative h-11 w-full">
-                            <input placeholder="•••" class="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
-                            <label class="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                              Card Number
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="absolute flex justify-center bg-white bottom-0 w-full">
-            <div mat-dialog-actions class="flex justify-end" (click)="nextto()">
-                <button class="text-[22px] font-medium px-20 py-3 rounded-[20px] bg-[#4CAF50] text-white">
-                    {{data.value}}
-                </button>
-            </div>
-        </div>
+<span mat-dialog-title class="text-right">Top-Up ( Credit/Debit )
+        <button class="text-[#ff0000] font-medium text-[12px]" (click)="onClose()">cancle</button>
+</span>
+<div class="flex flex-col h-full w-full] relative justify-center">
+    <div class="absolute top-0 left-[30px] z-10">
+        <p class="font-semibold text-[18px]">Do you want to top up your card?</p>
+        <div class="flex"><p class="font-semibold">Card name :&nbsp;</p>{{card?.name}}</div>
+        <div class="flex"><p class="font-semibold">Amount :&nbsp;</p>{{moneyTopUp}}</div>
     </div>
+    <div class="absolute z-10 bottom-[70px] left-[69px]">
+        <img class="w-[200px]" src="assets/images/logo/bank-bold.svg" alt="KBank">
+    </div>
+    <iframe [src]="getSafeUrl()" width="336px" height="489px" style="border:none;overflow-y: scroll;z-index: 20;"></iframe>
 </div>
-<!--<form method="POST" action="/checkout">
-    <script type="text/javascript"
-        src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-        data-apikey="pkey_test_20923L43S4RABbtwVoMIzsopFCYzyZny"
-        data-amount="1.00"
-        data-currency="THB"
-        data-payment-methods="card"
-        data-name="Your Shop Name"
-        data-mid="401202106043001">
-    </script>
-</form>-->
+
+

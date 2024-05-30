@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonModule} from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ElementRef, Renderer2, NgZone, inject} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -8,13 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { DateTime } from 'luxon';
 import { TopUpService } from '../../topUp.service';
 import { CreditDebitDialog } from '../creditdebit.component';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-credit-debit',
@@ -35,39 +36,61 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
     ],
 
     templateUrl: './creditdebit-topup.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CreditdebitTopupComponent implements OnInit {
+export class CreditdebitTopupComponent implements OnInit{
+
     form: FormGroup;
     users: any[] = []
-	  card: any
+	card: any
     time : any
     currentColor: string[] = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent'];
     currentTextColor: string[] = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]'];
+    sn: string;
+    bgCard!: string;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
         private _router: Router,
         private _topup: TopUpService,
-
+        private activityroute: ActivatedRoute,
     ) {
+        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
         this.form = this._fb.group({
             amount: '',
         })
     }
     ngOnInit(): void {
-		  this.card = this._topup.getCardData()
+		this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+            this.card = {
+                id: resp.sn, 
+                role: resp.role, 
+                name: resp.name, 
+                balance: parseInt(resp.remain).toLocaleString(), 
+                update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
+            }
+            this.bgCard = this.bg_card()
+            console.log('this.card', this.card);
+        })
+    }
+
+    decodeBase64(input: string): string {
+        return atob(input);
+    }
+
+    encodeBase64(input: string): string {
+        return btoa(input);
     }
 
 	openDialogEdit(item: any) {
 		console.log(item);
-
+        item = this.form.value.amount
         const DialogRef = this.dialog.open(CreditDebitDialog, {
             disableClose: true,
-            width: '400px',
-            height: '417px',
+            width: 'fit-content',
+            height: 'fit-content',
             data: {
-                type: 'EDIT',
+                card: this.card,
                 value: item
             }
         });
@@ -80,30 +103,7 @@ export class CreditdebitTopupComponent implements OnInit {
     }
 
     bg_card(): string{
-        const index = this._topup.getSelectIndex()
-        if (this.card.role == "student"){
-            if (index % 2 == 1)
-                return "assets/images/logo/card/bg_CardStudentGray.svg"
-            else
-                return "assets/images/logo/card/bg_CardStudentRed.svg"
-        }
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
-    }
-
-    text_card(): string{
-        if (this.card.role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/academic.svg"
-        else
-            return ""
+        return this._topup.get_bg_card(this.card.role)
     }
 
     clickForUpdateTime(){
@@ -154,31 +154,13 @@ export class CreditdebitTopupComponent implements OnInit {
     }
 
 	backto(){
-		this._router.navigate(['/top-up'])
+		this._router.navigate(['/top-up',this.encodeBase64(this.sn)])
 	}
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      disableClose: true,
-      width: '118px',
-      height: '118px',
-    });
-
-    setTimeout(() => {
-      dialogRef.close();
-    }, 3000);
-
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result:', result);
-      this._router.navigate(['/select'])
-    });
-  }
-
-  nextto(){
-    this._topup.setTopUp(this.form.value.amount)
-    console.log(this.form.value.amount);
-    this.openDialogEdit(this.form.value.amount)
-  }
+    nextto(){       
+        this._topup.setTopUp(+this.form.value.amount)
+        console.log(this.form.value.amount);
+        this.openDialogEdit(+this.form.value.amount)
+    }
 }
 

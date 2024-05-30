@@ -1,0 +1,26 @@
+<div style="width: 110px;height: 100px;">
+</div>
+<div style="display: flex; justify-content: center;">
+	<form method="POST" action="/top-up/success">
+		<script type="text/javascript"
+			src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+			data-apikey="pkey_prod_9929s93IlIbSmViDgW4eqjcqlnbT3JOWVrXB"
+			data-amount="105"
+			data-currency="THB"
+			data-payment-methods="card"
+			data-name="BANGKOK PATANA SCHOOL"
+			data-mid="401012208444001" id="topUP">
+		</script>
+	</form>
+</div>
+
+
+<script>
+	const shopId =  new URLSearchParams(window.location.search).get('id');
+	console.log('shopId ',shopId);
+	const topUpScript = document.getElementById('topUP');
+	if (topUpScript) {
+		topUpScript.setAttribute('data-amount', shopId); // Assign shopId value to data-amount
+		console.log('sussssssss')
+	}
+</script>

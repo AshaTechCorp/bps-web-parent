@@ -33,14 +33,16 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
 
     templateUrl: './selectCard.component.html',
     //styleUrl: './selectCard.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SelectCardComponent implements OnInit {
     orders: any[] = [];
     form: FormGroup;
     users: any[] = []
 	cards: any[] = []
+	data1: any[] = []
     time : any
+    cards_family: any;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -56,36 +58,38 @@ export class SelectCardComponent implements OnInit {
 
     ngOnInit(): void {
 		//this.cards = this._topupservice.getAllCard()
-		this.cards = this._topupservice.getAllCard()
-        console.log(this.cards);
+		//this.cards = this._topupservice.getAllCard()
+        this._topupservice.get_family_card(123123213).subscribe((resp: any) =>{
+            this.cards_family = resp
+            console.log(this.cards_family);
+           
+          for (let index = 0; index <  this.cards_family.persons.length; index++) {
+            const element =  this.cards_family.persons[index];
+            const data = {
+                id: element.sn, 
+                role: element.role, 
+                name: element.name, 
+                balance: parseInt(element.remain).toLocaleString(), 
+                update: DateTime.fromISO(element.at).toFormat('HH:mm')
+            }
+            this.cards.push(data)
+            }
+            console.log(this.cards , 'data1');
 
+          
+        })
         this.form.patchValue({
             payment_type: ''
         })
 
     }
 
-    bg_card(i: number): string{
-        if (this.cards[i].role == "student"){
-            return "assets/images/logo/card/bg_CardStudentRed.svg"
-        }
-        else if (this.cards[i].role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.cards[i].role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
+    encodeBase64(input: string): string {
+        return btoa(input);
     }
 
-    text_card(i: number): string{
-        if (this.cards[i].role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.cards[i].role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.cards[i].role == "academic")
-            return "assets/images/logo/card/academic.svg"
-        else
-            return ""
+    bg_card(i: number): string{
+        return this._topupservice.get_bg_card(this.cards[i].role)
     }
 
     clickForUpdateTime(i : number){
@@ -93,9 +97,9 @@ export class SelectCardComponent implements OnInit {
         this.cards[i].update = date.toFormat('HH:mm')
     }
 
-    select(i : number){
-        this._topupservice.setCardData(i)
-        this._router.navigate(['/card']);
+    select(sn : string){
+        //this._topupservice.setCardData(sn)
+        this._router.navigate(['/card',this.encodeBase64(sn)]);
     }
 
     getTextWidth(text: string): number {
@@ -111,6 +115,6 @@ export class SelectCardComponent implements OnInit {
         const width = span.offsetWidth;
         document.body.removeChild(span);
         return width;
-      }
+    }
 }
 

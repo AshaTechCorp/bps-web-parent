@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '
 import { MatDialog } from '@angular/material/dialog';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { isPlatformBrowser } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +20,25 @@ import { TopUpService } from '../top-up/topUp.service';
 import { HistoryService } from './page.service';
 import { UserService } from '../top-up/user.service';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
+
+//history: {date: string, data: {type:string,balance: number, time: string, list:{payment:string, order:string,amount:number,total:number}
+type History = {
+  date: string
+  data: {
+    time: string, // date แปลง
+    balance: number, // amount
+    type: string,
+    //channel: string,
+    //shopName: string,
+    list: {
+      payment: string //transactions.channel
+      order: string // == itemName
+      amount: number //same
+      total: number //same
+    }[]
+  }[]
+};
+
 @Component({
     selector: 'app-history',
     standalone: true,
@@ -39,7 +58,7 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
 
     templateUrl: './page.component.html',
     //styleUrl: './page.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class HistoryComponent implements OnInit {
   isMobile: boolean = window.innerWidth < 768;
@@ -47,20 +66,23 @@ export class HistoryComponent implements OnInit {
   users: any[] = []
   role: any
   total: any[] = []
-  history: any[] = []
+  //history: any[] = []
+  history: History[] = []
   isPlatformBrowser: boolean = window.innerWidth > 768;
   monthsYears: string[] = [];
   selectedDate: any
 	card: any
   showTransactions: boolean = false;
   k: any;
+  sn: any;
+  bgCard: string='';
 
   toggleTransactions() {
     this.showTransactions = !this.showTransactions;
   }
 
   getReversedHistory(): any[] {
-    return this.history.slice().reverse();
+    return this.history?.slice().reverse();
 }
 
 constructor(
@@ -70,9 +92,12 @@ constructor(
   private _topup: TopUpService,
   private _historyService: HistoryService,
   private _userService: UserService,
+  private activityroute: ActivatedRoute,
 
   @Inject(PLATFORM_ID) private platformId: any
-) {}
+) {
+  this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+}
 
 
   ngOnInit(): void {
@@ -82,39 +107,69 @@ constructor(
 
     //this.role = this._userService.get_role()
     this.role = 'staff'
-    this.card = this._topup.getCardData()
+    this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+      this.card = {
+          id: resp.sn, 
+          role: resp.role, 
+          name: resp.name, 
+          balance: parseInt(resp.remain).toLocaleString(), 
+          update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
+      }
+      this.bgCard = this.bg_card()
+    })
+    
+    this._historyService.get_transactionsCard().subscribe(
+      (resp: any) => {
+        this.total[0] = resp.totalTopUp
+        this.total[1] = resp.totalSpending
+        const historys = resp.history
+        for (let i = 0; i < historys.length; i++) {
+          const history = historys[i];
+          let temp_history = {
+            date: DateTime.fromISO(history.date).toLocaleString({ month: 'long',
+                                                day: '2-digit', year: 'numeric' }),
+            data: []
+          }
+          this.history.push(temp_history)
+          for (let j = 0; j < history.transactions.length; j++) {
+            const transaction = history.transactions[j];
+            let temp_data ={
+              time: (DateTime.fromISO(transaction.date)).toFormat('HH:mm'),
+              balance: transaction.amount,
+              type: transaction.type,
+              list: []
+            }
+            this.history[i].data.push(temp_data)
+            for (let k = 0; k < transaction.items.length; k++) {
+              const item = transaction.items[k];
+              let temp_list ={
+                payment: transaction.channel,
+                order: item.itemName,
+                amount: item.amount,
+                total: item.total
+              }
+              this.history[i].data[j].list.push(temp_list)
+            }
+          }
+        }
+      },
+      (error) => {
+        console.error('Error fetching transactions:', error);
+      }
+    );
+  }
 
-    this.total = this._historyService.get_total()
+  decodeBase64(input: string): string {
+    return atob(input);
+  }
 
-    this.history  = this._historyService.get_history()
+  encodeBase64(input: string): string {
+      return btoa(input);
   }
 
   bg_card(): string{
-    const index = this._topup.getSelectIndex()
-    if (this.card.role == "student"){
-        if (index % 2 == 1)
-            return "assets/images/logo/card/bg_CardStudentGray.svg"
-        else
-            return "assets/images/logo/card/bg_CardStudentRed.svg"
-    }
-    else if (this.card.role == "business")
-        return "assets/images/logo/card/bg_CardBusiness.svg"
-    else if (this.card.role == "academic")
-        return "assets/images/logo/card/bg_CardAcademic.svg"
-    else
-      return ""
+    return this._topup.get_bg_card(this.card.role)
   }
-
-  text_card(): string{
-    if (this.card.role == "student")
-        return "assets/images/logo/card/student.svg"
-    else if (this.card.role == "business")
-        return "assets/images/logo/card/business.svg"
-    else if (this.card.role == "academic")
-        return "assets/images/logo/card/academic.svg"
-    else
-        return ""
-}
 
   openDialog(i: number, j: number): void {
     const dialogRef = this.dialog.open(DialogForm, {
@@ -143,6 +198,8 @@ constructor(
   }
 
   getData(i: number, j: number): any {
+    console.log('test ,',this.history.slice().reverse());
+    
     return {
       history: this.history.slice().reverse(),
       date: this.history.slice().reverse()[i].date,
@@ -189,7 +246,7 @@ constructor(
   }
 
   backto(){
-    this._router.navigate(['/card'])
+    this._router.navigate(['/card',this.encodeBase64(this.sn)])
   }
 
 }

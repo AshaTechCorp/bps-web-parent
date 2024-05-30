@@ -1,4 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +55,7 @@ export class HistoryService {
 		{ type: "Paid", balance: -1000, date: '24 Mar 2024', time: '11:02'},
 	];
 
-  constructor() {}
+  constructor(private _httpClient: HttpClient) {}
 
   get_total() {
     return this.total
@@ -64,6 +67,20 @@ export class HistoryService {
 
   get_transactions() {
     return this.transactions
+  }
+
+  get_transactionsCard() :Observable<any> {
+    //const token = localStorage.getItem('accessToken');
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
+    //const headers = new HttpHeaders({
+    //  'Authorization': 'Bearer ' + token
+    //});
+
+    return this._httpClient.get<any>(environment.baseurl + '/api/card/history',{params:{
+		sn: 1,
+		year: 1,
+		month: 1
+	}});
   }
 }
 

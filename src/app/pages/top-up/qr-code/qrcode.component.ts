@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { DateTime } from 'luxon';
 import { TopUpService } from '../topUp.service';
@@ -33,109 +33,112 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
     ],
 
     templateUrl: './qrcode.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class QRcodeComponent implements OnInit {
-    users: any[] = []
-    card: any
-    time : any
-    cardName : any
-    form : FormGroup = this._fb.group({
-        amount: 100,
-        card: '2617800948'
-    })
+  users: any[] = []
+  card: any
+  time : any
+  cardName : any
+  form : FormGroup = this._fb.group({
+      amount: 100,
+      card: '2617800948'
+  })
 	amountTopup: any
-    img_qr: string = 'assets/images/logo/loading_payment.gif';
+  sn: string;
+  img_qr: string
+  bgCard!: string;
+
+  constructor(
+      public dialog: MatDialog,
+      private _fb: FormBuilder,
+      private _router: Router,
+      private _topup: TopUpService,
+      //private cdr: ChangeDetectorRef,
+      private activityroute: ActivatedRoute
+  ) {
+    this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+    this.img_qr  = 'assets/images/logo/loading_payment.gif';
+
+  }
+  ngOnInit(){
+    this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+      this.card = {
+          id: resp.sn, 
+          role: resp.role, 
+          name: resp.name, 
+          balance: parseInt(resp.remain).toLocaleString(), 
+          update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
+      }
+      this.bgCard = this.bg_card()
+      this.cardName = this.card.name
+
+      this.amountTopup = this._topup.getTopUp()
+      this.form = this._fb.group({
+          amount: this.amountTopup,
+          card: '2617800948'
+          //card: this.sn
+          //card: '123123213'
+      })
+      console.log(this.form.value);
+      this._topup.create_QR(this.form.value).subscribe((resp : any) => {
+          console.log(resp);
+          this.img_qr = resp.qrCodeUrl
+          //ปิด dialog
+          console.log(this.img_qr);
+          this._topup.check_status(resp.id).subscribe((resp : any) => {
+              if (resp && resp.status === 'SUCCESS') {
+                  console.log('Status is complete:', resp);
+                  this._router.navigate(['/top-up/success',this.encodeBase64(this.sn)])
+                } else {
+                  console.log('Polling stopped or timed out.');
+                }
+          });
+      });
+    })
+    console.log('this.card', this.card);
+
     
-    constructor(
-        public dialog: MatDialog,
-        private _fb: FormBuilder,
-        private _router: Router,
-        private _topup: TopUpService,
-        private cdr: ChangeDetectorRef
-    ) {
-    }
-    async ngOnInit(){
-        this.amountTopup = this._topup.getTopUp()
-        this.form = this._fb.group({
-            amount: this.amountTopup,
-            card: '2617800948'
-        })
-        console.log(this.form.value);
-        this._topup.create_QR(this.form.value).subscribe((resp : any) => {
-            console.log(resp);
-            this.img_qr = resp.qrCodeUrl
-            console.log(this.img_qr);
-            this.cdr.markForCheck();
-            //this._topup.check_status(resp.id).subscribe((resp : any) => {
-            //    if (resp && resp.status === 'complete') {
-            //        console.log('Status is complete:', resp);
-            //        this._router.navigate(['/top-up/success'])
-            //      } else {
-            //        console.log('Polling stopped or timed out.');
-            //      }
-            //});
-        });
+    console.log(this.amountTopup);
+  }
 
-		this.card = this._topup.getCardData()
-        this.cardName = this.card.name
-        console.log(this.amountTopup);
+  decodeBase64(input: string): string {
+    return atob(input);
+  }
 
-    }
+  encodeBase64(input: string): string {
+    return btoa(input);
+  }
 
-    bg_card(): string{
-        const index = this._topup.getSelectIndex()
-        if (this.card.role == "student"){
-            if (index % 2 == 1)
-                return "assets/images/logo/card/bg_CardStudentGray.svg"
-            else
-                return "assets/images/logo/card/bg_CardStudentRed.svg"
-        }
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
-    }
+  bg_card(): string{
+    return this._topup.get_bg_card(this.card.role)
+  }
 
-    text_card(): string{
-        if (this.card.role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/academic.svg"
-        else
-            return ""
-    }
+  clickForUpdateTime(){
+    const date = DateTime.local()
+    this.card.update = date.toFormat('HH:mm')
+    this._topup.setUpdateCard(this.card.update)
+  }
 
-    clickForUpdateTime(){
-        const date = DateTime.local()
-        this.card.update = date.toFormat('HH:mm')
-        this._topup.setUpdateCard(this.card.update)
-    }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      disableClose: true,
+      width: '118px',
+      height: '118px',
+    });
 
-    openDialog(): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        disableClose: true,
-        width: '118px',
-        height: '118px',
-      });
+    setTimeout(() => {
+      dialogRef.close();
+    }, 3000);
 
-      setTimeout(() => {
-        dialogRef.close();
-      }, 3000);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result:', result);
+      this._router.navigate(['/select'])
+    });
+  }
 
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed with result:', result);
-        this._router.navigate(['/select'])
-      });
-    }
-
-    backto(){
-		this._router.navigate(['/top-up/promptpay'])
-	}
+  backto(){
+  this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.sn)])
+  }
 }
 

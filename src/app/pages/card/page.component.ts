@@ -1,3 +1,4 @@
+import { Subscription, timer } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +16,8 @@ import { TopUpService } from '../top-up/topUp.service';
 import { HistoryService } from '../history/page.service';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
 import { UserService } from '../top-up/user.service';
+import { ActivatedRoute } from '@angular/router'
+import { DialogComponent } from 'src/app/dialog/dialog.component';
 
 @Component({
     selector: 'app-card',
@@ -35,7 +38,7 @@ import { UserService } from '../top-up/user.service';
 
     templateUrl: './page.component.html',
     //styleUrl: './selectCard.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CardComponent implements OnInit {
     users: any[] = []
@@ -49,6 +52,9 @@ export class CardComponent implements OnInit {
     display_left: any
     display_right: any
     slice_src: any
+    sn: any
+    cards_family: any;
+    bgCard!: string;
 
     constructor(
         public dialog: MatDialog,
@@ -56,11 +62,52 @@ export class CardComponent implements OnInit {
         private _router: Router,
         private _topup: TopUpService,
         private _historyService: HistoryService,
+        private activityroute: ActivatedRoute 
     ) {
+        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
     }
     ngOnInit(): void {
-        this.card = this._topup.getCardData()
-        this.cards = this._topup.getAllCard()
+        const dialogRef = this.dialog.open(DialogComponent, {
+            disableClose: true,
+            width: '118px',
+            height: '118px',
+        });
+        this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+            //this.card = resp
+            console.log(this.card);
+           
+            this.card = {
+                id: resp.sn, 
+                role: resp.role, 
+                name: resp.name, 
+                balance: parseInt(resp.remain).toLocaleString(), 
+                update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
+            }
+            console.log(this.card , 'data1');
+            this.bgCard = this.bg_card()
+            timer(2000).subscribe(() => {
+                dialogRef.close();
+            });
+        })
+        //this.card = this._topup.getCardData()
+        //this.cards = this._topup.getAllCard()
+        this._topup.get_family_card(123123213).subscribe((resp: any) =>{
+            this.cards_family = resp
+            console.log(this.cards_family);
+           
+          for (let index = 0; index <  this.cards_family.persons.length; index++) {
+            const element =  this.cards_family.persons[index];
+            const data = {
+                id: element.sn, 
+                role: element.role, 
+                name: element.name, 
+                balance: parseInt(element.remain).toLocaleString(), 
+                update: DateTime.fromISO(element.at).toFormat('HH:mm')
+            }
+            this.cards.push(data)
+            }
+            console.log(this.cards , 'data2');
+        })
         this.buttonL()
         this.buttonR()
         this.slice_card()
@@ -71,6 +118,14 @@ export class CardComponent implements OnInit {
         this.role = 'parent'
 
         this.transactions = this._historyService.get_transactions()
+    }
+
+    decodeBase64(input: string): string {
+        return atob(input);
+    }
+
+    encodeBase64(input: string): string {
+        return btoa(input);
     }
 
     buttonL(){
@@ -119,8 +174,9 @@ export class CardComponent implements OnInit {
         this._topup.setCardData(index)
         this.buttonL()
         this.buttonR()
-        this.card = this._topup.getCardData()
+        this.card = this.cards[index]
         this.slice_card()
+        this.bgCard = this.bg_card()
     }
 
     change_right(){
@@ -129,14 +185,16 @@ export class CardComponent implements OnInit {
         this._topup.setCardData(index)
         this.buttonL()
         this.buttonR()
-        this.card = this._topup.getCardData()
+        this.card = this.cards[index]
         this.slice_card()
+        this.bgCard = this.bg_card()
     }
 
     change_card(index: number){
         this._topup.setCardData(index)
         this.toggle_popup()
-        this.card = this._topup.getCardData()
+        this.card = this.cards[index]
+        this.bgCard = this.bg_card()
         console.log(index);
         this.slice_card()
     }
@@ -146,33 +204,14 @@ export class CardComponent implements OnInit {
             this.display_popup = "block"
         else if (this.display_popup == "block")
             this.display_popup = "hidden"
+        this.buttonL()
+        this.buttonR()
     }
 
     bg_card(): string{
-        const index = this._topup.getSelectIndex()
-        if (this.card.role == "student"){
-            if (index % 2 == 1)
-                return "assets/images/logo/card/bg_CardStudentGray.svg"
-            else
-                return "assets/images/logo/card/bg_CardStudentRed.svg"
-        }
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
-        else
-            return ""
-    }
-
-    text_card(): string{
-        if (this.card.role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/academic.svg"
-        else
-            return ""
+        console.log("this.card.role 1",this.card.role);
+        
+        return this._topup.get_bg_card(this.card.role)
     }
 
     //translate_y_popup(){
@@ -193,16 +232,16 @@ export class CardComponent implements OnInit {
       const date = DateTime.local()
       this.card.update = date.toFormat('HH:mm')
       this._topup.setUpdateCard(this.card.update)
+    //  this.card = this._topup.getCardData()
     }
 
     gototopup(){
-        this._router.navigate(['/top-up'])
+        this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
         console.log('top-up');
-
     }
 
     gotohistory(){
-        this._router.navigate(['/history'])
+        this._router.navigate(['/history',this.encodeBase64(this.sn)])
         console.log('history');
     }
 }

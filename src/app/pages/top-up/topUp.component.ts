@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { DateTime } from 'luxon';
 import { TopUpService } from './topUp.service';
@@ -32,50 +32,47 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
     ],
 
     templateUrl: './topUp.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TopUpComponent implements OnInit {
-  users: any[] = []
+    users: any[] = []
 	balance: number = 1400
 	card: any
-  time : any
+    time : any
+    sn: string;
+    bgCard!: string;
     constructor(
         public dialog: MatDialog,
         private _router: Router,
         private _topup: TopUpService,
+        private activityroute: ActivatedRoute
     ) {
+        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+        console.log(this.sn);
     }
     ngOnInit(): void {
-		this.card = this._topup.getCardData()
-
-        console.log(this.card);
-
-
+		this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+            this.card = {
+                id: resp.sn, 
+                role: resp.role, 
+                name: resp.name, 
+                balance: parseInt(resp.remain).toLocaleString(), 
+                update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
+            }
+            this.bgCard = this.bg_card()
+            console.log(this.card);
+        })
+    }
+    decodeBase64(input: string): string {
+        return atob(input);
     }
 
-    bg_card(): any{
-        const index = this._topup.getSelectIndex()
-        if (this.card.role == "student"){
-            if (index % 2 == 1)
-                return "assets/images/logo/card/bg_CardStudentGray.svg"
-            else
-                return "assets/images/logo/card/bg_CardStudentRed.svg"
-        }
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/bg_CardBusiness.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/bg_CardAcademic.svg"
+    encodeBase64(input: string): string {
+        return btoa(input);
     }
 
-    text_card(): string{
-        if (this.card.role == "student")
-            return "assets/images/logo/card/student.svg"
-        else if (this.card.role == "business")
-            return "assets/images/logo/card/business.svg"
-        else if (this.card.role == "academic")
-            return "assets/images/logo/card/academic.svg"
-        else
-            return ""
+    bg_card(): string{
+        return this._topup.get_bg_card(this.card.role)
     }
 
     clickForUpdateTime(){
@@ -86,16 +83,13 @@ export class TopUpComponent implements OnInit {
 
     select(data : string){
         if(data == "promptpay")
-            this._router.navigate(['/top-up/promptpay']);
+            this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.sn)]);
         else if(data == "credit_debit")
-            this._router.navigate(['/top-up/credit-debit']);
+            this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.sn)]);
     }
 
     backto(){
-		this._router.navigate(['/card'])
+		this._router.navigate(['/card',this.encodeBase64(this.sn)])
 	}
-
-
-
 }
 

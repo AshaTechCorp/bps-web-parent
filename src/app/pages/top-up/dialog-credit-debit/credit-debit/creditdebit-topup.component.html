@@ -4,52 +4,21 @@
 		<div class="flex flex-col my-[30px] min-[1030px]:my-[0px]">
 			<div class="flex rounded-[30px] justify-center min-[1030px]:mb-[18px] min-[1030px]:mr-[40px]">
 				<!-- Your SVG content -->
-				<ng-container *ngIf="card.role == 'business'; else elseTemplate">
-					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
-						<div class="flex flex-col justify-between w-full h-full">
-							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
-							<div class="flex divide-x divide-white">
-								<div class="w-[239px]">
-									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-									<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
-								</div>
-								<div class="w-14 pl-4">
-									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Coupons</p>
-									<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.coupon}}</p>
-								</div>
-							</div>
-							<div class="flex justify-between h-[22px] items-center">
-								<div class="flex">
-									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
-								</div>
-								<div>
-									<img class="w-[100px]" [src]="text_card()" alt="">
-								</div>
+				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
+					<div class="flex flex-col justify-between w-full h-full">
+						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card?.name}}</p>
+						<div>
+							<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+							<p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
+						</div>
+						<div class="flex justify-between h-[22px] items-center">
+							<div class="flex">
+								<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
 							</div>
 						</div>
 					</div>
-				</ng-container>
-				<ng-template #elseTemplate>
-					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card() + ')'">
-						<div class="flex flex-col justify-between w-full h-full">
-							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card.name}}</p>
-							<div>
-								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-								<p class="text-[34px] font-medium text-[#FFFFFF]">{{card.balance | number: '1.2-2'}}</p>
-							</div>
-							<div class="flex justify-between h-[22px] items-center">
-								<div class="flex">
-									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card.update}}</p>
-								</div>
-								<div>
-									<img class="w-[100px]" [src]="text_card()" alt="">
-								</div>
-							</div>
-						</div>
-					</div>
-				</ng-template>
+				</div>
 	  		</div>
 			<div class=" hidden min-[1030px]:block">
 				<button class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
@@ -67,7 +36,8 @@
 					<img class="w-[32px] h-[32px]" src="../../../../assets/images/logo/Logo_bank.svg"  alt="Logo">
 				</div>
 			</div>
-			<p class="text-[#32373D] text-[16px] font-normal mb-[12px]">Method: Credit/Debit</p>
+			<p class="text-[#32373D] text-[16px] font-normal">Method: Credit/Debit</p>
+			<p class="text-[#ff0018] text-[14px] min-[1030px]:text-[16px] font-normal mb-[14px]">Bank charge - local card 1.5%, oversea issued card 2.5%</p>
 			<div class="relative flex justify-between border-[1px] border-[#BFB5AC] rounded-[10px] mb-[18px]">
 				<div class="p-[12px]">
 					<p class="text-[16px] font-medium text-[#32373D] mb-[10px]">How to Top up</p>
@@ -98,9 +68,12 @@
 				<button (click)="select_amount(500)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[4]}} {{currentColor[4]}}"> 500 </button>
 				<button (click)="select_amount(1000)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[5]}} {{currentColor[5]}}"> 1,000 </button>
 			</div>
+			
 			<div class="flex justify-end">
 				<button (click)="nextto()" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+
