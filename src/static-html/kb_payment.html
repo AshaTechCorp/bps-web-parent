@@ -1,7 +1,7 @@
 <div style="width: 110px;height: 100px;">
 </div>
 <div style="display: flex; justify-content: center;">
-	<form method="POST" action="/top-up/success">
+	<form method="POST" action="">
 		<script type="text/javascript"
 			src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
 			data-apikey="pkey_prod_9929s93IlIbSmViDgW4eqjcqlnbT3JOWVrXB"
@@ -12,15 +12,58 @@
 			data-mid="401012208444001" id="topUP">
 		</script>
 	</form>
+	<script>
+		const shopId =  new URLSearchParams(window.location.search).get('id');
+		console.log('shopId ',shopId);
+		const topUpScript = document.getElementById('topUP');
+		if (topUpScript) {
+			topUpScript.setAttribute('data-amount', shopId); // Assign shopId value to data-amount
+			console.log('sussssssss')
+		}
+	</script>
+	<!--<form method=POST action="receive-data.php">
+		Username : <input type=text name=username><br>
+		Password : <input type=password name=password><br>
+		<input type=submit value='login'>
+	</form>-->
 </div>
 
 
 <script>
-	const shopId =  new URLSearchParams(window.location.search).get('id');
-	console.log('shopId ',shopId);
-	const topUpScript = document.getElementById('topUP');
-	if (topUpScript) {
-		topUpScript.setAttribute('data-amount', shopId); // Assign shopId value to data-amount
-		console.log('sussssssss')
-	}
+	document.addEventListener('DOMContentLoaded', function() {
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // ป้องกันการส่งฟอร์มโดยปกติ
+            
+            var formData = new FormData(form); // สร้าง FormData object เพื่อรับข้อมูลจากฟอร์ม
+            var token = formData.get('token'); // รับค่าชื่อผู้ใช้
+            var mid = formData.get('mid'); // รับค่าชื่อผู้ใช้
+            var paymentMethods = formData.get('paymentMethods'); // รับค่าชื่อผู้ใช้
+            
+            // ตรวจสอบข้อมูลหรือดำเนินการต่อไปตามที่ต้องการ
+            console.log('token ', token);
+            console.log('mid: ', mid);
+            console.log('paymentMethods: ', paymentMethods);
+			
+			fetch('https://bkptn-api.dev-asha.com/api/top-up/credit/requestCharge', {
+				method: 'POST',
+				headers: {
+				'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({token: token, mid: mid, paymentMethods: paymentMethods})
+			}).then(response => {
+				if (!response.ok) {
+				throw new Error('Network response was not ok');
+				}
+				return response.json();
+			}).then(data => {
+				console.log('ok Response:', data);
+				console.log(data);
+				//window.parent.location.href = data.redirect_url
+				// ทำอะไรต่อกับข้อมูลที่ได้รับมา
+			}).catch(error => {
+				console.error('There was a problem with the fetch operation:', error);
+			});
+		});
+	});
 </script>

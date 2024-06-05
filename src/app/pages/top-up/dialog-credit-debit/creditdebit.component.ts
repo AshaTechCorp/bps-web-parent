@@ -81,7 +81,7 @@ export class CreditDebitDialog implements OnInit {
     }
 
     getSafeUrl(): SafeResourceUrl {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(`http://localhost:4200/static-html/kb_payment.html?id=${this.moneyTopUp}`);
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?id=${this.moneyTopUp}`);
       }
 
     ngOnInit(): void {
