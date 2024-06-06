@@ -1,4 +1,4 @@
-<div style="width: 110px;height: 100px;">
+<div style="width: 110px;height: 130px;">
 </div>
 <div style="display: flex; justify-content: center;">
 	<form method="POST" action="">
@@ -59,7 +59,7 @@
 			}).then(data => {
 				console.log('ok Response:', data);
 				console.log(data);
-				//window.parent.location.href = data.redirect_url
+				window.parent.location.href = data.redirect_url
 				// ทำอะไรต่อกับข้อมูลที่ได้รับมา
 			}).catch(error => {
 				console.error('There was a problem with the fetch operation:', error);
