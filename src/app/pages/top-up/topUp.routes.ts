@@ -7,10 +7,6 @@ import { CreditdebitTopupComponent } from './dialog-credit-debit/credit-debit/cr
 
 export default [
     {
-        path     : ':sn',
-        component: TopUpComponent,
-    },
-    {
         path     : 'promptpay/:sn',
         component: PromptpayComponent,
     },
@@ -21,9 +17,18 @@ export default [
     {
         path     : 'success/:sn',
         component: PromptpaySuccessComponent,
+        pathMatch: 'full'
+    },
+    {
+        path     : 'complete',
+        component: PromptpaySuccessComponent,
     },
     {
         path     : 'credit-debit/:sn',
         component: CreditdebitTopupComponent,
+    },
+    {
+        path     : ':sn',
+        component: TopUpComponent,
     },
 ] as Routes;
