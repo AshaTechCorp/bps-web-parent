@@ -1,5 +1,5 @@
-<span mat-dialog-title class="text-right">Top-Up ( Credit/Debit )
-        <button class="text-[#ff0000] font-medium text-[12px]" (click)="onClose()">Cancel</button>
+<span mat-dialog-title class="text-center relative">Top-Up ( Credit/Debit )
+        <button class="absolute font-medium text-[22px] top-[16px] right-[16px] rounded-full bg-[#E2E2E2] w-[32px] h-[32px] leading-none pb-[3px]" (click)="onClose()">x</button>
 </span>
 <div class="flex flex-col h-full w-full] relative justify-center">
     <div class="absolute top-0 left-[30px] z-10">
@@ -13,7 +13,7 @@
         <div class="flex">
         </div>
     </div>
-    <div class="absolute z-10 bottom-[70px] left-[69px]">
+    <div class="absolute z-10 top-[140px] left-[69px]">
         <img class="w-[200px]" src="assets/images/logo/bank-bold.svg" alt="KBank">
     </div>
     <iframe [src]="getSafeUrl()" width="336px" height="489px" style="border:none;overflow-y: scroll;z-index: 20;"></iframe>

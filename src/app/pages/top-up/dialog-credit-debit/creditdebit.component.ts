@@ -50,7 +50,9 @@ export class CreditDebitDialog implements OnInit {
     // fee_moneyTopUp: number = +this.data.value
     fee_moneyTopUp: number = +this.data.value * (2.0408 / 100.0)
     // total_moneyTopUp: number = +this.data.value
-    total_moneyTopUp: number = +this.data.value //+ (this.data.value * (2.0408 / 100.0))
+    total_moneyTopUp: number = +this.data.value + (this.data.value * (2.0408 / 100.0));
+
+    
     card:any = this.data.card
     form: FormGroup;
     stores: any[]=[];
@@ -85,11 +87,20 @@ export class CreditDebitDialog implements OnInit {
     }
 
     getSafeUrl(): SafeResourceUrl {
-        const total_topUp = this.total_moneyTopUp.toFixed(2)
-        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${total_topUp}&name=${this.card.name}`);
+        // ตรวจสอบว่ามีทศนิยมน้อยกว่า 2 ตำแหน่งหรือไม่
+        
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}`);
       }
 
     ngOnInit(): void {
+        if (+this.total_moneyTopUp > +this.total_moneyTopUp.toFixed(2)) {
+            // ถ้ามีทศนิยมน้อยกว่า 2 ตำแหน่ง ให้เพิ่มเติมค่าอีก 1 หน่วย และทำการปัดทศนิยมอีกครั้ง
+            this.total_moneyTopUp = +this.total_moneyTopUp.toFixed(2) + 0.01;
+        }
+        if (+this.fee_moneyTopUp > +this.fee_moneyTopUp.toFixed(2)) {
+            // ถ้ามีทศนิยมน้อยกว่า 2 ตำแหน่ง ให้เพิ่มเติมค่าอีก 1 หน่วย และทำการปัดทศนิยมอีกครั้ง
+            this.fee_moneyTopUp = +this.fee_moneyTopUp.toFixed(2) + 0.01;
+        }
          if (this.data.type === 'EDIT') {
         //   this.form.patchValue({
         //     ...this.data.value,
