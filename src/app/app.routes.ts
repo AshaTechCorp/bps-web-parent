@@ -26,6 +26,7 @@ export const routes: Routes = [
         { path: 'select', loadChildren: () => import('./pages/select-card/selectCard.routes') },
         { path: 'top-up', loadChildren: () => import('./pages/top-up/topUp.routes') },
         { path: 'history', loadChildren: () => import('./pages/history/page.routes') },
+        { path: 'status-pending', loadChildren: () => import('./pages/success-ornot/success-ornot.routes') },
       ]
     }
 ];

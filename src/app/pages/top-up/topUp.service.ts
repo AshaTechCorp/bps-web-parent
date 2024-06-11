@@ -106,6 +106,33 @@ export class TopUpService {
     return this._httpClient.post<any>(environment.baseurl + '/api/top-up/qrpayment/request-web', data);// ,{ headers: headers }
   }
 
+  check_status_credit(ref: string) {
+    const checkInterval = 3000; // 3 วินาที
+    const checkTimeout = 9000; // 9 วินาที
+
+    //const token = localStorage.getItem('accessToken');
+    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+
+    return interval(checkInterval).pipe(
+      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/top-up/card/inquery' , {params: { referenceOrder: ref }}
+      ).pipe(//, { headers: headers }
+        catchError(error => {
+          console.error('API call failed:', error);
+          return of(null);
+        })
+      )),
+      takeWhile(response => response === null || (response.status !== 'SUCCESS' && response.status !== 'CREATE'), true),
+      timeout(checkTimeout),
+      catchError(error => {
+        console.error('Polling timed out:', error);
+        return of(null);
+      })
+    );
+  }
+
   getAllCard() {
     return this.cards
   }
