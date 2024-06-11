@@ -46,9 +46,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     ]
 })
 export class CreditDebitDialog implements OnInit {
-    moneyTopUp: number = this.data.value
-    fee_moneyTopUp: number = this.data.value * (2.0408 / 100.0)
-    total_moneyTopUp: number = this.data.value + (this.data.value * (2.0408 / 100.0))
+    moneyTopUp: number = +this.data.value
+    fee_moneyTopUp: number = +this.data.value
+    // fee_moneyTopUp: number = +this.data.value * (2.0408 / 100.0)
+    total_moneyTopUp: number = +this.data.value
+    // total_moneyTopUp: number = +this.data.value + (this.data.value * (2.0408 / 100.0))
     card:any = this.data.card
     form: FormGroup;
     stores: any[]=[];
