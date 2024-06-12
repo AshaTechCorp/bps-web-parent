@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -70,12 +70,6 @@ export class HistoryService {
   }
 
   get_transactionsCard() :Observable<any> {
-    //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
-    //const headers = new HttpHeaders({
-    //  'Authorization': 'Bearer ' + token
-    //});
-
     return this._httpClient.get<any>(environment.baseurl + '/api/card/history',{params:{
 		sn: 1,
 		year: 1,

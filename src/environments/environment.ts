@@ -13,7 +13,8 @@ export const environment = {
   apiConfig: {
       scopes: ['ENTER_SCOPE'],
       uri: 'ENTER_URI'
-  }
+  },
+  baseurl: 'BASE_URL'
 };
 
 /*
