@@ -9,5 +9,6 @@ export const environment = {
     apiConfig: {
         scopes: ['user.read'],
         uri: 'https://graph.microsoft-ppe.com/v1.0/me'
-    }
+    },
+    baseurl: "https://bkptn-api.dev-asha.com"
 };

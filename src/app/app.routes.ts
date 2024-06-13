@@ -19,8 +19,8 @@ export const routes: Routes = [
     },
     {
       path: '',
-      //canActivate: [MsalGuard],
-      //canActivateChild: [MsalGuard],
+      canActivate: [MsalGuard],
+      canActivateChild: [MsalGuard],
       children: [
         { path: 'card', loadChildren: () => import('./pages/card/page.routes') },
         { path: 'select', loadChildren: () => import('./pages/select-card/selectCard.routes') },
