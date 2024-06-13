@@ -22,7 +22,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       clientId: environment.msalConfig.auth.clientId,
       authority: environment.msalConfig.auth.authority,
       redirectUri: '/',
-      postLogoutRedirectUri: '/'
+      postLogoutRedirectUri: '/',
+      navigateToLoginRequestUrl: true
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage

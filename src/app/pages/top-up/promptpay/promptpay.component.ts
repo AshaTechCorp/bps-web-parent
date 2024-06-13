@@ -136,12 +136,12 @@ export class PromptpayComponent implements OnInit {
     }
 
 	backto(){
-		this._router.navigate(['/top-up',this.encodeBase64(this.fk)])
+		this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
 	}
 
     nextto(){
         this._topup.setTopUp(+this.form.value.amount)
-		this._router.navigate(['/top-up/qr-code',this.encodeBase64(this.fk)])
+		this._router.navigate(['/top-up/qr-code',this.encodeBase64(this.card.id)])
     }
 }
 

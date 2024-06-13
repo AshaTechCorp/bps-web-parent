@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((result: EventMessage) => {
         console.log(result);
-        // this._router.navigate(['/select'])
+        this.openDialog()
 
         const payload = result.payload as AuthenticationResult;
         this.authService.instance.setActiveAccount(payload.account);
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
         filter((status: InteractionStatus) => status === InteractionStatus.None),
         takeUntil(this._destroying$)
       )
-      .subscribe(() => {
+      .subscribe(() => { 
         this.setLoginDisplay();
         this.checkAndSetActiveAccount();
       })
@@ -78,6 +78,16 @@ export class HomeComponent implements OnInit {
     if (!activeAccount && this.authService.instance.getAllAccounts().length > 0) {
       let accounts = this.authService.instance.getAllAccounts();
       this.authService.instance.setActiveAccount(accounts[0]);
+    }
+  }
+
+  loginRedirect() {
+    console.log('REDIRECT');
+    
+    if (this.msalGuardConfig.authRequest){
+      this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
+    } else {
+      this.authService.loginRedirect();
     }
   }
 

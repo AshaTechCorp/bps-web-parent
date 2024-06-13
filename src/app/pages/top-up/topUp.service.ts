@@ -38,17 +38,28 @@ export class TopUpService {
     else if (role == "CTR" || role == "Contract")
         return "assets/images/logo/card/bg_CardContracted.svg"
     else
-        return ""
+        return "assets/images/logo/card/bg_CardEmpty.svg"
 }
 
-  get_family_card(email: any) {
+  get_family_card() {
+    let family_email = localStorage.getItem('family');
+    console.log('test777 :', family_email);
+    
     return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
-      email: email
+      email: family_email ?? ""
     }})
     .pipe( (response: any) => {
         return (response);
       }
     );
+  }
+
+  getProfile() {
+    return this._httpClient.get<any>('https://graph.microsoft.com/v1.0/me')
+      .pipe( (response: any) => {
+        return (response);
+      }
+    )
   }
 
   get_card_by_fk(fk: any) {
@@ -138,7 +149,6 @@ export class TopUpService {
   }
 
   setCardData(id: number) {
-    sessionStorage.setItem('card-Data', JSON.stringify(this.cards[id]));
     this.select_index = id
   }
 

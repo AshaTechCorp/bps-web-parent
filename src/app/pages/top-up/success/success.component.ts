@@ -103,7 +103,7 @@ export class PromptpaySuccessComponent implements OnInit {
     }
 
 	backto(){
-		this._router.navigate(['/top-up',this.encodeBase64(this.fk)])
+		this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
 	}
 }
 

@@ -85,13 +85,13 @@ export class TopUpComponent implements OnInit {
 
     select(data : string){
         if(data == "promptpay")
-            this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.fk)]);
+            this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)]);
         else if(data == "credit_debit")
-            this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.fk)]);
+            this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.card.id)]);
     }
 
     backto(){
-		this._router.navigate(['/card',this.encodeBase64(this.fk)])
+		this._router.navigate(['/card',this.encodeBase64(this.card.id)])
 	}
 }
 

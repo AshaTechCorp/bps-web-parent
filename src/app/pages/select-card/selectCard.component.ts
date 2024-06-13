@@ -44,6 +44,7 @@ export class SelectCardComponent implements OnInit {
     time : any
     cards_family: any;
     loadsuccess: boolean = false
+    acc_email: any;
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -60,25 +61,33 @@ export class SelectCardComponent implements OnInit {
     ngOnInit(): void {
 		//this.cards = this._topupservice.getAllCard()
 		//this.cards = this._topupservice.getAllCard()
-        this._topupservice.get_family_card('test@gmail.com').subscribe((resp: any) =>{
-            this.cards_family = resp
-            console.log(this.cards_family);
-           
-          for (let index = 0; index <  this.cards_family.persons.length; index++) {
-            const element =  this.cards_family.persons[index];
-            const data = {
-                //id: element.sn, 
-                id: element.fkId, 
-                role: element.role, 
-                name: element.name, 
-                balance: parseInt(element.remain).toLocaleString(), 
-                update: DateTime.fromISO(element.at).toFormat('HH:mm')
-            }
-            this.cards.push(data)
-            }
-            console.log(this.cards[0].id , 'data1');
-            this.loadsuccess = true
+        this._topupservice.getProfile().subscribe((resp: any) =>{
+            console.log(resp.userPrincipalName);
+
+            this.acc_email = resp.userPrincipalName
+            localStorage.setItem('family', JSON.stringify(this.acc_email));
+            this._topupservice.get_family_card().subscribe((resp: any) =>{
+                this.cards_family = resp
+                console.log(this.cards_family);
+               
+              for (let index = 0; index <  this.cards_family.persons.length; index++) {
+                const element =  this.cards_family.persons[index];
+                const data = {
+                    //id: element.sn, 
+                    id: element.fkId, 
+                    role: element.role, 
+                    name: element.name, 
+                    balance: parseInt(element.remain).toLocaleString(), 
+                    update: DateTime.fromISO(element.at).toFormat('HH:mm')
+                }
+                this.cards.push(data)
+                }
+                console.log(this.cards[0].id , 'data1');
+                this.loadsuccess = true
+            })
         })
+
+        
         this.form.patchValue({
             payment_type: ''
         })
@@ -98,8 +107,8 @@ export class SelectCardComponent implements OnInit {
         this.cards[i].update = date.toFormat('HH:mm')
     }
 
-    select(fk : string){
-        //this._topupservice.setCardData(sn)
+    select(fk : string, i: number){
+        this._topupservice.setCardData(i)
         this._router.navigate(['/card',this.encodeBase64(fk)]);
     }
 

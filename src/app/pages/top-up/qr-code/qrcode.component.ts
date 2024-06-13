@@ -90,7 +90,7 @@ export class QRcodeComponent implements OnInit {
           this._topup.check_status(resp.id).subscribe((resp : any) => {
               if (resp && resp.status === 'SUCCESS') {
                   console.log('Status is complete:', resp);
-                  this._router.navigate(['/top-up/success',this.encodeBase64(this.fk)])
+                  this._router.navigate(['/top-up/success',this.encodeBase64(this.card.id)])
                 } else {
                   console.log('Polling stopped or timed out.');
                 }
@@ -139,7 +139,7 @@ export class QRcodeComponent implements OnInit {
   }
 
   backto(){
-  this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.fk)])
+  this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)])
   }
 }
 

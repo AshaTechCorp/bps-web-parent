@@ -93,14 +93,14 @@ export class CardComponent implements OnInit {
         })
         //this.card = this._topup.getCardData()
         //this.cards = this._topup.getAllCard()
-        this._topup.get_family_card(this.fk).subscribe((resp: any) =>{
+        this._topup.get_family_card().subscribe((resp: any) =>{
             this.cards_family = resp
             console.log(this.cards_family);
            
           for (let index = 0; index <  this.cards_family.persons.length; index++) {
             const element =  this.cards_family.persons[index];
             const data = {
-                id: element.fk, 
+                id: element.fkId, 
                 role: element.role, 
                 name: element.name, 
                 balance: parseInt(element.remain).toLocaleString(), 
@@ -108,11 +108,11 @@ export class CardComponent implements OnInit {
             }
             this.cards.push(data)
             }
+            this.buttonL()
+            this.buttonR()
+            this.slice_card()
             console.log(this.cards , 'data2');
         })
-        this.buttonL()
-        this.buttonR()
-        this.slice_card()
         console.log(this.cards.length);
 
         console.log(this.cards);
@@ -190,6 +190,8 @@ export class CardComponent implements OnInit {
         this.card = this.cards[index]
         this.slice_card()
         this.bgCard = this.bg_card()
+        console.log('card :', this.card);
+        
     }
 
     change_card(index: number){
@@ -243,7 +245,7 @@ export class CardComponent implements OnInit {
     }
 
     gotohistory(){
-        this._router.navigate(['/history',this.encodeBase64(this.fk)])
+        this._router.navigate(['/history',this.encodeBase64(this.card.id)])
         console.log('history');
     }
 }

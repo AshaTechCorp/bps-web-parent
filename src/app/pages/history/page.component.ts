@@ -196,7 +196,6 @@ constructor(
     bottomSheetRef.afterDismissed().subscribe(result => {
       console.log('The bottom sheet was dismissed with result:', result);
     })
-
   }
 
   getData(i: number, j: number): any {
@@ -248,7 +247,7 @@ constructor(
   }
 
   backto(){
-    this._router.navigate(['/card',this.encodeBase64(this.fk)])
+    this._router.navigate(['/card',this.encodeBase64(this.card.id)])
   }
 
 }
