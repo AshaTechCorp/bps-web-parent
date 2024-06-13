@@ -3,22 +3,27 @@
 	<div class="flex flex-col min-[1030px]:flex-row w-full min-[1030px]:m-[30px] min-[1030px]:justify-center">
 		<div class="flex flex-col my-[30px] min-[1030px]:my-[0px]">
 			<div class="flex rounded-[30px] justify-center min-[1030px]:mb-[18px] min-[1030px]:mr-[40px]">
-				<!-- Your SVG content -->
-				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
-					<div class="flex flex-col justify-between w-full h-full">
-						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card?.name}}</p>
-						<div>
-							<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-							<p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
-						</div>
-						<div class="flex justify-between h-[22px] items-center">
-							<div class="flex">
-								<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
+				<ng-container *ngIf="loadsuccess == false">
+					<img class="relative w-[351px] h-[200px]" src="/assets/images/logo/card/mock_card.svg" alt="card">
+				</ng-container>
+				<ng-container *ngIf="loadsuccess == true">
+					<!-- Your SVG content -->
+					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
+						<div class="flex flex-col justify-between w-full h-full">
+							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card?.name}}</p>
+							<div>
+								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+								<p class="text-[34px] font-medium text-[#FFFFFF]">{{card?.balance}}</p>
+							</div>
+							<div class="flex justify-between h-[22px] items-center">
+								<div class="flex">
+									<img (click)="clickForUpdateTime()" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{card?.update}}</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+			</ng-container>
 	  		</div>
 			<div class=" hidden min-[1030px]:block">
 				<button class="flex items-center py-[8px] text-[#990033]" (click)="backto()">

@@ -74,8 +74,9 @@ export class HistoryComponent implements OnInit {
 	card: any
   showTransactions: boolean = false;
   k: any;
-  sn: any;
+  fk: any;
   bgCard: string='';
+  loadsuccess: boolean = false
 
   toggleTransactions() {
     this.showTransactions = !this.showTransactions;
@@ -96,7 +97,7 @@ constructor(
 
   @Inject(PLATFORM_ID) private platformId: any
 ) {
-  this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+  this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
 }
 
 
@@ -107,15 +108,16 @@ constructor(
 
     //this.role = this._userService.get_role()
     this.role = 'staff'
-    this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+    this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
       this.card = {
-          id: resp.sn, 
+          id: resp.fkId, 
           role: resp.role, 
           name: resp.name, 
           balance: parseInt(resp.remain).toLocaleString(), 
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
       this.bgCard = this.bg_card()
+      this.loadsuccess = true
     })
     
     this._historyService.get_transactionsCard().subscribe(
@@ -246,7 +248,7 @@ constructor(
   }
 
   backto(){
-    this._router.navigate(['/card',this.encodeBase64(this.sn)])
+    this._router.navigate(['/card',this.encodeBase64(this.fk)])
   }
 
 }

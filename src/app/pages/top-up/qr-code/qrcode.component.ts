@@ -45,9 +45,10 @@ export class QRcodeComponent implements OnInit {
       card: '2617800948'
   })
 	amountTopup: any
-  sn: string;
+  fk: string;
   img_qr: string
   bgCard!: string;
+  loadsuccess: boolean = false
 
   constructor(
       public dialog: MatDialog,
@@ -57,14 +58,14 @@ export class QRcodeComponent implements OnInit {
       //private cdr: ChangeDetectorRef,
       private activityroute: ActivatedRoute
   ) {
-    this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+    this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
     this.img_qr  = 'assets/images/logo/loading_payment.gif';
 
   }
   ngOnInit(){
-    this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+    this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
       this.card = {
-          id: resp.sn, 
+          id: resp.fkId, 
           role: resp.role, 
           name: resp.name, 
           balance: parseInt(resp.remain).toLocaleString(), 
@@ -72,12 +73,12 @@ export class QRcodeComponent implements OnInit {
       }
       this.bgCard = this.bg_card()
       this.cardName = this.card.name
-
+      this.loadsuccess = true
       this.amountTopup = this._topup.getTopUp()
       this.form = this._fb.group({
           amount: this.amountTopup,
           card: '2617800948'
-          //card: this.sn
+          //card: this.fkId
           //card: '123123213'
       })
       console.log(this.form.value);
@@ -89,7 +90,7 @@ export class QRcodeComponent implements OnInit {
           this._topup.check_status(resp.id).subscribe((resp : any) => {
               if (resp && resp.status === 'SUCCESS') {
                   console.log('Status is complete:', resp);
-                  this._router.navigate(['/top-up/success',this.encodeBase64(this.sn)])
+                  this._router.navigate(['/top-up/success',this.encodeBase64(this.fk)])
                 } else {
                   console.log('Polling stopped or timed out.');
                 }
@@ -138,7 +139,7 @@ export class QRcodeComponent implements OnInit {
   }
 
   backto(){
-  this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.sn)])
+  this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.fk)])
   }
 }
 

@@ -43,8 +43,9 @@ export class PromptpayComponent implements OnInit {
     time : any
     currentColor: string[] = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent'];
     currentTextColor: string[] = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]'];
-    sn: any;
+    fk: any;
     bgCard!: string;
+    loadsuccess: boolean = false
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -55,12 +56,12 @@ export class PromptpayComponent implements OnInit {
         this.form = this._fb.group({
             amount: '',
         })
-        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+        this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
     }
     ngOnInit(): void {
-		this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
-                id: resp.sn, 
+                id: resp.fkId, 
                 role: resp.role, 
                 name: resp.name, 
                 balance: parseInt(resp.remain).toLocaleString(), 
@@ -71,6 +72,7 @@ export class PromptpayComponent implements OnInit {
             console.log(this.card.role);
             
             console.log('this.card', this.card);
+            this.loadsuccess = true
         }) 
     }
 
@@ -134,12 +136,12 @@ export class PromptpayComponent implements OnInit {
     }
 
 	backto(){
-		this._router.navigate(['/top-up',this.encodeBase64(this.sn)])
+		this._router.navigate(['/top-up',this.encodeBase64(this.fk)])
 	}
 
     nextto(){
         this._topup.setTopUp(+this.form.value.amount)
-		this._router.navigate(['/top-up/qr-code',this.encodeBase64(this.sn)])
+		this._router.navigate(['/top-up/qr-code',this.encodeBase64(this.fk)])
     }
 }
 

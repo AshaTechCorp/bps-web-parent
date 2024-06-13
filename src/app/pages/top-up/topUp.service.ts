@@ -23,27 +23,27 @@ export class TopUpService {
   constructor(private _httpClient: HttpClient) {}
 
   get_bg_card(role: string): string{
-    if (role == "student" || role == "STD"){
+    if (role == "Student" || role == "STD"){
         //if (index % 2 == 1)
         //    return "assets/images/logo/card/bg_CardStudentGray.svg"
         //else
         return "assets/images/logo/card/bg_CardStudentRed.svg"
     }
-    else if (role == "STF" || role == "staff")
+    else if (role == "STF" || role == "Staff" || role == "Business")
         return "assets/images/logo/card/bg_CardStaff.svg"
-    else if (role == "PRT" || role == "parent")
+    else if (role == "PRT" || role == "Parent")
         return "assets/images/logo/card/bg_CardParent.svg"
-    else if (role == "TMP" || role == "temporary")
+    else if (role == "TMP" || role == "Temporary")
         return "assets/images/logo/card/bg_CardTemporary.svg"
-    else if (role == "CTR" || role == "contract")
+    else if (role == "CTR" || role == "Contract")
         return "assets/images/logo/card/bg_CardContracted.svg"
     else
         return ""
 }
 
-  get_family_card(familyCode: any) {
+  get_family_card(email: any) {
     return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
-      familyCode: familyCode
+      email: email
     }})
     .pipe( (response: any) => {
         return (response);
@@ -51,10 +51,10 @@ export class TopUpService {
     );
   }
 
-  get_card_by_SN(sn: any) {
-    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry',{params:{
+  get_card_by_fk(fk: any) {
+    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry-web',{params:{
       //card: sn
-      card: 2617766100
+      fk: fk
     }})
     .pipe( (response: any) => {
         return (response);

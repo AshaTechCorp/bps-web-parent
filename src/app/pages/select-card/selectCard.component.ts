@@ -43,6 +43,7 @@ export class SelectCardComponent implements OnInit {
 	data1: any[] = []
     time : any
     cards_family: any;
+    loadsuccess: boolean = false
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -59,14 +60,15 @@ export class SelectCardComponent implements OnInit {
     ngOnInit(): void {
 		//this.cards = this._topupservice.getAllCard()
 		//this.cards = this._topupservice.getAllCard()
-        this._topupservice.get_family_card(123123213).subscribe((resp: any) =>{
+        this._topupservice.get_family_card('test@gmail.com').subscribe((resp: any) =>{
             this.cards_family = resp
             console.log(this.cards_family);
            
           for (let index = 0; index <  this.cards_family.persons.length; index++) {
             const element =  this.cards_family.persons[index];
             const data = {
-                id: element.sn, 
+                //id: element.sn, 
+                id: element.fkId, 
                 role: element.role, 
                 name: element.name, 
                 balance: parseInt(element.remain).toLocaleString(), 
@@ -74,9 +76,8 @@ export class SelectCardComponent implements OnInit {
             }
             this.cards.push(data)
             }
-            console.log(this.cards , 'data1');
-
-          
+            console.log(this.cards[0].id , 'data1');
+            this.loadsuccess = true
         })
         this.form.patchValue({
             payment_type: ''
@@ -97,9 +98,9 @@ export class SelectCardComponent implements OnInit {
         this.cards[i].update = date.toFormat('HH:mm')
     }
 
-    select(sn : string){
+    select(fk : string){
         //this._topupservice.setCardData(sn)
-        this._router.navigate(['/card',this.encodeBase64(sn)]);
+        this._router.navigate(['/card',this.encodeBase64(fk)]);
     }
 
     getTextWidth(text: string): number {

@@ -44,8 +44,9 @@ export class PromptpaySuccessComponent implements OnInit {
 	success_date : Date = new Date()
     amount : any
     form : any
-    sn: string;
+    fk: string;
     bgCard!: string;
+    loadsuccess: boolean = false
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -53,21 +54,22 @@ export class PromptpaySuccessComponent implements OnInit {
         private _topup: TopUpService,
         private activityroute: ActivatedRoute
     ) {
-        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+        this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
         this.form = this._fb.group({
             amount: 0,
         })
     }
     ngOnInit(): void {
-		this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
-                id: resp.sn, 
+                id: resp.fkId, 
                 role: resp.role, 
                 name: resp.name, 
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
+            this.loadsuccess = true
         })
         console.log('this.card', this.card);
         this.amount = this._topup.getTopUp()
@@ -101,7 +103,7 @@ export class PromptpaySuccessComponent implements OnInit {
     }
 
 	backto(){
-		this._router.navigate(['/top-up',this.encodeBase64(this.sn)])
+		this._router.navigate(['/top-up',this.encodeBase64(this.fk)])
 	}
 }
 

@@ -39,21 +39,22 @@ export class TopUpComponent implements OnInit {
 	balance: number = 1400
 	card: any
     time : any
-    sn: string;
+    fk: string;
     bgCard!: string;
+    loadsuccess: boolean = false
     constructor(
         public dialog: MatDialog,
         private _router: Router,
         private _topup: TopUpService,
         private activityroute: ActivatedRoute
     ) {
-        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
-        console.log(this.sn);
+        this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
+        console.log(this.fk);
     }
     ngOnInit(): void {
-		this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
-                id: resp.sn, 
+                id: resp.fkId, 
                 role: resp.role, 
                 name: resp.name, 
                 balance: parseInt(resp.remain).toLocaleString(), 
@@ -61,6 +62,7 @@ export class TopUpComponent implements OnInit {
             }
             this.bgCard = this.bg_card()
             console.log(this.card);
+            this.loadsuccess = true
         })
     }
     decodeBase64(input: string): string {
@@ -83,13 +85,13 @@ export class TopUpComponent implements OnInit {
 
     select(data : string){
         if(data == "promptpay")
-            this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.sn)]);
+            this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.fk)]);
         else if(data == "credit_debit")
-            this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.sn)]);
+            this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.fk)]);
     }
 
     backto(){
-		this._router.navigate(['/card',this.encodeBase64(this.sn)])
+		this._router.navigate(['/card',this.encodeBase64(this.fk)])
 	}
 }
 

@@ -3,7 +3,7 @@ import { HistoryComponent } from './page.component';
 
 export default [
     {
-        path     : ':sn',
+        path     : ':fk',
         component: HistoryComponent,
     },
 ] as Routes;

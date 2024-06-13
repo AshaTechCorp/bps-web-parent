@@ -57,6 +57,7 @@ export class SuccessOrnotComponent implements OnInit {
 	bgCard!: string;
 	ref!: string;
 	success: number = 3;
+	loadsuccess: boolean = false
 	//loading: string = 'assets/images/waiting/pending.gif';
 	constructor(
 		public dialog: MatDialog,
@@ -65,7 +66,7 @@ export class SuccessOrnotComponent implements OnInit {
 		private _topup: TopUpService,
 		private activityroute: ActivatedRoute
 	) {
-		//this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+		//this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
 		//this.ref = this.activityroute.snapshot.params['referenceOrder']
 		this.activityroute.queryParams.subscribe((params) => {
 		this.ref = params['referenceOrder'];
@@ -88,7 +89,7 @@ export class SuccessOrnotComponent implements OnInit {
 			update: DateTime.fromISO(resp.date).toFormat('HH:mm'),
 			};
 			this.bgCard = this.bg_card();
-
+			this.loadsuccess = true
 			if (!resp) console.log('resp = null');
 			else if (resp.status == 'CREATE') this.success = 1;
 			else if (resp.status == 'SUCCESS') this.success = 2;

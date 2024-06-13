@@ -52,9 +52,10 @@ export class CardComponent implements OnInit {
     display_left: any
     display_right: any
     slice_src: any
-    sn: any
+    fk: any
     cards_family: any;
     bgCard!: string;
+    loadsuccess: boolean = false
 
     constructor(
         public dialog: MatDialog,
@@ -64,7 +65,7 @@ export class CardComponent implements OnInit {
         private _historyService: HistoryService,
         private activityroute: ActivatedRoute 
     ) {
-        this.sn = this.decodeBase64(this.activityroute.snapshot.params['sn'])
+        this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
     }
     ngOnInit(): void {
         const dialogRef = this.dialog.open(DialogComponent, {
@@ -72,18 +73,19 @@ export class CardComponent implements OnInit {
             width: '118px',
             height: '118px',
         });
-        this._topup.get_card_by_SN(123123213).subscribe((resp: any) =>{
+        this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             //this.card = resp
             console.log(this.card);
            
             this.card = {
-                id: resp.sn, 
+                id: resp.fkId, 
                 role: resp.role, 
                 name: resp.name, 
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             console.log(this.card , 'data1');
+            this.loadsuccess = true
             this.bgCard = this.bg_card()
             timer(2000).subscribe(() => {
                 dialogRef.close();
@@ -91,14 +93,14 @@ export class CardComponent implements OnInit {
         })
         //this.card = this._topup.getCardData()
         //this.cards = this._topup.getAllCard()
-        this._topup.get_family_card(123123213).subscribe((resp: any) =>{
+        this._topup.get_family_card(this.fk).subscribe((resp: any) =>{
             this.cards_family = resp
             console.log(this.cards_family);
            
           for (let index = 0; index <  this.cards_family.persons.length; index++) {
             const element =  this.cards_family.persons[index];
             const data = {
-                id: element.sn, 
+                id: element.fk, 
                 role: element.role, 
                 name: element.name, 
                 balance: parseInt(element.remain).toLocaleString(), 
@@ -241,7 +243,7 @@ export class CardComponent implements OnInit {
     }
 
     gotohistory(){
-        this._router.navigate(['/history',this.encodeBase64(this.sn)])
+        this._router.navigate(['/history',this.encodeBase64(this.fk)])
         console.log('history');
     }
 }

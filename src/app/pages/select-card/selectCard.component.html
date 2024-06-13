@@ -3,25 +3,35 @@
     <div class="px-[10px] min-[390px]:px-[15px] min-[420px]:px-[30px] my-[30px] bg-white rounded-[20px]">
 		<p class="text-[34px] py-[20px] font-medium text-center text-[#002755] p-0 m-0">Select Card</p>
 		<div class="grid grid-cols-1 gap-[30px] min-[960px]:grid-cols-2 pb-[30px]">
-			<ng-container *ngFor="let item of cards; let i=index">
-				<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card(i) + ')'">
-					<div class="relative flex flex-col justify-between w-full h-full">
-						<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{item.name}}</p>
-						<div class="absolute right-0 top-0" (click)="select(item.id)" >
-							<img class="h-[45px] hover:cursor-pointer" src="../../../../assets/images/logo/card/button_arrow.svg" alt="">
-						</div>
-						<div>
-							<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
-							<p class="text-[34px] font-medium text-[#FFFFFF]">{{item.balance}}</p>
-						</div>
-						<div class="flex justify-between h-[22px] items-center">
-							<div class="flex">
-								<img (click)="clickForUpdateTime(i)" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
-								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{item.update}}</p>
+			<ng-container *ngIf="loadsuccess == false">
+				<img src="/assets/images/logo/card/mock_card.svg" alt="card">
+				<img src="/assets/images/logo/card/mock_card.svg" alt="card">
+				<img src="/assets/images/logo/card/mock_card.svg" alt="card">
+				<img src="/assets/images/logo/card/mock_card.svg" alt="card">
+				<img src="/assets/images/logo/card/mock_card.svg" alt="card">
+				<img src="/assets/images/logo/card/mock_card.svg" alt="card">
+			</ng-container>
+			<ng-container *ngIf="loadsuccess == true">
+				<ng-container *ngFor="let item of cards; let i=index">
+					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [style.background-image]="'url(' + bg_card(i) + ')'">
+						<div class="relative flex flex-col justify-between w-full h-full">
+							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{item.name}}</p>
+							<div class="absolute right-0 top-0" (click)="select(item.id)" >
+								<img class="h-[45px] hover:cursor-pointer" src="../../../../assets/images/logo/card/button_arrow.svg" alt="">
+							</div>
+							<div>
+								<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Available Balance (Baht)</p>
+								<p class="text-[34px] font-medium text-[#FFFFFF]">{{item.balance}}</p>
+							</div>
+							<div class="flex justify-between h-[22px] items-center">
+								<div class="flex">
+									<img (click)="clickForUpdateTime(i)" class="w-[18px] hover:cursor-pointer mr-[2px]" src="../../../../assets/images/logo/card/refresh_icon.svg" alt="">
+									<p class="text-[14px] font-normal tracking-[0.1px] text-[#FFFFFF]">Updated at {{item.update}}</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</ng-container>
 			</ng-container>
 		</div>
     </div>

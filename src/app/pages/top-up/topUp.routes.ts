@@ -7,15 +7,15 @@ import { CreditdebitTopupComponent } from './dialog-credit-debit/credit-debit/cr
 
 export default [
     {
-        path     : 'promptpay/:sn',
+        path     : 'promptpay/:fk',
         component: PromptpayComponent,
     },
     {
-        path     : 'qr-code/:sn',
+        path     : 'qr-code/:fk',
         component: QRcodeComponent,
     },
     {
-        path     : 'success/:sn',
+        path     : 'success/:fk',
         component: PromptpaySuccessComponent,
         pathMatch: 'full'
     },
@@ -24,11 +24,11 @@ export default [
         component: PromptpaySuccessComponent,
     },
     {
-        path     : 'credit-debit/:sn',
+        path     : 'credit-debit/:fk',
         component: CreditdebitTopupComponent,
     },
     {
-        path     : ':sn',
+        path     : ':fk',
         component: TopUpComponent,
     },
 ] as Routes;

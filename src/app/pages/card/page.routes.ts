@@ -3,7 +3,7 @@ import { CardComponent } from './page.component';
 
 export default [
     {
-        path     : ':sn',
+        path     : ':fk',
         component: CardComponent,
     },
 ] as Routes;
