@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((result: EventMessage) => {
         console.log(result);
-        this.openDialog()
 
         const payload = result.payload as AuthenticationResult;
         this.authService.instance.setActiveAccount(payload.account);
@@ -66,6 +65,8 @@ export class HomeComponent implements OnInit {
 
   setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+    if (this.loginDisplay)
+      this.openDialog()
   }
   checkAndSetActiveAccount(){
     /**
@@ -82,8 +83,6 @@ export class HomeComponent implements OnInit {
   }
 
   loginRedirect() {
-    console.log('REDIRECT');
-    
     if (this.msalGuardConfig.authRequest){
       this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
     } else {
@@ -130,7 +129,7 @@ export class HomeComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result:', result);
+      //console.log('The dialog was closed with result:', result);
       this._router.navigate(['/select'])
     });
   }

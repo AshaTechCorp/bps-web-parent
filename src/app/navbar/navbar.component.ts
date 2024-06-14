@@ -115,6 +115,9 @@ export class NavbarComponent {
         this.openDialog();
       });
     }
+    else {
+      this.authService.logoutRedirect();
+    }
   }
 
   openDialog(): void {
