@@ -43,7 +43,6 @@ export class TopUpService {
 
   get_family_card() {
     let family_email = localStorage.getItem('family');
-    console.log('test777 :', family_email);
     
     return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
       email: family_email ?? ""
