@@ -77,7 +77,7 @@ export class QRcodeComponent implements OnInit {
       this.amountTopup = this._topup.getTopUp()
       this.form = this._fb.group({
           amount: this.amountTopup,
-          card: this.card.id
+          fkId: this.card.id
           //card: this.fkId
           //card: '123123213'
       })
