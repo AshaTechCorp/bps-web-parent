@@ -26,6 +26,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     selector: 'app-product-form',
     standalone: true,
     templateUrl: './creditdebit.component.html',
+    styleUrl: './creditdebit.component.css',
     imports: [
         CommonModule,
         MatIconModule,
