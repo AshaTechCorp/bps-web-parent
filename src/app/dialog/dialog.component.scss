@@ -1,0 +1,11 @@
+.dialog-content {
+    overflow: hidden !important;
+}
+.mat-dialog-container, .mat-dialog-content {
+    overflow: hidden !important;
+}
+::ng-deep{
+    .mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__container, .mat-mdc-dialog-container._mat-animation-noopable .mdc-dialog__surface{
+        border-radius: 10px !important;
+    }
+}

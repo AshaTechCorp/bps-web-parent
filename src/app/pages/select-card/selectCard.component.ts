@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { DateTime } from 'luxon';
 import { TopUpService } from '../top-up/topUp.service';
 import { NavbarComponent } from 'src/app/navbar/navbar.component';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
     selector: 'app-select',
@@ -50,7 +51,8 @@ export class SelectCardComponent implements OnInit {
         private _fb: FormBuilder,
         private _router: Router,
         private _topupservice: TopUpService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private authService: MsalService,
     ) {
         this.form = this._fb.group({
             payment_type: '',
@@ -68,7 +70,6 @@ export class SelectCardComponent implements OnInit {
             localStorage.setItem('family', this.acc_email);
             this._topupservice.get_family_card().subscribe((resp: any) =>{
                 this.cards_family = resp
-                console.log(this.cards_family);
                
               for (let index = 0; index <  this.cards_family.persons.length; index++) {
                 const element =  this.cards_family.persons[index];
@@ -82,8 +83,13 @@ export class SelectCardComponent implements OnInit {
                 }
                 this.cards.push(data)
                 }
-                console.log(this.cards[0].id , 'data1');
                 this.loadsuccess = true
+            },error=> {
+                // จัดการเมื่อเกิด error ในการดึงข้อมูล
+                alert('this email is not registered')
+                console.error('Error fetching family card data:', error);
+                this.authService.logoutRedirect();
+                // อาจต้องมีการ handle error ตามที่ต้องการ เช่น แสดงข้อความแจ้งเตือนให้ผู้ใช้
             })
         })
 

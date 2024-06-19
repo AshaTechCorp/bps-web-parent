@@ -81,12 +81,9 @@ export class QRcodeComponent implements OnInit {
           //card: this.fkId
           //card: '123123213'
       })
-      console.log(this.form.value);
       this._topup.create_QR(this.form.value).subscribe((resp : any) => {
-          console.log(resp);
           this.img_qr = resp.qrCodeUrl
           //ปิด dialog
-          console.log(this.img_qr);
           this._topup.check_status(resp.id).subscribe((resp : any) => {
               if (resp && resp.status === 'SUCCESS') {
                   console.log('Status is complete:', resp);
@@ -97,10 +94,6 @@ export class QRcodeComponent implements OnInit {
           });
       });
     })
-    console.log('this.card', this.card);
-
-    
-    console.log(this.amountTopup);
   }
 
   decodeBase64(input: string): string {

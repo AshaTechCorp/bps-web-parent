@@ -69,11 +69,14 @@ export class HistoryService {
     return this.transactions
   }
 
-  get_transactionsCard() :Observable<any> {
+  get_transactionsCard(month: number, year: number) :Observable<any> {
     return this._httpClient.get<any>(environment.baseurl + '/api/card/history',{params:{
+		//sn: 1,
+		//year: 1,
+		//month: 1
 		sn: 1,
-		year: 1,
-		month: 1
+		year: month,
+		month: year
 	}});
   }
 }

@@ -77,8 +77,6 @@ export class SuccessOrnotComponent implements OnInit {
 		});
 	}
 	ngOnInit(): void {
-		console.log(this.ref);
-
 		if (this.ref) {
 		this._topup.check_status_credit(this.ref).subscribe((resp: any) => {
 			this.card = {
@@ -95,10 +93,7 @@ export class SuccessOrnotComponent implements OnInit {
 			else if (resp.status == 'SUCCESS') this.success = 2;
 			else console.log('555555');
 		});
-		console.log('success', this.success);
-		console.log('111');
 		}
-		console.log('this.card', this.card);
 		this.amount = this._topup.getTopUp();
 	}
 	decodeBase64(input: string): string {
@@ -124,7 +119,6 @@ export class SuccessOrnotComponent implements OnInit {
 		this.form.patchValue({
 		amount: i,
 		});
-		console.log(this.form.value.amount);
 	}
 
 	backto() {

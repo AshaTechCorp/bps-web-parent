@@ -71,7 +71,6 @@ export class PromptpaySuccessComponent implements OnInit {
             this.bgCard = this.bg_card()
             this.loadsuccess = true
         })
-        console.log('this.card', this.card);
         this.amount = this._topup.getTopUp()
     }
 
@@ -98,8 +97,6 @@ export class PromptpaySuccessComponent implements OnInit {
         this.form.patchValue({
 			amount: i
 		});
-		console.log(this.form.value.amount);
-
     }
 
 	backto(){

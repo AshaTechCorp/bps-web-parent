@@ -37,7 +37,7 @@
         <div class="flex justify-between items-center px-4 mt-4">
           <p class="font-medium text-[#002755] text-[20px] min-[404px]:text-[24px]">Transactions History</p>
           <div class="">
-            <select class="block w-auto bg-white px-2 py-2 hover:cursor-pointer" [(ngModel)]="selectedDate">
+            <select class="block w-auto bg-white px-2 py-2 hover:cursor-pointer" [(ngModel)]="selectedDate" (ngModelChange)="onSelectedDateChange()">
               <option *ngFor="let monthYear of monthsYears" [value]="monthYear">{{ monthYear }}</option>
             </select>
           </div>

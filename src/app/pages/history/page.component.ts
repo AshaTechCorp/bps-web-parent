@@ -105,7 +105,6 @@ constructor(
     this.generateMonthsYears();
     this.setDefaultMonthYear();
 
-
     //this.role = this._userService.get_role()
     this.role = 'staff'
     this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
@@ -119,9 +118,13 @@ constructor(
       this.bgCard = this.bg_card()
       this.loadsuccess = true
     })
-    
-    this._historyService.get_transactionsCard().subscribe(
+    this.onSelectedDateChange()
+  }
+
+  get_Transaction(month: number, year: number){
+    this._historyService.get_transactionsCard(month, year).subscribe(
       (resp: any) => {
+        this.history = []
         this.total[0] = resp.totalTopUp
         this.total[1] = resp.totalSpending
         const historys = resp.history
@@ -169,6 +172,20 @@ constructor(
       return btoa(input);
   }
 
+  onSelectedDateChange() {
+    const parts = this.selectedDate.split(' ');
+    const monthString = parts[0]; // ชื่อเดือน เช่น "February"
+    const yearString = parts[1];  // ปี เช่น "2023"
+
+    // สร้าง mapping ของชื่อเดือนกับตัวเลขเดือน
+    const monthMapping: { [key: string]: number } = {
+      'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
+    };
+    const monthNumber = monthMapping[monthString];
+    const yearNumber = parseInt(yearString, 10);
+    this.get_Transaction(monthNumber, yearNumber)
+  }
+
   bg_card(): string{
     return this._topup.get_bg_card(this.card.role)
   }
@@ -199,7 +216,7 @@ constructor(
   }
 
   getData(i: number, j: number): any {
-    console.log('test ,',this.history.slice().reverse());
+  //  console.log('test ,',this.history.slice().reverse());
     
     return {
       history: this.history.slice().reverse(),
@@ -213,7 +230,7 @@ constructor(
 
   openDialogOrBottomSheet(i: number, j: number): void {
     if (isPlatformBrowser(this.platformId)) {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const isMobile = window.innerWidth < 960;
       if (isMobile) {
         this.openBottomSheet(i, j);
       } else {
@@ -229,10 +246,17 @@ constructor(
 
   generateMonthsYears(): void {
     const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
     for (let year = currentYear; year >= currentYear - 1; year--) {
-      for (let month = 1; month <= 12; month++) {
-        this.monthsYears.push(`${this.getMonthName(month)} ${year}`);
+      if (year == currentYear) {
+        for (let month = currentMonth; month <= 12; month++) {
+          this.monthsYears.push(`${this.getMonthName(month)} ${year}`);
+        }
       }
+      else
+        for (let month = 1; month <= currentMonth; month++) {
+          this.monthsYears.push(`${this.getMonthName(month)} ${year}`);
+        }
     }
   }
 

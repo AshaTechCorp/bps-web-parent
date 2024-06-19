@@ -73,10 +73,7 @@ export class CardComponent implements OnInit {
             width: '118px',
             height: '118px',
         });
-        this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
-            //this.card = resp
-            console.log(this.card);
-           
+        this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{     
             this.card = {
                 id: resp.fkId, 
                 role: resp.role, 
@@ -84,7 +81,6 @@ export class CardComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
-            console.log(this.card , 'data1');
             this.loadsuccess = true
             this.bgCard = this.bg_card()
             timer(2000).subscribe(() => {
@@ -95,7 +91,6 @@ export class CardComponent implements OnInit {
         //this.cards = this._topup.getAllCard()
         this._topup.get_family_card().subscribe((resp: any) =>{
             this.cards_family = resp
-            console.log(this.cards_family);
            
           for (let index = 0; index <  this.cards_family.persons.length; index++) {
             const element =  this.cards_family.persons[index];
@@ -111,11 +106,13 @@ export class CardComponent implements OnInit {
             this.buttonL()
             this.buttonR()
             this.slice_card()
-            console.log(this.cards , 'data2');
+        },
+        (error) => {
+            console.error('เกิดข้อผิดพลาดในการสมัครสมาชิก:', error);
+            this.buttonL()
+            this.buttonR()
+          // ทำการจัดการข้อผิดพลาดที่นี่ เช่น แสดงข้อความผิดพลาดหรือทำสิ่งใดก็ได้ตามที่คุณต้องการ
         })
-        console.log(this.cards.length);
-
-        console.log(this.cards);
 
         this.role = 'parent'
 
@@ -132,9 +129,6 @@ export class CardComponent implements OnInit {
 
     buttonL(){
         const index = this._topup.getSelectIndex()
-        console.log('L' + index);
-
-        console.log('buttonL');
 
         if (index > 0){
             this.display_left = "block"
@@ -146,15 +140,11 @@ export class CardComponent implements OnInit {
 
     buttonR(){
         const index = this._topup.getSelectIndex()
-        console.log('R' + index);
-        console.log('buttonR');
         if (index < this.cards.length - 1){
             this.display_right = "block"
-            console.log(index + '<' + this.cards.length +'R block');
         }
         else{
             this.display_right = "hidden"
-            console.log(index + '<' + this.cards.length +'R hidden');
         }
     }
 
@@ -172,7 +162,6 @@ export class CardComponent implements OnInit {
 
     change_left(){
         const index = this._topup.getSelectIndex() - 1
-        console.log('this._topup.getSelectIndex() - 1 = ' + index);
         this._topup.setCardData(index)
         this.buttonL()
         this.buttonR()
@@ -183,15 +172,12 @@ export class CardComponent implements OnInit {
 
     change_right(){
         const index = this._topup.getSelectIndex() + 1
-        console.log('this._topup.getSelectIndex() + 1 = ' + index);
         this._topup.setCardData(index)
         this.buttonL()
         this.buttonR()
         this.card = this.cards[index]
         this.slice_card()
         this.bgCard = this.bg_card()
-        console.log('card :', this.card);
-        
     }
 
     change_card(index: number){
@@ -199,7 +185,6 @@ export class CardComponent implements OnInit {
         this.toggle_popup()
         this.card = this.cards[index]
         this.bgCard = this.bg_card()
-        console.log(index);
         this.slice_card()
     }
 
@@ -213,8 +198,6 @@ export class CardComponent implements OnInit {
     }
 
     bg_card(): string{
-        console.log("this.card.role 1",this.card.role);
-        
         return this._topup.get_bg_card(this.card.role)
     }
 
@@ -241,11 +224,9 @@ export class CardComponent implements OnInit {
 
     gototopup(){
         this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
-        console.log('top-up');
     }
 
     gotohistory(){
         this._router.navigate(['/history',this.encodeBase64(this.card.id)])
-        console.log('history');
     }
 }

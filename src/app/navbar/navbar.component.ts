@@ -22,8 +22,16 @@ import { DialogComponent } from '../dialog/dialog.component'
 export class NavbarComponent {
   isIframe = false;
   loginDisplay = false;
+  isButtonDisabled = false
   private readonly _destroying$ = new Subject<void>();
 
+  disableButton(): void {
+    this.isButtonDisabled = true;
+  }
+
+  enableButton(): void {
+    this.isButtonDisabled = false;
+  }
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,

@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit, OnChanges, Inject } from '@angular/core';
+import { Component, OnInit, OnChanges, Inject, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -64,7 +64,8 @@ export class CreditDebitDialog implements OnInit {
         public dialog: MatDialog,
         private FormBuilder: FormBuilder,
         public _router: Router,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private elementRef: ElementRef
     )
     {
         console.log(' this.form', this.data);

@@ -1,5 +1,5 @@
 import { CommonModule} from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ElementRef, Renderer2, NgZone, inject} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ElementRef, Renderer2, NgZone, inject, ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +39,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CreditdebitTopupComponent implements OnInit{
-
+    @ViewChild(NavbarComponent) navbarComponent!: NavbarComponent;
+    IsDialogOpen: boolean = false
     form: FormGroup;
     users: any[] = []
 	card: any
@@ -71,7 +72,6 @@ export class CreditdebitTopupComponent implements OnInit{
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
-            console.log('this.card', this.card);
             this.loadsuccess = true
         })
     }
@@ -85,7 +85,9 @@ export class CreditdebitTopupComponent implements OnInit{
     }
 
 	openDialogEdit(item: any) {
-		console.log(item);
+        this.IsDialogOpen = true
+        this.navbarComponent.disableButton();
+
         item = this.form.value.amount
         const DialogRef = this.dialog.open(CreditDebitDialog, {
             disableClose: true,
@@ -97,8 +99,9 @@ export class CreditdebitTopupComponent implements OnInit{
             }
         });
         DialogRef.afterClosed().subscribe((result) => {
+            this.IsDialogOpen = false
+            this.navbarComponent.enableButton();
             if (result) {
-                console.log(result, 'result')
                 window.location.reload();
             }
         });
@@ -115,43 +118,44 @@ export class CreditdebitTopupComponent implements OnInit{
     }
 
     select_amount(i : number){
-        if (i == 0) {
-            this.currentColor = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent']
-            this.currentTextColor = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]']
-            this.form.patchValue({
-                amount: ''
-            });
-        }else {
-            this.form.patchValue({
-                amount: i
-            });
-            this.currentColor = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent']
-            this.currentTextColor = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]']
-            if(i == 50){
-                this.currentColor[0] = 'bg-[#990033]'
-                this.currentTextColor[0] = 'text-white'
+        if (!this.IsDialogOpen) {
+            if (i == 0) {
+                this.currentColor = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent']
+                this.currentTextColor = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]']
+                this.form.patchValue({
+                    amount: ''
+                });
+            }else {
+                this.form.patchValue({
+                    amount: i
+                });
+                this.currentColor = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent']
+                this.currentTextColor = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]']
+                if(i == 50){
+                    this.currentColor[0] = 'bg-[#990033]'
+                    this.currentTextColor[0] = 'text-white'
+                }
+                else if(i == 100){
+                    this.currentColor[1] = 'bg-[#990033]'
+                    this.currentTextColor[1] = 'text-white'
+                }
+                else if(i == 200){
+                    this.currentColor[2] = 'bg-[#990033]'
+                    this.currentTextColor[2] = 'text-white'
+                }
+                else if(i == 300){
+                    this.currentColor[3] = 'bg-[#990033]'
+                    this.currentTextColor[3] = 'text-white'
+                }
+                else if(i == 500){
+                    this.currentColor[4] = 'bg-[#990033]'
+                    this.currentTextColor[4] = 'text-white'
+                }
+                else if(i == 1000){
+                    this.currentColor[5] = 'bg-[#990033]'
+                    this.currentTextColor[5] = 'text-white'
+                }
             }
-            else if(i == 100){
-                this.currentColor[1] = 'bg-[#990033]'
-                this.currentTextColor[1] = 'text-white'
-            }
-            else if(i == 200){
-                this.currentColor[2] = 'bg-[#990033]'
-                this.currentTextColor[2] = 'text-white'
-            }
-            else if(i == 300){
-                this.currentColor[3] = 'bg-[#990033]'
-                this.currentTextColor[3] = 'text-white'
-            }
-            else if(i == 500){
-                this.currentColor[4] = 'bg-[#990033]'
-                this.currentTextColor[4] = 'text-white'
-            }
-            else if(i == 1000){
-                this.currentColor[5] = 'bg-[#990033]'
-                this.currentTextColor[5] = 'text-white'
-            }
-            console.log(this.form.value.amount);
         }
     }
 
@@ -161,7 +165,6 @@ export class CreditdebitTopupComponent implements OnInit{
 
     nextto(){       
         this._topup.setTopUp(+this.form.value.amount)
-        console.log(this.form.value.amount);
         this.openDialogEdit(+this.form.value.amount)
     }
 }

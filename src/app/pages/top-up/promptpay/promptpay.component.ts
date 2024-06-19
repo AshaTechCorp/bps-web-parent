@@ -68,10 +68,6 @@ export class PromptpayComponent implements OnInit {
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
-            console.log(this.bgCard);
-            console.log(this.card.role);
-            
-            console.log('this.card', this.card);
             this.loadsuccess = true
         }) 
     }
@@ -131,7 +127,6 @@ export class PromptpayComponent implements OnInit {
                 this.currentColor[5] = 'bg-[#990033]'
                 this.currentTextColor[5] = 'text-white'
             }
-            console.log(this.form.value.amount);
         }
     }
 

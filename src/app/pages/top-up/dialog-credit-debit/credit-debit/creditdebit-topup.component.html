@@ -26,9 +26,9 @@
 				</ng-container>
 	  		</div>
 			<div class=" hidden min-[1030px]:block">
-				<button class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
-          <img src="assets/images/logo/back_icon.svg" alt="">
-          <p class="flex items-center text-lg font-medium mt-[2px]">BACK</p>
+				<button [disabled]="IsDialogOpen" class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
+					<img src="assets/images/logo/back_icon.svg" alt="">
+					<p class="flex items-center text-lg font-medium mt-[2px]">BACK</p>
 				</button>
 			</div>
 		</div>
@@ -57,25 +57,25 @@
 				</div>
 			</div>
 			<form [formGroup]="form">
-				<mat-form-field class="text-[16px] font-normal text-[#32373D] w-full" style="margin-bottom: -0.5em"  (click)="select_amount(0)">
+				<mat-form-field class="text-[16px] font-normal text-[#32373D] w-full" style="margin-bottom: -0.5em" (click)="select_amount(0)" [ngClass]="{'pointer-events-none': IsDialogOpen, 'pointer-events-auto': !IsDialogOpen}" >
 				  <img matPrefix src="../../../../../assets/images/logo/Logo_money.svg" alt="money" class="w-[16px] ms-4">
 				  <span matTextPrefix>&nbsp;&nbsp;</span>
-				  <input matInput formControlName="amount" placeholder="Amount">
+				  <input [readonly]="IsDialogOpen" matInput formControlName="amount" placeholder="Amount">
 				  <span matTextSuffix class="text-[16px] font-normal text-[#32373D]">Baht</span>
 				</mat-form-field>
 			</form>
 			<p class="text-[14px] font-normal text-[#32373D] mb-[14px]">Maximum top-up 10,000 baht</p>
 			<div class="grid grid-cols-3 gap-[13px] mb-[30px]">
-				<button (click)="select_amount(50)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[0]}} {{currentColor[0]}} "> 50 </button>
-				<button (click)="select_amount(100)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[1]}} {{currentColor[1]}}"> 100 </button>
-				<button (click)="select_amount(200)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[2]}} {{currentColor[2]}}"> 200 </button>
-				<button (click)="select_amount(300)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[3]}} {{currentColor[3]}}"> 300 </button>
-				<button (click)="select_amount(500)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[4]}} {{currentColor[4]}}"> 500 </button>
-				<button (click)="select_amount(1000)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[5]}} {{currentColor[5]}}"> 1,000 </button>
+				<button (click)="select_amount(50)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[0]}} {{currentColor[0]}} "> 50 </button>
+				<button (click)="select_amount(100)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[1]}} {{currentColor[1]}}"> 100 </button>
+				<button (click)="select_amount(200)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[2]}} {{currentColor[2]}}"> 200 </button>
+				<button (click)="select_amount(300)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[3]}} {{currentColor[3]}}"> 300 </button>
+				<button (click)="select_amount(500)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[4]}} {{currentColor[4]}}"> 500 </button>
+				<button (click)="select_amount(1000)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[5]}} {{currentColor[5]}}"> 1,000 </button>
 			</div>
 			
 			<div class="flex justify-end">
-				<button (click)="nextto()" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
+				<button (click)="nextto()" [disabled]="IsDialogOpen" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
 			</div>
 		</div>
 	</div>

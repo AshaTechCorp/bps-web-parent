@@ -14,11 +14,9 @@
 	</form>
 	<script>
 		const amountTopUp =  new URLSearchParams(window.location.search).get('amount');
-		console.log('amountTopUp ',amountTopUp);
 		const topUpScript = document.getElementById('topUP');
 		if (topUpScript) {
 			topUpScript.setAttribute('data-amount', amountTopUp); // Assign shopId value to data-amount
-			console.log('sussssssss')
 		}
 	</script>
 	<!--<form method=POST action="receive-data.php">
@@ -43,12 +41,6 @@
 			var name = new URLSearchParams(window.location.search).get('name');
             
             // ตรวจสอบข้อมูลหรือดำเนินการต่อไปตามที่ต้องการ
-            console.log('token ', token);
-            console.log('mid: ', mid);
-			console.log('amount ', amount);
-			console.log('name ', name);
-            console.log('paymentMethods: ', paymentMethods);
-			
 			fetch('https://bkptn-api.dev-asha.com/api/top-up/credit/requestCharge', {
 				method: 'POST',
 				headers: {
@@ -62,7 +54,6 @@
 				return response.json();
 			}).then(data => {
 				console.log('ok Response:', data);
-				console.log(data);
 				window.parent.location.href = data.redirect_url
 				// ทำอะไรต่อกับข้อมูลที่ได้รับมา
 			}).catch(error => {

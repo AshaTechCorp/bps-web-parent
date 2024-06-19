@@ -43,7 +43,7 @@ export class TopUpService {
 
   get_family_card() {
     let family_email = localStorage.getItem('family');
-    
+    //let family_email = 'phia@patana.ac.th';
     return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
       email: family_email ?? ""
     }})
@@ -170,7 +170,6 @@ export class TopUpService {
     } else {
       //const parsedResp = parseInt(resp);
       const parsedResp = JSON.parse(resp);
-      console.log(parsedResp);
         //return this.cards[parsedResp];
         return parsedResp;
       }

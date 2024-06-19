@@ -49,7 +49,6 @@ export class TopUpComponent implements OnInit {
         private activityroute: ActivatedRoute
     ) {
         this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
-        console.log(this.fk);
     }
     ngOnInit(): void {
 		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
