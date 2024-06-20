@@ -50,9 +50,9 @@ import { environment } from 'src/environments/environment';
 export class CreditDebitDialog implements OnInit {
     moneyTopUp: number = +this.data.value
     // fee_moneyTopUp: number = +this.data.value
-    fee_moneyTopUp: number = +this.data.value * (2.0408 / 100.0)
+    fee_moneyTopUp: number = +this.data.value * (2.0 / 100.0)
     // total_moneyTopUp: number = +this.data.value
-    total_moneyTopUp: number = +this.data.value + (this.data.value * (2.0408 / 100.0));
+    total_moneyTopUp: number = +this.data.value + (this.data.value * (2.0 / 100.0));
 
     
     card:any = this.data.card
