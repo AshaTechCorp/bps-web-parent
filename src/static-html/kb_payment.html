@@ -53,11 +53,11 @@
 				}
 				return response.json();
 			}).then(data => {
-				console.log('ok Response:', data);
+				//console.log('ok Response:', data);
 				window.parent.location.href = data.redirect_url
 				// ทำอะไรต่อกับข้อมูลที่ได้รับมา
 			}).catch(error => {
-				console.error('There was a problem with the fetch operation:', error);
+				//console.error('There was a problem with the fetch operation:', error);
 			});
 		});
 	});

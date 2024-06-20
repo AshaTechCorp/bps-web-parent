@@ -164,7 +164,7 @@ export class TopUpService {
   getCardData() {
     const resp = sessionStorage.getItem('card-Data');
     if (resp === null) {
-      console.log('error func getCardData()');
+      //console.log('error func getCardData()');
       this.setCardFromData(0,this.cards[0])
       return this.cards[0];
     } else {

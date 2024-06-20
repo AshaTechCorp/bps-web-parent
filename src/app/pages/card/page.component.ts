@@ -223,10 +223,12 @@ export class CardComponent implements OnInit {
     }
 
     gototopup(){
-        this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
+        if (this.card?.id)
+            this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
     }
 
     gotohistory(){
-        this._router.navigate(['/history',this.encodeBase64(this.card.id)])
+        if (this.card?.id)
+            this._router.navigate(['/history',this.encodeBase64(this.card.id)])
     }
 }

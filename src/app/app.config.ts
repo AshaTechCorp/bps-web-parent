@@ -13,7 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule} from '@angular/material/list';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
-  console.log(message);
+  //console.log(message);
 }
 
 export function MSALInstanceFactory(): IPublicClientApplication {

@@ -90,7 +90,7 @@ export class NavbarComponent {
   }
 
   loginRedirect() {
-    console.log('REDIRECT');
+    //console.log('REDIRECT');
 
     if (this.msalGuardConfig.authRequest){
       this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
@@ -100,7 +100,7 @@ export class NavbarComponent {
   }
 
   loginPopup() {
-    console.log('POPUP');
+    //console.log('POPUP');
 
     if (this.msalGuardConfig.authRequest){
       this.authService.loginPopup({...this.msalGuardConfig.authRequest} as PopupRequest)
@@ -140,7 +140,7 @@ export class NavbarComponent {
     }, 3000);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result:', result);
+      //console.log('The dialog was closed with result:', result);
       this._router.navigate(['/']);
     });
   }

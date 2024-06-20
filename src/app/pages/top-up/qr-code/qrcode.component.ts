@@ -86,10 +86,10 @@ export class QRcodeComponent implements OnInit {
           //ปิด dialog
           this._topup.check_status(resp.id).subscribe((resp : any) => {
               if (resp && resp.status === 'SUCCESS') {
-                  console.log('Status is complete:', resp);
+                  //console.log('Status is complete:', resp);
                   this._router.navigate(['/top-up/success',this.encodeBase64(this.card.id)])
                 } else {
-                  console.log('Polling stopped or timed out.');
+                 // console.log('Polling stopped or timed out.');
                 }
           });
       });
@@ -126,13 +126,14 @@ export class QRcodeComponent implements OnInit {
     }, 3000);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result:', result);
+      //console.log('The dialog was closed with result:', result);
       this._router.navigate(['/select'])
     });
   }
 
   backto(){
-  this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)])
+    if (this.card?.id)
+      this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)])
   }
 }
 

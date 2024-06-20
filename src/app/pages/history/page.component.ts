@@ -199,7 +199,7 @@ constructor(
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result:', result);
+      //console.log('The dialog was closed with result:', result);
     });
   }
 
@@ -211,7 +211,7 @@ constructor(
     });
 
     bottomSheetRef.afterDismissed().subscribe(result => {
-      console.log('The bottom sheet was dismissed with result:', result);
+      //console.log('The bottom sheet was dismissed with result:', result);
     })
   }
 
@@ -271,7 +271,8 @@ constructor(
   }
 
   backto(){
-    this._router.navigate(['/card',this.encodeBase64(this.card.id)])
+    if (this.card?.id)
+      this._router.navigate(['/card',this.encodeBase64(this.card.id)])
   }
 
 }
