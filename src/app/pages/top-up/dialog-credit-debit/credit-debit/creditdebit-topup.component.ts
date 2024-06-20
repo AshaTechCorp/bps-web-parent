@@ -160,7 +160,8 @@ export class CreditdebitTopupComponent implements OnInit{
     }
 
 	backto(){
-		this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
+        if (this.card?.id)
+		    this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
 	}
 
     nextto(){       

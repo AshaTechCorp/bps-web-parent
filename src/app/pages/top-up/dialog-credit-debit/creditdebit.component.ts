@@ -68,8 +68,8 @@ export class CreditDebitDialog implements OnInit {
         private elementRef: ElementRef
     )
     {
-        console.log(' this.form', this.data);
-        console.log('moneyTopUp ', this.moneyTopUp);
+        //console.log(' this.form', this.data);
+        //console.log('moneyTopUp ', this.moneyTopUp);
         if(this.data.type === 'EDIT') {
 
             this.form = this.FormBuilder.group({
@@ -110,7 +110,7 @@ export class CreditDebitDialog implements OnInit {
         //   })
 
         } else {
-            console.log('New');
+            //console.log('New');
         }
     }
 

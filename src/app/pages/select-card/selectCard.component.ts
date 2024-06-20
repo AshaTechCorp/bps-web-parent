@@ -64,7 +64,7 @@ export class SelectCardComponent implements OnInit {
 		//this.cards = this._topupservice.getAllCard()
 		//this.cards = this._topupservice.getAllCard()
         this._topupservice.getProfile().subscribe((resp: any) =>{
-            console.log(resp.userPrincipalName);
+            //console.log(resp.userPrincipalName);
 
             this.acc_email = resp.userPrincipalName
             localStorage.setItem('family', this.acc_email);

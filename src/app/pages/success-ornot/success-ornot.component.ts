@@ -70,7 +70,7 @@ export class SuccessOrnotComponent implements OnInit {
 		//this.ref = this.activityroute.snapshot.params['referenceOrder']
 		this.activityroute.queryParams.subscribe((params) => {
 		this.ref = params['referenceOrder'];
-		console.log('ref ', this.ref);
+		//console.log('ref ', this.ref);
 		});
 		this.form = this._fb.group({
 		amount: 0,
@@ -122,6 +122,7 @@ export class SuccessOrnotComponent implements OnInit {
 	}
 
 	backto() {
-		this._router.navigate(['/top-up', this.encodeBase64(this.card.id)]);
+		if (this.card?.id)
+			this._router.navigate(['/top-up', this.encodeBase64(this.card.id)]);
 	}
 }

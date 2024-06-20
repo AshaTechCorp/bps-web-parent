@@ -60,7 +60,7 @@ export class TopUpComponent implements OnInit {
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
-            console.log(this.card);
+            //console.log(this.card);
             this.loadsuccess = true
         })
     }
@@ -83,14 +83,19 @@ export class TopUpComponent implements OnInit {
     }
 
     select(data : string){
-        if(data == "promptpay")
-            this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)]);
-        else if(data == "credit_debit")
-            this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.card.id)]);
+        if(data == "promptpay"){
+            if (this.card?.id)
+                this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)]);
+        }   
+        else if(data == "credit_debit"){
+            if (this.card?.id)
+                this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.card.id)]);
+        }
     }
 
     backto(){
-		this._router.navigate(['/card',this.encodeBase64(this.card.id)])
+        if (this.card?.id)
+		    this._router.navigate(['/card',this.encodeBase64(this.card.id)])
 	}
 }
 
