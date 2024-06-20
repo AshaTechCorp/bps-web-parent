@@ -91,10 +91,10 @@ export class SuccessOrnotComponent implements OnInit {
 			if (!resp) console.log('resp = null');
 			else if (resp.status == 'CREATE') this.success = 1;
 			else if (resp.status == 'SUCCESS') this.success = 2;
-			else console.log('555555');
+			else console.log('');
+			this.amount = resp.amount
 		});
 		}
-		this.amount = this._topup.getTopUp();
 	}
 	decodeBase64(input: string): string {
 		return atob(input);
@@ -112,13 +112,6 @@ export class SuccessOrnotComponent implements OnInit {
 		const date = DateTime.local();
 		this.card.update = date.toFormat('HH:mm');
 		this._topup.setUpdateCard(this.card.update);
-	}
-
-	select_amount(i: number) {
-		this.data_amount = i;
-		this.form.patchValue({
-		amount: i,
-		});
 	}
 
 	backto() {
