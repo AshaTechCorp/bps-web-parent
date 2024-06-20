@@ -84,6 +84,8 @@ export class SelectCardComponent implements OnInit {
                 this.cards.push(data)
                 }
                 this.loadsuccess = true
+                const requesterId = resp.requesterId
+                localStorage.setItem('requesterId', requesterId);
             },error=> {
                 // จัดการเมื่อเกิด error ในการดึงข้อมูล
                 alert('this email is not registered')

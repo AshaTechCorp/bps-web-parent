@@ -60,7 +60,7 @@
 				<mat-form-field class="text-[16px] font-normal text-[#32373D] w-full" style="margin-bottom: -0.5em" (click)="select_amount(0)" [ngClass]="{'pointer-events-none': IsDialogOpen, 'pointer-events-auto': !IsDialogOpen}" >
 				  <img matPrefix src="../../../../../assets/images/logo/Logo_money.svg" alt="money" class="w-[16px] ms-4">
 				  <span matTextPrefix>&nbsp;&nbsp;</span>
-				  <input [readonly]="IsDialogOpen" matInput formControlName="amount" placeholder="Amount">
+				  <input [readonly]="IsDialogOpen" type="text" matInput formControlName="amount" placeholder="Amount">
 				  <span matTextSuffix class="text-[16px] font-normal text-[#32373D]">Baht</span>
 				</mat-form-field>
 			</form>

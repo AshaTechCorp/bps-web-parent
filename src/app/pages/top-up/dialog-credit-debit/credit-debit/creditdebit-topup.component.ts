@@ -168,5 +168,17 @@ export class CreditdebitTopupComponent implements OnInit{
         this._topup.setTopUp(+this.form.value.amount)
         this.openDialogEdit(+this.form.value.amount)
     }
+
+    restrictToDigits(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        let value = input.value.trim();
+        
+        // Remove non-digit characters
+        value = value.replace(/\D/g, '');
+        // Update input value
+        input.value = value;
+        // Update form control value
+        this.form.controls['amount'].setValue(value);
+      }
 }
 

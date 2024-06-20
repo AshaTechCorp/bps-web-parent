@@ -22,6 +22,7 @@ import { TopUpService } from '../topUp.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 @Component({
     selector: 'app-product-form',
     standalone: true,
@@ -91,7 +92,7 @@ export class CreditDebitDialog implements OnInit {
     getSafeUrl(): SafeResourceUrl {
         // ตรวจสอบว่ามีทศนิยมน้อยกว่า 2 ตำแหน่งหรือไม่
         
-        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}`);
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}&base=${environment.baseurl}&id=${this.card.id}`);
       }
 
     ngOnInit(): void {
