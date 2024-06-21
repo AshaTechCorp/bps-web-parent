@@ -54,7 +54,7 @@ export class CreditDebitDialog implements OnInit {
     // total_moneyTopUp: number = +this.data.value
     total_moneyTopUp: number = +this.data.value + (this.data.value * (2.0 / 100.0));
 
-    
+
     card:any = this.data.card
     form: FormGroup;
     stores: any[]=[];
@@ -91,8 +91,14 @@ export class CreditDebitDialog implements OnInit {
 
     getSafeUrl(): SafeResourceUrl {
         // ตรวจสอบว่ามีทศนิยมน้อยกว่า 2 ตำแหน่งหรือไม่
-        
-        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}&base=${environment.baseurl}&id=${this.card.id}`);
+
+        return this.sanitizer.bypassSecurityTrustResourceUrl(
+          `/static-html/kb_payment.html
+          ?topupAmount=${+this.moneyTopUp.toFixed(2)}
+          &amount=${+this.total_moneyTopUp.toFixed(2)}
+          &name=${this.card.name}
+          &base=${environment.baseurl}
+          &id=${this.card.id}`);
       }
 
     ngOnInit(): void {
@@ -119,7 +125,7 @@ export class CreditDebitDialog implements OnInit {
         this.onClose()
         this._router.navigate(['/top-up/success',this.encodeBase64(this.data.id)])
     }
-    
+
     encodeBase64(input: string): string {
         return btoa(input);
     }
