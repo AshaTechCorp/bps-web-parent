@@ -83,7 +83,8 @@ export class CardComponent implements OnInit {
             }
             this.loadsuccess = true
             this.bgCard = this.bg_card()
-            timer(2000).subscribe(() => {
+            this.get_LastTransaction()
+            timer(1000).subscribe(() => {
                 dialogRef.close();
             });
         })
@@ -116,7 +117,27 @@ export class CardComponent implements OnInit {
 
         this.role = 'parent'
 
-        this.transactions = this._historyService.get_transactions()
+        //this.transactions = this._historyService.get_transactions()
+    }
+
+    get_LastTransaction(){
+        this._historyService.get_last_transactionsCard(this.card.id).subscribe(
+          (resp: any) => {
+            console.log('resp : ',resp);
+            this.transactions = []
+            for (let i = 0; i < resp.length; i++) {
+                let temp_data ={
+                    type: resp[i].type,
+                    balance: resp[i].amount,
+                    date: (DateTime.fromISO(resp[i].date)).toFormat('dd LLL yyyy'),
+                    time: (DateTime.fromISO(resp[i].date)).toFormat('HH:mm')
+                }
+                this.transactions.push(temp_data)
+            }
+        },  (error) => {
+                console.error('Error fetching transactions:', error);
+            }
+        );     
     }
 
     decodeBase64(input: string): string {

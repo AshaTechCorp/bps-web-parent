@@ -79,6 +79,11 @@ export class HistoryService {
 		month: year
 	}});
   }
+  get_last_transactionsCard(id: number) :Observable<any> {
+    return this._httpClient.get<any>(environment.baseurl + '/api/card/last',{params:{
+		fkId: id
+	}});
+  }
 }
 
 //  setCardData(id: number) {

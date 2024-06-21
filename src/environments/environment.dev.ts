@@ -10,5 +10,5 @@ export const environment = {
         scopes: ['user.read'],
         uri: 'https://graph.microsoft.com/v1.0/me'
     },
-    baseurl: "https://schooneyuat.patana.ac.th:3131"//"https://bkptn-api.dev-asha.com"// 
+    baseurl: "https://bkptn-api.dev-asha.com"// "https://schooneyuat.patana.ac.th:3131"//
 };
