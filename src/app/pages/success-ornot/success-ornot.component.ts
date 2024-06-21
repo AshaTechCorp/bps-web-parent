@@ -80,7 +80,7 @@ export class SuccessOrnotComponent implements OnInit {
 		if (this.ref) {
 		this._topup.check_status_credit(this.ref).subscribe((resp: any) => {
 			this.card = {
-			id: resp.topupTo.sn,
+			id: resp.topupTo.fkId,
 			role: resp.topupTo.type,
 			name: resp.topupTo.name,
 			balance: parseInt(resp.topupTo.balance).toLocaleString(),
