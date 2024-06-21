@@ -251,12 +251,12 @@ constructor(
     const currentMonth = new Date().getMonth() + 1;
     for (let year = currentYear; year >= currentYear - 1; year--) {
       if (year == currentYear) {
-        for (let month = currentMonth; month <= 12; month++) {
+        for (let month = currentMonth; month >= 1; month--) {
           this.monthsYears.push(`${this.getMonthName(month)} ${year}`);
         }
       }
       else
-        for (let month = 1; month <= currentMonth; month++) {
+        for (let month = 12; month >= currentMonth; month--) {
           this.monthsYears.push(`${this.getMonthName(month)} ${year}`);
         }
     }

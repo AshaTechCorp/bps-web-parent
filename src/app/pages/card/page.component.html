@@ -112,7 +112,7 @@
                 <p class="text-xs font-normal text-[#84776E]">{{item.date}} {{item.time}}</p>
               </div>
               <div>
-                <p class="text-xl" [ngStyle]="{'color': item.type === 'Paid' ? '#FF5252' : '#4CAF50'}">{{item.balance | number:'1.2-2'}}</p>
+                <p class="text-xl" [ngStyle]="{'color': item.balance < 0 ? '#FF5252' : '#4CAF50'}">{{item.balance | number:'1.2-2'}}</p>
               </div>
             </div>
           </ng-container>

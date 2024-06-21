@@ -75,8 +75,8 @@ export class HistoryService {
 		//year: 1,
 		//month: 1
 		fkId: id,
-		year: month,
-		month: year
+		year: year,
+		month: month
 	}});
   }
   get_last_transactionsCard(id: number) :Observable<any> {
