@@ -18,7 +18,7 @@
           <img class="w-[50px]" src="assets/images/transactions/paid.svg">
         </div>
         <div class="flex flex-col items-start px-2">
-          <p class="text-lg font-medium">Restaurant Name</p>
+          <p class="text-lg font-medium">{{data_shopname}}</p>
           <p class="text-md font-normal text-[#32373D]">{{data_date}} {{data_time}}</p>
         </div>
       </div>
@@ -31,7 +31,7 @@
     <!-- Payment Method -->
     <div class="flex justify-between p-4">
       <p>Payment Method</p>
-      <p>Card</p>
+      <p>{{data_channel}}</p>
     </div>
     <!-- Grid Headers -->
     <div class="grid grid-cols-7 w-full p-4 bg-[#DED7D1] text-[#84776E]">
@@ -53,16 +53,19 @@
   <ng-template #topUpTemplate>
     <div class="flex justify-between">
       <div class="flex p-4 items-center">
-        <div>
+        <div *ngIf="data_type == 'Refund'">
+          <img class="w-[50px]" src="assets/images/transactions/paid.svg">
+        </div>
+        <div *ngIf="data_type != 'Refund'">
           <img class="w-[50px]" src="assets/images/transactions/top_up.svg">
         </div>
         <div class="flex flex-col items-start px-4">
-          <p class="text-lg font-medium">Top-Up</p>
+          <p class="text-lg font-medium">{{data_type}}</p>
           <p class="text-md font-normal text-[#32373D]">{{data_date}} {{data_time}}</p>
         </div>
       </div>
       <div class="flex p-4 items-center justify-end">
-        <p class="text-xl" [style.color]="'#4CAF50'">{{data_balance | number:'1.2-2'}}</p>
+        <p class="text-xl" [ngStyle]="{'color': data_balance < 0 ? '#FF5252' : '#4CAF50'}">{{data_balance | number:'1.2-2'}}</p>
       </div>
     </div>
     <div class="border-b border-[#DED7D1]"></div>
@@ -75,7 +78,7 @@
       </div>
       <div class="flex p-4 items-center">
         <div class="flex flex-col items-start px-2">
-          <p class="text-lg font-normal text-[#32373D]">Offline</p>
+          <p class="text-lg font-normal text-[#32373D]">{{data_channel}}</p>
         </div>
       </div>
     </div>

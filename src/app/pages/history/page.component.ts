@@ -28,8 +28,8 @@ type History = {
     time: string, // date แปลง
     balance: number, // amount
     type: string,
-    //channel: string,
-    //shopName: string,
+    channel: string,
+    shopName: string,
     list: {
       payment: string //transactions.channel
       order: string // == itemName
@@ -142,6 +142,8 @@ constructor(
               time: (DateTime.fromISO(transaction.date)).toFormat('HH:mm'),
               balance: transaction.amount,
               type: transaction.type,
+              shopName: transaction.shopName,
+              channel: transaction.channel,
               list: []
             }
             this.history[i].data.push(temp_data)
@@ -219,14 +221,15 @@ constructor(
 
   getData(i: number, j: number): any {
   //  console.log('test ,',this.history.slice().reverse());
-    
     return {
-      history: this.history.slice().reverse(),
+      //history: this.history.slice().reverse(),
       date: this.history.slice().reverse()[i].date,
       type: this.history.slice().reverse()[i].data[j].type,
       balance: this.history.slice().reverse()[i].data[j].balance,
       time: this.history.slice().reverse()[i].data[j].time,
-      list: this.history.slice().reverse()[i].data[j].list
+      list: this.history.slice().reverse()[i].data[j].list,
+      shopName: this.history.slice().reverse()[i].data[j].shopName,
+      channel: this.history.slice().reverse()[i].data[j].channel
     };
   }
 
