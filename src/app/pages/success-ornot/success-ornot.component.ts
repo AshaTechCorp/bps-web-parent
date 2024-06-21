@@ -93,6 +93,9 @@ export class SuccessOrnotComponent implements OnInit {
 			else if (resp.status == 'SUCCESS') this.success = 2;
 			else console.log('');
 			this.amount = resp.amount
+		},(error)=>{
+			alert("error not found")
+			this._router.navigate(['/select']);
 		});
 		}
 	}
