@@ -41,6 +41,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class CreditdebitTopupComponent implements OnInit{
     @ViewChild(NavbarComponent) navbarComponent!: NavbarComponent;
     IsDialogOpen: boolean = false
+    canTopUp: boolean = false
     form: FormGroup;
     users: any[] = []
 	card: any
@@ -74,6 +75,9 @@ export class CreditdebitTopupComponent implements OnInit{
             this.bgCard = this.bg_card()
             this.loadsuccess = true
         })
+        this.form.get('amount')?.valueChanges.subscribe((value) => {
+            this.check_disable(value); // เรียกใช้งาน check พร้อมส่งค่าที่เปลี่ยนแปลงไปด้วย
+        });
     }
 
     decodeBase64(input: string): string {
@@ -167,6 +171,14 @@ export class CreditdebitTopupComponent implements OnInit{
     nextto(){       
         this._topup.setTopUp(+this.form.value.amount)
         this.openDialogEdit(+this.form.value.amount)
+    }
+
+    check_disable(data: number){
+        if ((+this.card.balance) + (+data) <= 5000){
+            this.canTopUp = false
+        }else {
+            this.canTopUp = true
+        }
     }
 
     restrictToDigits(event: Event): void {

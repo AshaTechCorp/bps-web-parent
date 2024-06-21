@@ -61,11 +61,11 @@
 
           <img matPrefix src="../../../../../assets/images/logo/Logo_money.svg" alt="money" class="w-[16px] ms-4">
 				  <span matTextPrefix>&nbsp;&nbsp;</span>
-				  <input matInput type="text" [formControlName]="'amount'" placeholder="Amount" (input)="restrictToDigits($event)" >
+				  <input matInput type="text" [formControlName]="'amount'" placeholder="Amount" (input)="restrictToDigits($event)">
 				  <span matTextSuffix class="text-[16px] font-normal text-[#32373D]">Baht</span>
 				</mat-form-field>
 			</form>
-			<p class="text-[14px] font-normal text-[#32373D] mb-[14px]">Maximum top-up 10,000 baht</p>
+			<p class="text-[14px] font-normal text-[#32373D] mb-[14px]">Maximum top-up 5,000 baht</p>
 			<div class="grid grid-cols-3 gap-[13px] mb-[30px]">
 				<button (click)="select_amount(50)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[0]}} {{currentColor[0]}} "> 50 </button>
 				<button (click)="select_amount(100)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[1]}} {{currentColor[1]}}"> 100 </button>
@@ -75,7 +75,7 @@
 				<button (click)="select_amount(1000)" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[5]}} {{currentColor[5]}}"> 1,000 </button>
 			</div>
 			<div class="flex justify-end">
-				<button (click)="nextto()" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
+				<button (click)="nextto()" [disabled]="isButtonDisabled" [ngClass]="{'opacity-50': isButtonDisabled, 'opacity-100': !isButtonDisabled}" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
 			</div>
 		</div>
 	</div>

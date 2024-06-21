@@ -39,13 +39,14 @@ export class PromptpayComponent implements OnInit {
     orders: any[] = [];
     form: FormGroup;
     users: any[] = []
-	  card: any
+	card: any
     time : any
     currentColor: string[] = ['bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent', 'bg-transparent'];
     currentTextColor: string[] = ['text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]', 'text-[#000000]'];
     fk: any;
     bgCard!: string;
     loadsuccess: boolean = false
+    isButtonDisabled: boolean = false
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -69,7 +70,15 @@ export class PromptpayComponent implements OnInit {
             }
             this.bgCard = this.bg_card()
             this.loadsuccess = true
-        }) 
+            if (+this.card.balance < 5000)
+                this.isButtonDisabled = false
+            else
+                console.log(+this.card.balance);
+                
+        })
+        this.form.get('amount')?.valueChanges.subscribe((value) => {
+            this.check_disable(+value); // เรียกใช้งาน check พร้อมส่งค่าที่เปลี่ยนแปลงไปด้วย
+        });
     }
 
     decodeBase64(input: string): string {
@@ -138,7 +147,15 @@ export class PromptpayComponent implements OnInit {
     nextto(){
         this._topup.setTopUp(+this.form.value.amount)
         if (this.card?.id)
-		    this._router.navigate(['/top-up/qr-code',this.encodeBase64(this.card.id)])
+            this._router.navigate(['/top-up/qr-code',this.encodeBase64(this.card.id)])
+    }
+
+    check_disable(value: number){
+        if ((+this.card.balance) + value <= 5000 && value >= 0){
+            this.isButtonDisabled = false
+        }else {
+            this.isButtonDisabled = true
+        }
     }
 
     restrictToDigits(event: Event): void {
