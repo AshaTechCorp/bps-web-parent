@@ -117,12 +117,12 @@ constructor(
       }
       this.bgCard = this.bg_card()
       this.loadsuccess = true
+      this.onSelectedDateChange()
     })
-    this.onSelectedDateChange()
   }
 
   get_Transaction(month: number, year: number){
-    this._historyService.get_transactionsCard(month, year).subscribe(
+    this._historyService.get_transactionsCard(this.card.id, month, year).subscribe(
       (resp: any) => {
         this.history = []
         this.total[0] = resp.totalTopUp
@@ -183,6 +183,8 @@ constructor(
     };
     const monthNumber = monthMapping[monthString];
     const yearNumber = parseInt(yearString, 10);
+    console.log('history : ',this.card.id);
+    
     this.get_Transaction(monthNumber, yearNumber)
   }
 
