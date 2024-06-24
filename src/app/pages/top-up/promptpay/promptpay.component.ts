@@ -46,7 +46,7 @@ export class PromptpayComponent implements OnInit {
     fk: any;
     bgCard!: string;
     loadsuccess: boolean = false
-    isButtonDisabled: boolean = false
+    isButtonDisabled: boolean = true
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -74,7 +74,7 @@ export class PromptpayComponent implements OnInit {
                 this.isButtonDisabled = false
             else
                 console.log(+this.card.balance);
-                
+            this.check_disable(this.form.value.amount)
         })
         this.form.get('amount')?.valueChanges.subscribe((value) => {
             this.check_disable(+value); // เรียกใช้งาน check พร้อมส่งค่าที่เปลี่ยนแปลงไปด้วย
@@ -151,7 +151,7 @@ export class PromptpayComponent implements OnInit {
     }
 
     check_disable(value: number){
-        if ((+this.card.balance) + value <= 5000 && value >= 0){
+        if ((+this.card.balance) + value <= 5000 && value > 0){
             this.isButtonDisabled = false
         }else {
             this.isButtonDisabled = true
