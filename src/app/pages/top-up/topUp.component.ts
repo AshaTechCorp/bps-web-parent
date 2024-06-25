@@ -42,6 +42,10 @@ export class TopUpComponent implements OnInit {
     fk: string;
     bgCard!: string;
     loadsuccess: boolean = false
+    all_cards: any[] = []
+    slice_src: string = '';
+    display_right: string = 'hidden';
+    display_left: string = 'hidden';
     constructor(
         public dialog: MatDialog,
         private _router: Router,
@@ -51,6 +55,7 @@ export class TopUpComponent implements OnInit {
         this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
     }
     ngOnInit(): void {
+        this.loadsuccess = false
 		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
                 id: resp.fkId, 
@@ -61,9 +66,69 @@ export class TopUpComponent implements OnInit {
             }
             this.bgCard = this.bg_card()
             //console.log(this.card);
+            this.all_cards = this._topup.getAllCard()
+            console.log(this.all_cards);
+            
+            this.buttonL()
+            this.buttonR()
+            this.slice_card()
             this.loadsuccess = true
         })
     }
+
+    buttonL(){
+        const index = this._topup.getIndex(this.card.id)
+
+        if (index > 0){
+            this.display_left = "block"
+        }
+        else{
+            this.display_left = "hidden"
+        }
+    }
+
+    buttonR(){
+        const index = this._topup.getIndex(this.card.id)
+        if (index < this.all_cards.length - 1){
+            this.display_right = "block"
+        }
+        else{
+            this.display_right = "hidden"
+        }
+    }
+
+    slice_card(){
+        const index = this._topup.getIndex(this.card.id)
+        if (this.all_cards.length == 1)
+            this.slice_src = "assets/images/logo/card/slide_card0.svg"
+        else if (index == 0)
+            this.slice_src = "assets/images/logo/card/slide_card1.svg"
+        else if ((index < this.all_cards.length - 1) && (index > 0))
+            this.slice_src = "assets/images/logo/card/slide_card2.svg"
+        else if (index == this.all_cards.length - 1)
+            this.slice_src = "assets/images/logo/card/slide_card3.svg"
+    }
+
+    change_left(){
+        const index = this._topup.getIndex(this.card.id) - 1
+        this.card = this.all_cards[index]
+        this.buttonL()
+        this.buttonR()
+        this.slice_card()
+        this.bgCard = this.bg_card()
+        this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
+    }
+
+    change_right(){
+        const index = this._topup.getIndex(this.card.id) + 1
+        this.card = this.all_cards[index]
+        this.buttonL()
+        this.buttonR()
+        this.slice_card()
+        this.bgCard = this.bg_card()
+        this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
+    }
+
     decodeBase64(input: string): string {
         return atob(input);
     }

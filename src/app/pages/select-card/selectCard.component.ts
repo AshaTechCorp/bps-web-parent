@@ -71,21 +71,22 @@ export class SelectCardComponent implements OnInit {
             this._topupservice.get_family_card().subscribe((resp: any) =>{
                 this.cards_family = resp
                
-              for (let index = 0; index <  this.cards_family.persons.length; index++) {
-                const element =  this.cards_family.persons[index];
-                const data = {
-                    //id: element.sn, 
-                    id: element.fkId, 
-                    role: element.role, 
-                    name: element.name, 
-                    balance: parseInt(element.remain).toLocaleString(), 
-                    update: DateTime.fromISO(element.at).toFormat('HH:mm')
+                for (let index = 0; index <  this.cards_family.persons.length; index++) {
+                    const element =  this.cards_family.persons[index];
+                    const data = {
+                        //id: element.sn, 
+                        id: element.fkId, 
+                        role: element.role, 
+                        name: element.name, 
+                        balance: parseInt(element.remain).toLocaleString(), 
+                        update: DateTime.fromISO(element.at).toFormat('HH:mm')
+                    }
+                    this.cards.push(data)
                 }
-                this.cards.push(data)
-                }
-                this.loadsuccess = true
+                sessionStorage.setItem('all_c', JSON.stringify(this.cards));
                 const requesterId = resp.requesterId
                 localStorage.setItem('requesterId', requesterId);
+                this.loadsuccess = true
             },error=> {
                 // จัดการเมื่อเกิด error ในการดึงข้อมูล
                 alert('this email is not registered')
@@ -95,11 +96,9 @@ export class SelectCardComponent implements OnInit {
             })
         })
 
-        
         this.form.patchValue({
             payment_type: ''
         })
-
     }
 
     encodeBase64(input: string): string {

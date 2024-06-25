@@ -53,7 +53,6 @@ export class CardComponent implements OnInit {
     display_right: any
     slice_src: any
     fk: any
-    cards_family: any;
     bgCard!: string;
     loadsuccess: boolean = false
 
@@ -81,41 +80,21 @@ export class CardComponent implements OnInit {
                 balance: parseInt(resp.remain).toLocaleString(), 
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
-            this.loadsuccess = true
             this.bgCard = this.bg_card()
             this.get_LastTransaction()
+            this.cards = this._topup.getAllCard()
+            this.buttonL()
+            this.buttonR()
+            this.slice_card()
+            this.role = 'parent'
             timer(1000).subscribe(() => {
+                this.loadsuccess = true
                 dialogRef.close();
             });
         })
         //this.card = this._topup.getCardData()
         //this.cards = this._topup.getAllCard()
-        this._topup.get_family_card().subscribe((resp: any) =>{
-            this.cards_family = resp
-           
-          for (let index = 0; index <  this.cards_family.persons.length; index++) {
-            const element =  this.cards_family.persons[index];
-            const data = {
-                id: element.fkId, 
-                role: element.role, 
-                name: element.name, 
-                balance: parseInt(element.remain).toLocaleString(), 
-                update: DateTime.fromISO(element.at).toFormat('HH:mm')
-            }
-            this.cards.push(data)
-            }
-            this.buttonL()
-            this.buttonR()
-            this.slice_card()
-        },
-        (error) => {
-            console.error('เกิดข้อผิดพลาดในการสมัครสมาชิก:', error);
-            this.buttonL()
-            this.buttonR()
-          // ทำการจัดการข้อผิดพลาดที่นี่ เช่น แสดงข้อความผิดพลาดหรือทำสิ่งใดก็ได้ตามที่คุณต้องการ
-        })
-
-        this.role = 'parent'
+        
 
         //this.transactions = this._historyService.get_transactions()
     }
@@ -149,7 +128,7 @@ export class CardComponent implements OnInit {
     }
 
     buttonL(){
-        const index = this._topup.getSelectIndex()
+        const index = this._topup.getIndex(this.card.id)
 
         if (index > 0){
             this.display_left = "block"
@@ -160,7 +139,7 @@ export class CardComponent implements OnInit {
     }
 
     buttonR(){
-        const index = this._topup.getSelectIndex()
+        const index = this._topup.getIndex(this.card.id)
         if (index < this.cards.length - 1){
             this.display_right = "block"
         }
@@ -170,7 +149,7 @@ export class CardComponent implements OnInit {
     }
 
     slice_card(){
-        const index = this._topup.getSelectIndex()
+        const index = this._topup.getIndex(this.card.id)
         if (this.cards.length == 1)
             this.slice_src = "assets/images/logo/card/slide_card0.svg"
         else if (index == 0)
@@ -182,31 +161,33 @@ export class CardComponent implements OnInit {
     }
 
     change_left(){
-        const index = this._topup.getSelectIndex() - 1
-        this._topup.setCardData(index)
+        const index = this._topup.getIndex(this.card.id) - 1
+        this.card = this.cards[index]
         this.buttonL()
         this.buttonR()
-        this.card = this.cards[index]
         this.slice_card()
         this.bgCard = this.bg_card()
+        this._router.navigate(['/card',this.encodeBase64(this.card.id)])
     }
 
     change_right(){
-        const index = this._topup.getSelectIndex() + 1
-        this._topup.setCardData(index)
+        const index = this._topup.getIndex(this.card.id) + 1
+        this.card = this.cards[index]
         this.buttonL()
         this.buttonR()
-        this.card = this.cards[index]
         this.slice_card()
         this.bgCard = this.bg_card()
+        this._router.navigate(['/card',this.encodeBase64(this.card.id)])
     }
 
     change_card(index: number){
-        this._topup.setCardData(index)
         this.toggle_popup()
         this.card = this.cards[index]
         this.bgCard = this.bg_card()
         this.slice_card()
+        this.buttonL()
+        this.buttonR()
+        this._router.navigate(['/card',this.encodeBase64(this.card.id)])
     }
 
     toggle_popup(){
@@ -251,5 +232,9 @@ export class CardComponent implements OnInit {
     gotohistory(){
         if (this.card?.id)
             this._router.navigate(['/history',this.encodeBase64(this.card.id)])
+    }
+
+    backto() {
+        this._router.navigate(['/select'])
     }
 }

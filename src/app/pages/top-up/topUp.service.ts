@@ -145,7 +145,31 @@ export class TopUpService {
   }
 
   getAllCard() {
-    return this.cards
+    const allCards = sessionStorage.getItem('all_c');
+    
+    return allCards ? JSON.parse(allCards) : [];
+  }
+
+  getOneCard() {
+    const oneCard = sessionStorage.getItem('one_c');
+
+    return oneCard ? JSON.parse(oneCard) : '';
+  }
+
+  setOneCard(card: any) {
+    sessionStorage.setItem('one_c', card);
+  }
+
+  getIndex(fk: any) {
+    const temp = sessionStorage.getItem('all_c')
+    const allCard = temp ? JSON.parse(temp) : [];
+    for (let i = 0; i < allCard.length; i++) {
+      const element = allCard[i];
+      if (element.id == fk){
+        return i
+      }
+    }
+    return 0;
   }
 
   setCardData(id: number) {

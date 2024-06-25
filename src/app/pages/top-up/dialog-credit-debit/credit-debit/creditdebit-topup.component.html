@@ -2,13 +2,15 @@
 <div class="flex justify-center font-ibm w-full bg-[#F4F4F9]  h-[calc(100vh-72px)]">
 	<div class="flex flex-col min-[1030px]:flex-row w-full min-[1030px]:m-[30px] min-[1030px]:justify-center">
 		<div class="flex flex-col my-[30px] min-[1030px]:my-[0px]">
-			<div class="flex rounded-[30px] justify-center min-[1030px]:mb-[18px] min-[1030px]:mr-[40px]">
+			<div class="flex flex-col rounded-[30px] items-center min-[1030px]:mb-[8px] min-[1030px]:mr-[40px]">
 				<ng-container *ngIf="loadsuccess == false">
-					<img class="relative w-[351px] h-[200px]" src="/assets/images/logo/card/mock_card.svg" alt="card">
+					<img class="relative w-[351px] h-[200px] mb-3" src="/assets/images/logo/card/mock_card.svg" alt="card">
 				</ng-container>
 				<ng-container *ngIf="loadsuccess == true">
 					<!-- Your SVG content -->
-					<div class="w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px]" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
+					<div class="relative w-[351px] h-[200px] px-[20px] py-[16px] rounded-[12px] mb-3" [ngStyle]="{ 'background-image': 'url(' + bgCard + ')' }">
+						<img (click)="change_left()" class="{{display_left}} cursor-pointer absolute h-[40px] w-[40px] top-1/2 left-0 -translate-x-1/2 -translate-y-1/2" src="assets/images/logo/card/button_previousCard.svg" alt="">
+            			<img (click)="change_right()" class="{{display_right}} cursor-pointer absolute h-[40px] w-[40px] top-1/2 right-0 translate-x-1/2 -translate-y-1/2"src="assets/images/logo/card/button_nextCard.svg" alt="">
 						<div class="flex flex-col justify-between w-full h-full">
 							<p class="text-[16px] font-medium leading-[32px] text-[#FFFFFF]">{{card?.name}}</p>
 							<div>
@@ -24,9 +26,10 @@
 						</div>
 					</div>
 				</ng-container>
+				<img class="w-[66px] h-[6px]" src="{{slice_src}}" alt="">
 	  		</div>
 			<div class=" hidden min-[1030px]:block">
-				<button [disabled]="IsDialogOpen" class="flex items-center py-[8px] text-[#990033]" (click)="backto()">
+				<button [disabled]="IsDialogOpen" class="flex items-center text-[#990033]" (click)="backto()">
 					<img src="assets/images/logo/back_icon.svg" alt="">
 					<p class="flex items-center text-lg font-medium mt-[2px]">BACK</p>
 				</button>

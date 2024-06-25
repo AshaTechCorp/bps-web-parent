@@ -77,6 +77,10 @@ export class HistoryComponent implements OnInit {
   fk: any;
   bgCard: string='';
   loadsuccess: boolean = false
+  all_cards: any[] = []
+  slice_src: string = '';
+  display_right: string = 'hidden';
+  display_left: string = 'hidden';
 
   toggleTransactions() {
     this.showTransactions = !this.showTransactions;
@@ -116,7 +120,11 @@ constructor(
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
       this.bgCard = this.bg_card()
+      this.all_cards = this._topup.getAllCard()
       this.loadsuccess = true
+      this.buttonL()
+      this.buttonR()
+      this.slice_card()
       this.onSelectedDateChange()
     })
   }
@@ -164,6 +172,59 @@ constructor(
         console.error('Error fetching transactions:', error);
       }
     );
+  }
+
+  buttonL(){
+    const index = this._topup.getIndex(this.card.id)
+
+    if (index > 0){
+        this.display_left = "block"
+    }
+    else{
+        this.display_left = "hidden"
+    }
+  }
+
+  buttonR(){
+      const index = this._topup.getIndex(this.card.id)
+      if (index < this.all_cards.length - 1){
+          this.display_right = "block"
+      }
+      else{
+          this.display_right = "hidden"
+      }
+  }
+
+  slice_card(){
+      const index = this._topup.getIndex(this.card.id)
+      if (this.all_cards.length == 1)
+          this.slice_src = "assets/images/logo/card/slide_card0.svg"
+      else if (index == 0)
+          this.slice_src = "assets/images/logo/card/slide_card1.svg"
+      else if ((index < this.all_cards.length - 1) && (index > 0))
+          this.slice_src = "assets/images/logo/card/slide_card2.svg"
+      else if (index == this.all_cards.length - 1)
+          this.slice_src = "assets/images/logo/card/slide_card3.svg"
+  }
+
+  change_left(){
+      const index = this._topup.getIndex(this.card.id) - 1
+      this.card = this.all_cards[index]
+      this.buttonL()
+      this.buttonR()
+      this.slice_card()
+      this.bgCard = this.bg_card()
+      this._router.navigate(['/history',this.encodeBase64(this.card.id)])
+  }
+
+  change_right(){
+      const index = this._topup.getIndex(this.card.id) + 1
+      this.card = this.all_cards[index]
+      this.buttonL()
+      this.buttonR()
+      this.slice_card()
+      this.bgCard = this.bg_card()
+      this._router.navigate(['/history',this.encodeBase64(this.card.id)])
   }
 
   decodeBase64(input: string): string {
