@@ -281,16 +281,17 @@ constructor(
   }
 
   getData(i: number, j: number): any {
-  //  console.log('test ,',this.history.slice().reverse());
+    //console.log('test ,',this.history.slice().reverse()[i].data[j].time);
+    //console.log('test2 ,',this.history.slice().reverse()[i].data.slice().reverse()[j].time);
     return {
       //history: this.history.slice().reverse(),
       date: this.history.slice().reverse()[i].date,
-      type: this.history.slice().reverse()[i].data[j].type,
-      balance: this.history.slice().reverse()[i].data[j].balance,
-      time: this.history.slice().reverse()[i].data[j].time,
-      list: this.history.slice().reverse()[i].data[j].list,
-      shopName: this.history.slice().reverse()[i].data[j].shopName,
-      channel: this.history.slice().reverse()[i].data[j].channel
+      type: this.history.slice().reverse()[i].data.slice().reverse()[j].type,
+      balance: this.history.slice().reverse()[i].data.slice().reverse()[j].balance,
+      time: this.history.slice().reverse()[i].data.slice().reverse()[j].time,
+      list: this.history.slice().reverse()[i].data.slice().reverse()[j].list,
+      shopName: this.history.slice().reverse()[i].data.slice().reverse()[j].shopName,
+      channel: this.history.slice().reverse()[i].data.slice().reverse()[j].channel
     };
   }
 
