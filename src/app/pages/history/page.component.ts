@@ -113,10 +113,10 @@ constructor(
     this.role = 'staff'
     this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
       this.card = {
-          id: resp.fkId, 
-          role: resp.role, 
-          name: resp.name, 
-          balance: parseInt(resp.remain).toLocaleString(), 
+          id: resp.fkId,
+          role: resp.role,
+          name: resp.name,
+          balance: parseInt(resp.remain).toLocaleString(),
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
       this.bgCard = this.bg_card()
@@ -246,8 +246,8 @@ constructor(
     };
     const monthNumber = monthMapping[monthString];
     const yearNumber = parseInt(yearString, 10);
-    console.log('history : ',this.card.id);
-    
+    // console.log('history : ',this.card.id);
+
     this.get_Transaction(monthNumber, yearNumber)
   }
 

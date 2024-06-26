@@ -62,7 +62,7 @@ export class CardComponent implements OnInit {
         private _router: Router,
         private _topup: TopUpService,
         private _historyService: HistoryService,
-        private activityroute: ActivatedRoute 
+        private activityroute: ActivatedRoute
     ) {
         this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
     }
@@ -72,12 +72,12 @@ export class CardComponent implements OnInit {
             width: '118px',
             height: '118px',
         });
-        this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{     
+        this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
-                id: resp.fkId, 
-                role: resp.role, 
-                name: resp.name, 
-                balance: parseInt(resp.remain).toLocaleString(), 
+                id: resp.fkId,
+                role: resp.role,
+                name: resp.name,
+                balance: parseInt(resp.remain).toLocaleString(),
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
@@ -94,7 +94,7 @@ export class CardComponent implements OnInit {
         })
         //this.card = this._topup.getCardData()
         //this.cards = this._topup.getAllCard()
-        
+
 
         //this.transactions = this._historyService.get_transactions()
     }
@@ -102,7 +102,7 @@ export class CardComponent implements OnInit {
     get_LastTransaction(){
         this._historyService.get_last_transactionsCard(this.card.id).subscribe(
           (resp: any) => {
-            console.log('resp : ',resp);
+            // console.log('resp : ',resp);
             this.transactions = []
             for (let i = 0; i < resp.length; i++) {
                 let temp_data ={
@@ -116,7 +116,7 @@ export class CardComponent implements OnInit {
         },  (error) => {
                 console.error('Error fetching transactions:', error);
             }
-        );     
+        );
     }
 
     decodeBase64(input: string): string {
@@ -214,7 +214,7 @@ export class CardComponent implements OnInit {
     //        this.translate_y = 'translate-y-[230px]'
     //    else
     //        this.translate_y = 'translate-y-[0px]'
-    //    console.log(this.translate_y); 
+    //    console.log(this.translate_y);
     //}
 
     clickForUpdateTime(){

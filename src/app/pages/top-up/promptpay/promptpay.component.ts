@@ -66,10 +66,10 @@ export class PromptpayComponent implements OnInit {
     ngOnInit(): void {
 		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
-                id: resp.fkId, 
-                role: resp.role, 
-                name: resp.name, 
-                balance: parseInt(resp.remain).toLocaleString(), 
+                id: resp.fkId,
+                role: resp.role,
+                name: resp.name,
+                balance: parseInt(resp.remain).toLocaleString(),
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
@@ -80,8 +80,7 @@ export class PromptpayComponent implements OnInit {
             this.slice_card()
             if (+this.card.balance < 5000)
                 this.isButtonDisabled = false
-            else
-                console.log(+this.card.balance);
+
             this.check_disable(this.form.value.amount)
         })
         this.form.get('amount')?.valueChanges.subscribe((value) => {
@@ -222,7 +221,7 @@ export class PromptpayComponent implements OnInit {
     restrictToDigits(event: Event): void {
         const input = event.target as HTMLInputElement;
         let value = input.value.trim();
-        
+
         // Remove non-digit characters
         value = value.replace(/\D/g, '');
         // Update input value

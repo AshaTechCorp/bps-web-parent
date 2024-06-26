@@ -32,7 +32,7 @@
         var form = document.querySelector('form');
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // ป้องกันการส่งฟอร์มโดยปกติ
-            
+
             var formData = new FormData(form); // สร้าง FormData object เพื่อรับข้อมูลจากฟอร์ม
             var token = formData.get('token'); // รับค่าชื่อผู้ใช้
             var mid = formData.get('mid'); // รับค่าชื่อผู้ใช้
@@ -43,9 +43,9 @@
 			var topupId = new URLSearchParams(window.location.search).get('id');
             var requesterId = localStorage.getItem('requesterId')
 			var nofee = +new URLSearchParams(window.location.search).get('nofee');
-			console.log('apiUrl: ',apiUrl);
-			console.log('topupId: ',topupId);
-			console.log('requesterId: ',requesterId);
+			// console.log('apiUrl: ',apiUrl);
+			// console.log('topupId: ',topupId);
+			// console.log('requesterId: ',requesterId);
             // ตรวจสอบข้อมูลหรือดำเนินการต่อไปตามที่ต้องการ
 			fetch(apiUrl + '/api/top-up/credit/requestCharge', {
 				method: 'POST',
