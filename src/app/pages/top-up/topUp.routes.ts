@@ -24,7 +24,7 @@ export default [
         component: PromptpaySuccessComponent,
     },
     {
-        path     : 'credit-debit/:fk',
+        path     : 'credit-debit/:fk/:card',
         component: CreditdebitTopupComponent,
     },
     {

@@ -152,9 +152,15 @@ export class TopUpComponent implements OnInit {
             if (this.card?.id)
                 this._router.navigate(['/top-up/promptpay',this.encodeBase64(this.card.id)]);
         }   
-        else if(data == "credit_debit"){
-            if (this.card?.id)
-                this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.card.id)]);
+        else if(data == "visa"){
+            if (this.card?.id){
+                this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.card.id),this.encodeBase64('visa')]);
+            }
+        }
+        else if(data == "jcb"){
+            if (this.card?.id){
+                this._router.navigate(['/top-up/credit-debit',this.encodeBase64(this.card.id),this.encodeBase64('jcb')]);
+            }
         }
     }
 

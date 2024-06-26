@@ -91,9 +91,11 @@ export class CreditDebitDialog implements OnInit {
 
     getSafeUrl(): SafeResourceUrl {
         // ตรวจสอบว่ามีทศนิยมน้อยกว่า 2 ตำแหน่งหรือไม่
-        
-        return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}&base=${environment.baseurl}&id=${this.card.id}&nofee=${this.moneyTopUp}`);
-      }
+        if (this.data.type == 'visa')
+            return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}&base=${environment.baseurl}&id=${this.card.id}&nofee=${this.moneyTopUp}`);
+        else
+            return this.sanitizer.bypassSecurityTrustResourceUrl(`/static-html/kb_payment2.html?amount=${+this.total_moneyTopUp.toFixed(2)}&name=${this.card.name}&base=${environment.baseurl}&id=${this.card.id}&nofee=${this.moneyTopUp}`);
+    }
 
     ngOnInit(): void {
         if (+this.total_moneyTopUp > +this.total_moneyTopUp.toFixed(2)) {

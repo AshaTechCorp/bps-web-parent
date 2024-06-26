@@ -55,6 +55,8 @@ export class CreditdebitTopupComponent implements OnInit{
     slice_src: string = '';
     display_right: string = 'hidden';
     display_left: string = 'hidden';
+    type_card: string
+    method_text: string
     constructor(
         public dialog: MatDialog,
         private _fb: FormBuilder,
@@ -63,9 +65,18 @@ export class CreditdebitTopupComponent implements OnInit{
         private activityroute: ActivatedRoute,
     ) {
         this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
+        this.type_card = this.decodeBase64(this.activityroute.snapshot.params['card'])
         this.form = this._fb.group({
             amount: '',
         })
+        if (this.type_card == 'visa'){
+            this.method_text = 'Credit Card (VISA/MASTER CARD)'
+        }
+        else if (this.type_card == 'jcb'){
+            this.method_text = 'Credit Card (JCB/Union Pay/TPN)'
+        }
+        else
+            this.method_text = 'Credit Card'
     }
     ngOnInit(): void {
 		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
@@ -161,7 +172,8 @@ export class CreditdebitTopupComponent implements OnInit{
             height: 'fit-content',
             data: {
                 card: this.card,
-                value: item
+                value: item,
+                type: this.type_card
             }
         });
         DialogRef.afterClosed().subscribe((result) => {
