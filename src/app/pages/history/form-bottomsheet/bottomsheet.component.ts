@@ -38,6 +38,9 @@ export class BottomSheetForm implements OnInit {
     data_list:any[]=[];
     data_shopname: any;
     data_channel: any;
+    data_referenceOrder: any;
+    data_cardMasking: any;
+    data_brand: any;
 
     constructor(
         private BottomSheetRef: MatBottomSheetRef<BottomSheetForm>,
@@ -54,6 +57,15 @@ export class BottomSheetForm implements OnInit {
         this.data_channel = this.data.channel
         if (this.data_channel == "")
             this.data_channel = "PATANA CARD"
+        this.data_referenceOrder = this.data.referenceOrder
+        if (this.data_referenceOrder == "")
+            this.data_referenceOrder = "-"
+        this.data_cardMasking = this.data.marking
+        if (this.data_cardMasking == "")
+            this.data_cardMasking = "-"
+        this.data_brand  = this.data.brand
+        if (this.data_brand == "")
+            this.data_brand = "-"
     }
 
     onClose() {
