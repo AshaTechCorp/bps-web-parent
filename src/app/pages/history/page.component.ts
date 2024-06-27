@@ -34,6 +34,7 @@ type History = {
       payment: string //transactions.channel
       order: string // == itemName
       amount: number //same
+      price: number // add new
       total: number //same
     }[]
   }[]
@@ -161,17 +162,21 @@ constructor(
                 payment: transaction.channel,
                 order: item.itemName,
                 amount: item.amount,
+                price: item.price,
                 total: item.total
               }
               this.history[i].data[j].list.push(temp_list)
             }
           }
         }
+        console.log(this.history);
       },
       (error) => {
         console.error('Error fetching transactions:', error);
       }
     );
+    
+    
   }
 
   buttonL(){
@@ -197,7 +202,9 @@ constructor(
 
   slice_card(){
       const index = this._topup.getIndex(this.card.id)
-      if (this.all_cards.length == 1)
+      if (this.all_cards.length == 0) 
+        this.slice_src = ""
+      else if (this.all_cards.length == 1)
           this.slice_src = "assets/images/logo/card/slide_card0.svg"
       else if (index == 0)
           this.slice_src = "assets/images/logo/card/slide_card1.svg"
@@ -239,11 +246,16 @@ constructor(
     const parts = this.selectedDate.split(' ');
     const monthString = parts[0]; // ชื่อเดือน เช่น "February"
     const yearString = parts[1];  // ปี เช่น "2023"
-
+    let all_month = []
+    
+    for (let i = 1; i <= 12; i++) {
+      all_month.push(this.getMonthName(i))
+    }
     // สร้าง mapping ของชื่อเดือนกับตัวเลขเดือน
     const monthMapping: { [key: string]: number } = {
-      'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
+      [all_month[0]]: 1, [all_month[1]]: 2, [all_month[2]]: 3, [all_month[3]]: 4, [all_month[4]]: 5, [all_month[5]]: 6, [all_month[6]]: 7, [all_month[7]]: 8, [all_month[8]]: 9, [all_month[9]]: 10, [all_month[10]]: 11, [all_month[11]]: 12
     };
+    
     const monthNumber = monthMapping[monthString];
     const yearNumber = parseInt(yearString, 10);
     // console.log('history : ',this.card.id);

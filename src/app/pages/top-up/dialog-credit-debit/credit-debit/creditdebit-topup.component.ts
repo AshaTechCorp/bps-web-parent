@@ -131,7 +131,9 @@ export class CreditdebitTopupComponent implements OnInit{
 
     slice_card(){
         const index = this._topup.getIndex(this.card.id)
-        if (this.all_cards.length == 1)
+        if (this.all_cards.length == 0) 
+            this.slice_src = ""
+        else if (this.all_cards.length == 1)
             this.slice_src = "assets/images/logo/card/slide_card0.svg"
         else if (index == 0)
             this.slice_src = "assets/images/logo/card/slide_card1.svg"

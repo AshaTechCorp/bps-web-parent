@@ -34,17 +34,19 @@
       <p>{{data_channel}}</p>
     </div>
     <!-- Grid Headers -->
-    <div class="grid grid-cols-7 w-full p-4 bg-[#DED7D1] text-[#84776E]">
-      <p class="col-span-3">Order</p>
-      <p class="col-span-2 grid justify-items-end">Amount</p>
-      <p class="col-span-2 grid justify-items-end">Total (Baht)</p>
+    <div class="grid grid-cols-12 w-full p-4 bg-[#DED7D1] text-[#84776E]">
+      <p class="col-span-5">Order</p>
+      <p class="col-span-2 grid justify-items-end">Qty</p>
+      <p class="col-span-2 grid justify-items-end">Price</p>
+      <p class="col-span-3 grid justify-items-end">Total (Baht)</p>
     </div>
     <!-- Transaction Items -->
     <ng-container *ngFor="let item of data_list; let k=index">
-      <div class="grid grid-cols-7 w-full px-4 pt-4">
-        <p class="col-span-3">{{item.order}}</p>
+      <div class="grid grid-cols-12 w-full px-4 py-2 border-t-[0.5px]">
+        <p class="col-span-5">{{item.order}}</p>
         <p class="col-span-2 grid justify-items-end">{{item.amount}}</p>
-        <p class="col-span-2 grid justify-items-end">{{item.total}}</p>
+        <p class="col-span-2 grid justify-items-end">{{item.price}}</p>
+        <p class="col-span-3 grid justify-items-end">{{item.total}}</p>
       </div>
     </ng-container>
   </ng-template>

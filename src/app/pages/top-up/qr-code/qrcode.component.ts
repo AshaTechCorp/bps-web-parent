@@ -92,6 +92,9 @@ export class QRcodeComponent implements OnInit {
                  // console.log('Polling stopped or timed out.');
                 }
           });
+      },error =>{
+        this._router.navigate(['//top-up/promptpay',this.encodeBase64(this.card.id)])
+        
       });
     })
   }
