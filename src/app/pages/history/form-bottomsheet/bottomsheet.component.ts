@@ -53,7 +53,7 @@ export class BottomSheetForm implements OnInit {
         this.data_shopname = this.data.shopName
         this.data_channel = this.data.channel
         if (this.data_channel == "")
-            this.data_channel = "CARD"
+            this.data_channel = "PATANA CARD"
     }
 
     onClose() {
