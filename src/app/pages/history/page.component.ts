@@ -87,9 +87,9 @@ export class HistoryComponent implements OnInit {
     this.showTransactions = !this.showTransactions;
   }
 
-  getReversedHistory(): any[] {
-    return this.history?.slice().reverse();
-}
+  //getReversedHistory(): any[] {
+  //  return this.history?.slice().reverse();
+  //}
 
 constructor(
   private dialog: MatDialog,
@@ -297,13 +297,13 @@ constructor(
     //console.log('test2 ,',this.history.slice().reverse()[i].data.slice().reverse()[j].time);
     return {
       //history: this.history.slice().reverse(),
-      date: this.history.slice().reverse()[i].date,
-      type: this.history.slice().reverse()[i].data.slice().reverse()[j].type,
-      balance: this.history.slice().reverse()[i].data.slice().reverse()[j].balance,
-      time: this.history.slice().reverse()[i].data.slice().reverse()[j].time,
-      list: this.history.slice().reverse()[i].data.slice().reverse()[j].list,
-      shopName: this.history.slice().reverse()[i].data.slice().reverse()[j].shopName,
-      channel: this.history.slice().reverse()[i].data.slice().reverse()[j].channel
+      date: this.history[i].date,
+      type: this.history[i].data[j].type,
+      balance: this.history[i].data[j].balance,
+      time: this.history[i].data[j].time,
+      list: this.history[i].data[j].list,
+      shopName: this.history[i].data[j].shopName,
+      channel: this.history[i].data[j].channel
     };
   }
 

@@ -68,11 +68,11 @@
               </div>
             </div>
           </ng-container>
-          <ng-container *ngFor="let item of getReversedHistory(); let i=index" style="overflow-y: scroll; max-height: 800px;">
+          <ng-container *ngFor="let item of history; let i=index" style="overflow-y: scroll; max-height: 800px;">
             <div class="flex items-center h-[32px] w-full bg-[#DED7D1] p-4 text-[#84776E]">
               <p>{{item.date}}</p>
             </div>
-            <ng-container *ngFor="let transaction of item.data.reverse(); let j=index">
+            <ng-container *ngFor="let transaction of item.data; let j=index">
               <div class="px-4">
                 <ng-container *ngIf="j != 0">
                   <div class="border-b border-[#DED7D1] w-full"></div>
