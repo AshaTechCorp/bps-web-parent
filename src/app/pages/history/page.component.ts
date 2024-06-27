@@ -169,7 +169,7 @@ constructor(
             }
           }
         }
-        console.log(this.history);
+        //console.log(this.history);
       },
       (error) => {
         console.error('Error fetching transactions:', error);

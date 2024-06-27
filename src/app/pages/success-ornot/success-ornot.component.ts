@@ -88,10 +88,9 @@ export class SuccessOrnotComponent implements OnInit {
 			};
 			this.bgCard = this.bg_card();
 			this.loadsuccess = true
-			if (!resp) console.log('resp = null');
-			else if (resp.status == 'CREATE') this.success = 1;
-			else if (resp.status == 'SUCCESS') this.success = 2;
-			else console.log('');
+			if (resp && resp.status == 'CREATE') this.success = 1;
+			else if (resp && resp.status == 'SUCCESS') this.success = 2;
+			//else console.log('');
 			this.amount = resp.amount
 		},(error)=>{
 			alert("error not found")
