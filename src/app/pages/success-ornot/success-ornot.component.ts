@@ -83,7 +83,7 @@ export class SuccessOrnotComponent implements OnInit {
 			id: resp.topupTo.fkId,
 			role: resp.topupTo.type,
 			name: resp.topupTo.name,
-			balance: parseInt(resp.topupTo.balance).toLocaleString(),
+			balance: resp.topupTo.balance,
 			update: DateTime.fromISO(resp.date).toFormat('HH:mm'),
 			};
 			this.bgCard = this.bg_card();

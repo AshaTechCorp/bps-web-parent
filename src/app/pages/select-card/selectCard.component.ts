@@ -78,7 +78,7 @@ export class SelectCardComponent implements OnInit {
                         id: element.fkId, 
                         role: element.role, 
                         name: element.name, 
-                        balance: parseInt(element.remain).toLocaleString(), 
+                        balance: element.remain, 
                         update: DateTime.fromISO(element.at).toFormat('HH:mm')
                     }
                     this.cards.push(data)
