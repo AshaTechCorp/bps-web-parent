@@ -68,7 +68,7 @@ export class QRcodeComponent implements OnInit {
           id: resp.fkId, 
           role: resp.role, 
           name: resp.name, 
-          balance: parseInt(resp.remain).toLocaleString(), 
+          balance: resp.remain, 
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
       this.bgCard = this.bg_card()
