@@ -73,7 +73,7 @@ export class CreditdebitTopupComponent implements OnInit{
             this.method_text = 'Credit Card (VISA/MASTER CARD)'
         }
         else if (this.type_card == 'jcb'){
-            this.method_text = 'Credit Card (JCB/Union Pay/TPN)'
+            this.method_text = 'Credit Card (JCB/Union Pay)'
         }
         else
             this.method_text = 'Credit Card'
@@ -81,10 +81,10 @@ export class CreditdebitTopupComponent implements OnInit{
     ngOnInit(): void {
 		this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
             this.card = {
-                id: resp.fkId, 
-                role: resp.role, 
-                name: resp.name, 
-                balance: resp.remain, 
+                id: resp.fkId,
+                role: resp.role,
+                name: resp.name,
+                balance: resp.remain,
                 update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
             }
             this.bgCard = this.bg_card()
@@ -131,7 +131,7 @@ export class CreditdebitTopupComponent implements OnInit{
 
     slice_card(){
         const index = this._topup.getIndex(this.card.id)
-        if (this.all_cards.length == 0) 
+        if (this.all_cards.length == 0)
             this.slice_src = ""
         else if (this.all_cards.length == 1)
             this.slice_src = "assets/images/logo/card/slide_card0.svg"
@@ -244,7 +244,7 @@ export class CreditdebitTopupComponent implements OnInit{
 		    this._router.navigate(['/top-up',this.encodeBase64(this.card.id)])
 	}
 
-    nextto(){       
+    nextto(){
         this._topup.setTopUp(+this.form.value.amount)
         this.openDialogEdit(+this.form.value.amount)
     }
@@ -260,7 +260,7 @@ export class CreditdebitTopupComponent implements OnInit{
     restrictToDigits(event: Event): void {
         const input = event.target as HTMLInputElement;
         let value = input.value.trim();
-        
+
         // Remove non-digit characters
         value = value.replace(/\D/g, '');
         // Update input value

@@ -64,7 +64,7 @@
 
           <img matPrefix src="../../../../../assets/images/logo/Logo_money.svg" alt="money" class="w-[16px] ms-4">
 				  <span matTextPrefix>&nbsp;&nbsp;</span>
-				  <input matInput type="text" [formControlName]="'amount'" placeholder="Amount" (input)="restrictToDigits($event)">
+				  <input matInput type="text" [formControlName]="'amount'" placeholder="Amount" autocomplete="off" (input)="restrictToDigits($event)">
 				  <span matTextSuffix class="text-[16px] font-normal text-[#32373D]">Baht</span>
 				</mat-form-field>
 			</form>

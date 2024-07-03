@@ -63,7 +63,7 @@
 				<mat-form-field class="text-[16px] font-normal text-[#32373D] w-full" style="margin-bottom: -0.5em" (click)="select_amount(0)" [ngClass]="{'pointer-events-none': IsDialogOpen, 'pointer-events-auto': !IsDialogOpen}" >
 				  <img matPrefix src="../../../../../assets/images/logo/Logo_money.svg" alt="money" class="w-[16px] ms-4">
 				  <span matTextPrefix>&nbsp;&nbsp;</span>
-				  <input [readonly]="IsDialogOpen" type="text" matInput formControlName="amount" placeholder="Amount" (input)="restrictToDigits($event)">
+				  <input [readonly]="IsDialogOpen" type="text" matInput formControlName="amount" autocomplete="off" placeholder="Amount" (input)="restrictToDigits($event)">
 				  <span matTextSuffix class="text-[16px] font-normal text-[#32373D]">Baht</span>
 				</mat-form-field>
 			</form>
@@ -76,7 +76,7 @@
 				<button (click)="select_amount(500)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[4]}} {{currentColor[4]}}"> 500 </button>
 				<button (click)="select_amount(1000)" [disabled]="IsDialogOpen" class="border-[1px] border-[#990033] pb-[8px] pt-[11px] rounded-[30px] text-[16px] font-medium {{currentTextColor[5]}} {{currentColor[5]}}"> 1,000 </button>
 			</div>
-			
+
 			<div class="flex justify-end">
 				<button (click)="nextto()" [disabled]="IsDialogOpen || cantTopUp" [ngClass]="{'opacity-50': cantTopUp, 'opacity-100': !cantTopUp}" class="w-full min-[1030px]:w-[257.5px] h-[52px] bg-[#990033] rounded-[30px] px-[16px] py-[10px] text-[16px] font-medium text-[#FFFFFF]">CONFIRM</button>
 			</div>
