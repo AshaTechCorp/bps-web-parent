@@ -81,13 +81,13 @@
               <div class="flex justify-between">
                 <div class="p-4">
                   <div class="flex items-center">
-                    <div class="w-[14px] h-[14px] rounded-full mb-[2px]" [ngStyle]="{'background': transaction.type == 'Paid' || transaction.type == 'Refund' ? '#FF5252' : '#4CAF50'}"></div>
+                    <div class="w-[14px] h-[14px] rounded-full mb-[2px]" [ngStyle]="{'background': transaction.balance < 0 ? '#FF5252' : '#4CAF50'}"></div>
                     <p class="px-2 text-lg text-[#002755]">{{transaction.type}}</p>
                   </div>
                   <p class="text-md font-normal text-[#84776E]">{{transaction.time}}</p>
                 </div>
                 <div class="flex flex-col items-end justify-between p-4">
-                  <p [ngStyle]="{'color': transaction.type == 'Paid' || transaction.type == 'Refund' ? '#FF5252' : '#4CAF50'}">{{transaction.balance | number:'1.2-2'}}</p>
+                  <p [ngStyle]="{'color': transaction.balance < 0 ? '#FF5252' : '#4CAF50'}">{{transaction.balance | number:'1.2-2'}}</p>
                   <button class="flex w-[18px] items-center justify-center hover:cursor-pointer " (click)="openDialogOrBottomSheet(i, j)">
                     <img src="assets/images/logo/seedetail.svg" alt="">
                   </button>

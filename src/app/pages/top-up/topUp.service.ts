@@ -42,10 +42,10 @@ export class TopUpService {
 }
 
   get_family_card() {
-    let family_email = localStorage.getItem('family');
-    //let family_email = 'phia@patana.ac.th';
+    // let family_email = localStorage.getItem('family');
+    let family_email = 'phia@patana.ac.th';
     //let family_email = 'akulla4671@thinhmin.com';
-    //let family_email = 'suha@patana.ac.th'
+    // let family_email = 'suha@patana.ac.th'
     return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
       email: family_email ?? ""
     }})
@@ -74,23 +74,23 @@ export class TopUpService {
     );
   }
 
-  get_test_card() {
-    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry?card=2617800948')
-    .pipe( (response: any) => {
-        return (response);
-      }
-    );
-  }
+  // get_test_card() {
+  //   return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry?card=2617800948')
+  //   .pipe( (response: any) => {
+  //       return (response);
+  //     }
+  //   );
+  // }
 
   check_status(id: number) {
     const checkInterval = 3000; // 3 วินาที
     const checkTimeout = 600000; // 10 นาที
 
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + token
-    });
+    // const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
+    // const headers = new HttpHeaders({
+    //   'Authorization': 'Bearer ' + token
+    // });
 
     return interval(checkInterval).pipe(
       switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/top-up/qrpayment/' + id).pipe(//, { headers: headers }
@@ -110,10 +110,10 @@ export class TopUpService {
 
   create_QR(data: any): Observable<any> {
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + token
-    });
+    // const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
+    // const headers = new HttpHeaders({
+    //   'Authorization': 'Bearer ' + token
+    // });
 
     return this._httpClient.post<any>(environment.baseurl + '/api/top-up/qrpayment/request-web', data);// ,{ headers: headers }
   }
@@ -123,10 +123,10 @@ export class TopUpService {
     const checkTimeout = 9000; // 9 วินาที
 
     //const token = localStorage.getItem('accessToken');
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + token
-    });
+    // const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MTYyOTM3MzcsImV4cCI6MTcxNjM4MDEzN30.052VPoFGCA-TnFPul7hEwscTnfRtPNwr-D2i9RKltFY"
+    // const headers = new HttpHeaders({
+    //   'Authorization': 'Bearer ' + token
+    // });
 
     return interval(checkInterval).pipe(
       switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/top-up/card/inquery' , {params: { referenceOrder: ref }}
@@ -147,7 +147,7 @@ export class TopUpService {
 
   getAllCard() {
     const allCards = sessionStorage.getItem('all_c');
-    
+
     return allCards ? JSON.parse(allCards) : [];
   }
 
