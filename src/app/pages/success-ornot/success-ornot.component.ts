@@ -45,79 +45,98 @@ import { NavbarComponent } from 'src/app/navbar/navbar.component';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SuccessOrnotComponent implements OnInit {
-  	users: any[] = [];
-  	balance: number = 1400;
-	card: any;
-	time: any;
-	data_amount: any;
-	success_date: Date = new Date();
-	amount: any;
-	form: any;
-	//sn: string;
-	bgCard!: string;
-	ref!: string;
-	success: number = 3;
-	loadsuccess: boolean = false
-	//loading: string = 'assets/images/waiting/pending.gif';
-	constructor(
-		public dialog: MatDialog,
-		private _fb: FormBuilder,
-		private _router: Router,
-		private _topup: TopUpService,
-		private activityroute: ActivatedRoute
-	) {
-		//this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
-		//this.ref = this.activityroute.snapshot.params['referenceOrder']
-		this.activityroute.queryParams.subscribe((params) => {
-		this.ref = params['referenceOrder'];
-		//console.log('ref ', this.ref);
-		});
-		this.form = this._fb.group({
-		amount: 0,
-		});
-	}
-	ngOnInit(): void {
-		if (this.ref) {
-		this._topup.check_status_credit(this.ref).subscribe((resp: any) => {
-			this.card = {
-			id: resp.topupTo.fkId,
-			role: resp.topupTo.type,
-			name: resp.topupTo.name,
-			balance: resp.topupTo.balance,
-			update: DateTime.fromISO(resp.date).toFormat('HH:mm'),
-			};
-			this.bgCard = this.bg_card();
-			this.loadsuccess = true
-			if (resp && resp.status == 'CREATE') this.success = 1;
-			else if (resp && resp.status == 'SUCCESS') this.success = 2;
-			//else console.log('');
-			this.amount = resp.amount
-		},(error)=>{
-			alert("error not found")
-			this._router.navigate(['/select']);
-		});
-		}
-	}
-	decodeBase64(input: string): string {
-		return atob(input);
-	}
+  users: any[] = [];
+  balance: number = 1400;
+  card: any;
+  time: any;
+  data_amount: any;
+  success_date: Date = new Date();
+  amount: any;
+  form: any;
+  //sn: string;
+  bgCard!: string;
+  ref!: string;
+  success: number = 3;
+  loadsuccess: boolean = false
+  //loading: string = 'assets/images/waiting/pending.gif';
+  constructor(
+    public dialog: MatDialog,
+    private _fb: FormBuilder,
+    private _router: Router,
+    private _topup: TopUpService,
+    private activityroute: ActivatedRoute
+  ) {
+    //this.fk = this.decodeBase64(this.activityroute.snapshot.params['fk'])
+    //this.ref = this.activityroute.snapshot.params['referenceOrder']
+    this.activityroute.queryParams.subscribe((params) => {
+      this.ref = params['referenceOrder'];
+      //console.log('ref ', this.ref);
+    });
+    this.form = this._fb.group({
+      amount: 0,
+    });
+  }
+  ngOnInit(): void {
+    if (this.ref) {
+      this._topup.check_status_credit(this.ref).subscribe((resp: any) => {
+        this.card = {
+          id: resp.topupTo.fkId,
+          role: resp.topupTo.type,
+          name: resp.topupTo.name,
+          balance: resp.topupTo.balance,
+          update: DateTime.fromISO(resp.date).toFormat('HH:mm'),
+        };
+        this.bgCard = this.bg_card();
+        this.loadsuccess = true
+        if (resp && resp.status == 'CREATE') {
+          this.success = 1;
+        } else if (resp && resp.status == 'SUCCESS') {
+          this.success = 2;
+        }
 
-	encodeBase64(input: string): string {
-		return btoa(input);
-	}
+        this.amount = resp.amount
 
-	bg_card(): string {
-		return this._topup.get_bg_card(this.card.role);
-	}
+        this._topup.get_family_card().subscribe((resp: any) => {
+          const cards = []
+          for (const person of resp.persons) {
+            const data = {
+              //id: element.sn,
+              id: person.fkId,
+              role: person.role,
+              name: person.name,
+              balance: person.remain,
+              update: DateTime.fromISO(person.at).toFormat('HH:mm')
+            }
+            cards.push(data)
+          }
+          sessionStorage.setItem('all_c', JSON.stringify(cards));
+        })
+      }, (error) => {
+        alert("error not found")
+        this._router.navigate(['/select']);
+      });
+    }
+  }
+  decodeBase64(input: string): string {
+    return atob(input);
+  }
 
-	clickForUpdateTime() {
-		const date = DateTime.local();
-		this.card.update = date.toFormat('HH:mm');
-		this._topup.setUpdateCard(this.card.update);
-	}
+  encodeBase64(input: string): string {
+    return btoa(input);
+  }
 
-	backto() {
-		if (this.card?.id)
-			this._router.navigate(['/top-up', this.encodeBase64(this.card.id)]);
-	}
+  bg_card(): string {
+    return this._topup.get_bg_card(this.card.role);
+  }
+
+  clickForUpdateTime() {
+    const date = DateTime.local();
+    this.card.update = date.toFormat('HH:mm');
+    this._topup.setUpdateCard(this.card.update);
+  }
+
+  backto() {
+    if (this.card?.id)
+      this._router.navigate(['/top-up', this.encodeBase64(this.card.id)]);
+  }
 }
