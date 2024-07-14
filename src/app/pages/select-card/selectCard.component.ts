@@ -49,8 +49,8 @@ export class SelectCardComponent implements OnInit {
 
   ngOnInit(): void {
     this._topupservice.getProfile().subscribe((resp: any) => {
-      // const email = resp.userPrincipalName
-      const email = "akulla4671@thinhmin.com"
+      const email = resp.userPrincipalName
+      // const email = "akulla4671@thinhmin.com"
 
       localStorage.setItem('family', email);
 

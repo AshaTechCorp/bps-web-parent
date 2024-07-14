@@ -5,6 +5,8 @@ import {
     HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 import { Observable, catchError, throwError } from 'rxjs';
 
 /**
@@ -17,6 +19,9 @@ export const authInterceptor = (
     req: HttpRequest<unknown>,
     next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
+    const router = inject(Router);
+    const authService = inject(MsalService);
+
     let newReq = req.clone();
 
     // Request
@@ -46,8 +51,10 @@ export const authInterceptor = (
                 // Sign out
                 localStorage.clear()
 
-                // Reload the app
-                location.reload();
+                authService.logoutRedirect()
+
+                // // // Reload the app
+                // location.reload();
             }
 
             return throwError(error);
