@@ -9,69 +9,70 @@ import { environment } from 'src/environments/environment';
 export class TopUpService {
   private topUp: number = 0
   private select_index = 0
-  private cards: {id: number, role: string, name: string, balance: number, update: string, coupon: Number}[]= [
-    {id: 1, role: "student", name: "Jenny Wilson", balance: 1400, update: '13:54', coupon: 7},
-    {id: 2, role: "student", name: "Bessie Cooper", balance: 200, update: '13:54', coupon: 8},
-    {id: 3, role: "student", name: "Jerome Bell", balance: 830, update: '13:54', coupon: 99},
-    {id: 4, role: "staff", name: "Eleanor Pena", balance: 50, update: '13:54', coupon: 10},
-    {id: 5, role: "parent", name: "Jerome Bell", balance: 830, update: '13:54', coupon: 11},
-    {id: 6, role: "temporary", name: "Cameron Williamson", balance: 1400, update: '13:54', coupon: 12},
-    {id: 7, role: "contracted", name: "Esther Howard", balance: 200, update: '13:54', coupon: 13},
+  private cards: { id: number, role: string, name: string, balance: number, update: string, coupon: Number }[] = [
+    { id: 1, role: "student", name: "Jenny Wilson", balance: 1400, update: '13:54', coupon: 7 },
+    { id: 2, role: "student", name: "Bessie Cooper", balance: 200, update: '13:54', coupon: 8 },
+    { id: 3, role: "student", name: "Jerome Bell", balance: 830, update: '13:54', coupon: 99 },
+    { id: 4, role: "staff", name: "Eleanor Pena", balance: 50, update: '13:54', coupon: 10 },
+    { id: 5, role: "parent", name: "Jerome Bell", balance: 830, update: '13:54', coupon: 11 },
+    { id: 6, role: "temporary", name: "Cameron Williamson", balance: 1400, update: '13:54', coupon: 12 },
+    { id: 7, role: "contracted", name: "Esther Howard", balance: 200, update: '13:54', coupon: 13 },
     //// เพิ่ม object เพิ่มเติมตามต้องการ
   ];
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient) { }
 
-  get_bg_card(role: string): string{
-    if (role == "Student" || role == "STD"){
-        //if (index % 2 == 1)
-        //    return "assets/images/logo/card/bg_CardStudentGray.svg"
-        //else
-        return "assets/images/logo/card/bg_CardStudentRed.svg"
+  get_bg_card(role: string): string {
+    if (role == "Student" || role == "STD") {
+      //if (index % 2 == 1)
+      //    return "assets/images/logo/card/bg_CardStudentGray.svg"
+      //else
+      return "assets/images/logo/card/bg_CardStudentRed.svg"
     }
     else if (role == "STF" || role == "Staff" || role == "Business")
-        return "assets/images/logo/card/bg_CardStaff.svg"
+      return "assets/images/logo/card/bg_CardStaff.svg"
     else if (role == "PRT" || role == "Parent")
-        return "assets/images/logo/card/bg_CardParent.svg"
+      return "assets/images/logo/card/bg_CardParent.svg"
     else if (role == "TMP" || role == "Temporary")
-        return "assets/images/logo/card/bg_CardTemporary.svg"
+      return "assets/images/logo/card/bg_CardTemporary.svg"
     else if (role == "CTR" || role == "Contract")
-        return "assets/images/logo/card/bg_CardContracted.svg"
+      return "assets/images/logo/card/bg_CardContracted.svg"
     else
-        return "assets/images/logo/card/bg_CardEmpty.svg"
-}
+      return "assets/images/logo/card/bg_CardEmpty.svg"
+  }
 
   get_family_card() {
     let family_email = localStorage.getItem('family');
     // let family_email = 'phia@patana.ac.th';
-    //let family_email = 'akulla4671@thinhmin.com';
+    // let family_email = 'akulla4671@thinhmin.com';
     // let family_email = 'suha@patana.ac.th'
-    return this._httpClient.get<any>(environment.baseurl + '/api/card/inqury-family',{params:{
-      email: family_email ?? ""
-    }})
-    .pipe( (response: any) => {
+    return this._httpClient.post<any>(environment.baseurl + '/api/card/inqury-family', {
+      email: family_email
+    })
+      .pipe((response: any) => {
         return (response);
       }
-    );
+      );
   }
 
   getProfile() {
     return this._httpClient.get<any>('https://graph.microsoft.com/v1.0/me')
-      .pipe( (response: any) => {
+      .pipe((response: any) => {
         return (response);
-      }
-    )
+      })
   }
 
   get_card_by_fk(fk: any) {
-    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry-web',{params:{
-      //card: sn
-      fk: fk
-    }})
-    .pipe( (response: any) => {
+    return this._httpClient.get<any>(environment.baseurl + '/api/person/inquiry-web', {
+      params: {
+        //card: sn
+        fk: fk
+      }
+    })
+      .pipe((response: any) => {
         return (response);
       }
-    );
+      );
   }
 
   // get_test_card() {
@@ -129,7 +130,7 @@ export class TopUpService {
     // });
 
     return interval(checkInterval).pipe(
-      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/top-up/card/inquery' , {params: { referenceOrder: ref }}
+      switchMap(() => this._httpClient.get<any>(environment.baseurl + '/api/top-up/card/inquery', { params: { referenceOrder: ref } }
       ).pipe(//, { headers: headers }
         catchError(error => {
           console.error('API call failed:', error);
@@ -166,7 +167,7 @@ export class TopUpService {
     const allCard = temp ? JSON.parse(temp) : [];
     for (let i = 0; i < allCard.length; i++) {
       const element = allCard[i];
-      if (element.id == fk){
+      if (element.id == fk) {
         return i
       }
     }
@@ -182,7 +183,7 @@ export class TopUpService {
     this.select_index = index
   }
 
-  getSelectIndex(){
+  getSelectIndex() {
     return (this.select_index ?? 0);
     // return 1;
   }
@@ -191,37 +192,43 @@ export class TopUpService {
     const resp = sessionStorage.getItem('card-Data');
     if (resp === null) {
       //console.log('error func getCardData()');
-      this.setCardFromData(0,this.cards[0])
+      this.setCardFromData(0, this.cards[0])
       return this.cards[0];
     } else {
       //const parsedResp = parseInt(resp);
       const parsedResp = JSON.parse(resp);
-        //return this.cards[parsedResp];
-        return parsedResp;
-      }
+      //return this.cards[parsedResp];
+      return parsedResp;
+    }
   }
 
-  setUpdateCard(data: any){
-	  this.cards[this.select_index].update = data
+  setUpdateCard(data: any) {
+    this.cards[this.select_index].update = data
   }
 
   getUpdateCard() {
     return this.cards[this.select_index].update;
   }
 
-  setbalanceCard(data: any){
-	this.cards[this.select_index].balance = data
+  setbalanceCard(data: any) {
+    this.cards[this.select_index].balance = data
   }
 
   getbalanceCard() {
     return this.cards[this.select_index].balance;
   }
 
-  setTopUp(data: number){
+  setTopUp(data: number) {
     this.topUp = data;
   }
 
-  getTopUp(){
+  getTopUp() {
     return this.topUp
+  }
+
+  signInWithEmail(email: string) {
+    return this._httpClient.post(environment.baseurl + '/api/auth/sign-in-with-email', {
+      email: email,
+    })
   }
 }

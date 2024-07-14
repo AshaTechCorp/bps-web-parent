@@ -2,7 +2,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, withFetch } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, withFetch, withInterceptors } from '@angular/common/http';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 import { MsalInterceptor, MSAL_INSTANCE, MsalInterceptorConfiguration, MsalGuardConfiguration, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService } from '@azure/msal-angular';
@@ -10,7 +10,8 @@ import { environment } from '../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { authInterceptor } from './auth.interceptor';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
   //console.log(message);
@@ -63,23 +64,23 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(BrowserModule, MatButtonModule, MatToolbarModule, MatListModule, MatMenuModule),
     provideNoopAnimations(),
-    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch(), withInterceptors([authInterceptor])),
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: MsalInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
     },
     {
-        provide: MSAL_INSTANCE,
-        useFactory: MSALInstanceFactory
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
     },
     {
-        provide: MSAL_GUARD_CONFIG,
-        useFactory: MSALGuardConfigFactory
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
     },
     {
-        provide: MSAL_INTERCEPTOR_CONFIG,
-        useFactory: MSALInterceptorConfigFactory
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory
     },
     MsalService,
     MsalGuard,
