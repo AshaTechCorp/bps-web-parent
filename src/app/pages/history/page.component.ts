@@ -33,6 +33,7 @@ type History = {
     referenceOrder: string,
     brand: string,
     shopName: string,
+    location: string,
     list: {
       payment: string //transactions.channel
       order: string // == itemName
@@ -159,6 +160,7 @@ constructor(
               cardMasking: transaction.cardMasking,
               referenceOrder: transaction.referenceOrder,
               brand: transaction.brand,
+              location: transaction.location,
               list: []
             }
             this.history[i].data.push(temp_data)
@@ -311,7 +313,8 @@ constructor(
       channel: this.history[i].data[j].channel,
       referenceOrder: this.history[i].data[j].referenceOrder,
       marking: this.history[i].data[j].cardMasking,
-      brand: this.history[i].data[j].brand
+      brand: this.history[i].data[j].brand,
+      location: this.history[i].data[j].location
     };
   }
 

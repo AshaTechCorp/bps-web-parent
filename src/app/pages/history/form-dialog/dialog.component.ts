@@ -40,6 +40,7 @@ export class DialogForm implements OnInit {
     data_time:any;
     data_shopname:any;
     data_channel:any;
+    data_location: string = '';
     data_list:any[] = [];
     data_referenceOrder: any;
     data_cardMasking: any;
@@ -58,6 +59,7 @@ export class DialogForm implements OnInit {
         this.data_list = this.data.list
         this.data_shopname = this.data.shopName
         this.data_channel = this.data.channel
+        this.data_location = this.data.location
         if (this.data_channel == "")
             this.data_channel = "PATANA CARD"
         this.data_referenceOrder = this.data.referenceOrder

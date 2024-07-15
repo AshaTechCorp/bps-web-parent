@@ -67,7 +67,8 @@
         </div>
       </div>
       <div class="flex p-4 items-center justify-end">
-        <p class="text-xl" [ngStyle]="{'color': data_balance < 0 ? '#FF5252' : '#4CAF50'}">{{data_balance | number:'1.2-2'}}</p>
+        <p class="text-xl" [ngStyle]="{'color': data_balance < 0 ? '#FF5252' : '#4CAF50'}">{{data_balance |
+          number:'1.2-2'}}</p>
       </div>
     </div>
     <div class="border-b border-[#DED7D1]"></div>
@@ -80,7 +81,14 @@
       </div>
       <div class="flex p-4 pb-2 items-center">
         <div class="flex flex-col items-start px-2">
-          <p class="text-lg font-normal text-[#32373D]">{{data_channel}}</p>
+          <p class="text-lg font-normal text-[#32373D]">
+            {{data_channel == 'CREDIT'
+            ? 'CREDIT CARD'
+            : data_channel == 'QR'
+            ? 'Thai QR-Code Payment ' + data_location
+            : data_channel == 'CASH'
+            ? 'Cash top-ups by ' + data_location
+            : data_channel}}</p>
         </div>
       </div>
     </div>
@@ -122,8 +130,3 @@
     </div>
   </ng-template>
 </div>
-
-
-
-
-
