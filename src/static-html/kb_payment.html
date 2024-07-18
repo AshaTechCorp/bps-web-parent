@@ -1,25 +1,20 @@
 <div style="width: 110px;height: 360px;">
 </div>
 <div style="display: flex; justify-content: center;">
-	<form method="POST" action="">
-		<script type="text/javascript"
-			src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-			data-apikey="pkey_prod_9929s93IlIbSmViDgW4eqjcqlnbT3JOWVrXB"
-			data-amount="0"
-			data-currency="THB"
-			data-payment-methods="card"
-			data-name="BANGKOK PATANA SCHOOL"
-			data-mid="451005594444001" id="topUP">
-		</script>
-	</form>
-	<script>
-		const amountTopUp =  new URLSearchParams(window.location.search).get('amount');
-		const topUpScript = document.getElementById('topUP');
-		if (topUpScript) {
-			topUpScript.setAttribute('data-amount', amountTopUp); // Assign shopId value to data-amount
-		}
-	</script>
-	<!--<form method=POST action="receive-data.php">
+  <form method="POST" action="">
+    <script type="text/javascript" src="https://kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+      data-apikey="pkey_prod_9929s93IlIbSmViDgW4eqjcqlnbT3JOWVrXB" data-amount="0" data-currency="THB"
+      data-payment-methods="card" data-name="BANGKOK PATANA SCHOOL" data-mid="451005594444001" id="topUP">
+      </script>
+  </form>
+  <script>
+    const amountTopUp = new URLSearchParams(window.location.search).get('amount');
+    const topUpScript = document.getElementById('topUP');
+    if (topUpScript) {
+      topUpScript.setAttribute('data-amount', amountTopUp); // Assign shopId value to data-amount
+    }
+  </script>
+  <!--<form method=POST action="receive-data.php">
 		Username : <input type=text name=username><br>
 		Password : <input type=password name=password><br>
 		<input type=submit value='login'>
@@ -28,43 +23,43 @@
 
 
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-        var form = document.querySelector('form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // ป้องกันการส่งฟอร์มโดยปกติ
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // ป้องกันการส่งฟอร์มโดยปกติ
 
-            var formData = new FormData(form); // สร้าง FormData object เพื่อรับข้อมูลจากฟอร์ม
-            var token = formData.get('token'); // รับค่าชื่อผู้ใช้
-            var mid = formData.get('mid'); // รับค่าชื่อผู้ใช้
-            var paymentMethods = formData.get('paymentMethods'); // รับค่าชื่อผู้ใช้
-			var amount = +new URLSearchParams(window.location.search).get('amount');
-			var name = new URLSearchParams(window.location.search).get('name');
-			var apiUrl = new URLSearchParams(window.location.search).get('base');
-			var topupId = new URLSearchParams(window.location.search).get('id');
-            var requesterId = localStorage.getItem('requesterId')
-			var nofee = +new URLSearchParams(window.location.search).get('nofee');
-			// console.log('apiUrl: ',apiUrl);
-			// console.log('topupId: ',topupId);
-			// console.log('requesterId: ',requesterId);
-            // ตรวจสอบข้อมูลหรือดำเนินการต่อไปตามที่ต้องการ
-			fetch(apiUrl + '/api/top-up/credit/requestCharge', {
-				method: 'POST',
-				headers: {
-				'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({token: token, mid: mid, paymentMethods: paymentMethods, amount: amount, giverName: name, requesterId: requesterId, topupId: topupId, topupAmount: nofee})
-			}).then(response => {
-				if (!response.ok) {
-				throw new Error('Network response was not ok');
-				}
-				return response.json();
-			}).then(data => {
-				//console.log('ok Response:', data);
-				window.parent.location.href = data.redirect_url
-				// ทำอะไรต่อกับข้อมูลที่ได้รับมา
-			}).catch(error => {
-				//console.error('There was a problem with the fetch operation:', error);
-			});
-		});
-	});
+      var formData = new FormData(form); // สร้าง FormData object เพื่อรับข้อมูลจากฟอร์ม
+      var token = formData.get('token'); // รับค่าชื่อผู้ใช้
+      var mid = formData.get('mid'); // รับค่าชื่อผู้ใช้
+      var paymentMethods = formData.get('paymentMethods'); // รับค่าชื่อผู้ใช้
+      var amount = +new URLSearchParams(window.location.search).get('amount');
+      var name = new URLSearchParams(window.location.search).get('name');
+      var apiUrl = new URLSearchParams(window.location.search).get('base');
+      var topupId = new URLSearchParams(window.location.search).get('id');
+      var requesterId = localStorage.getItem('requesterId')
+      var nofee = +new URLSearchParams(window.location.search).get('nofee');
+      // console.log('apiUrl: ',apiUrl);
+      // console.log('topupId: ',topupId);
+      // console.log('requesterId: ',requesterId);
+      // ตรวจสอบข้อมูลหรือดำเนินการต่อไปตามที่ต้องการ
+      fetch(apiUrl + '/api/top-up/credit/requestCharge', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token: token, mid: mid, paymentMethods: paymentMethods, amount: amount, giverName: name, requesterId: requesterId, topupId: topupId, topupAmount: nofee })
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      }).then(data => {
+        //console.log('ok Response:', data);
+        window.parent.location.href = data.redirect_url
+        // ทำอะไรต่อกับข้อมูลที่ได้รับมา
+      }).catch(error => {
+        //console.error('There was a problem with the fetch operation:', error);
+      });
+    });
+  });
 </script>
