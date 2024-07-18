@@ -88,9 +88,9 @@ export class SuccessOrnotComponent implements OnInit {
         };
         this.bgCard = this.bg_card();
         this.loadsuccess = true
-        if (resp && resp.status == 'CREATE') {
+        if (resp?.status == 'CREATE' || resp?.status == 'FAIL') {
           this.success = 1;
-        } else if (resp && resp.status == 'SUCCESS') {
+        } else if (resp?.status == 'SUCCESS') {
           this.success = 2;
         }
 
