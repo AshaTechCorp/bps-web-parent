@@ -38,6 +38,7 @@
       var topupId = new URLSearchParams(window.location.search).get('id');
       var requesterId = localStorage.getItem('requesterId')
       var nofee = +new URLSearchParams(window.location.search).get('nofee');
+      const accessToken = localStorage.getItem('accessToken');
       // console.log('apiUrl: ',apiUrl);
       // console.log('topupId: ',topupId);
       // console.log('requesterId: ',requesterId);
@@ -45,7 +46,8 @@
       fetch(apiUrl + '/api/top-up/credit/requestCharge', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken
         },
         body: JSON.stringify({ token: token, mid: mid, paymentMethods: paymentMethods, amount: amount, giverName: name, requesterId: requesterId, topupId: topupId, topupAmount: nofee })
       }).then(response => {
