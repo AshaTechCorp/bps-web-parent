@@ -14,7 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { authInterceptor } from './auth.interceptor';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
-  //console.log(message);
+  // console.log(message);
 }
 
 export function MSALInstanceFactory(): IPublicClientApplication {

@@ -116,6 +116,9 @@ export class NavbarComponent {
   }
 
   logout(popup?: boolean) {
+    localStorage.clear()
+    sessionStorage.clear()
+
     if (popup) {
       this.authService.logoutPopup({
         // mainWindowRedirectUri: "/"

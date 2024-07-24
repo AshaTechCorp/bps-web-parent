@@ -8,6 +8,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 /**
  * Intercept
@@ -34,14 +35,17 @@ export const authInterceptor = (
     // the user out from the app.
     const accessToken = localStorage.getItem('accessToken');
 
-    if (!!accessToken) {
-        newReq = req.clone({
-            headers: req.headers.set(
-                'Authorization',
-                'Bearer ' + accessToken
-            ),
-        });
+    if (req.url != environment.apiConfig.uri) {
+      if (!!accessToken) {
+          newReq = req.clone({
+              headers: req.headers.set(
+                  'Authorization',
+                  'Bearer ' + accessToken
+              ),
+          });
+      }
     }
+
 
     // Response
     return next(newReq).pipe(
@@ -50,6 +54,7 @@ export const authInterceptor = (
             if (error instanceof HttpErrorResponse && error.status === 401) {
                 // Sign out
                 localStorage.clear()
+                sessionStorage.clear()
 
                 authService.logoutRedirect()
 
