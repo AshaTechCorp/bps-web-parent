@@ -65,10 +65,10 @@ export class QRcodeComponent implements OnInit {
   ngOnInit(){
     this._topup.get_card_by_fk(this.fk).subscribe((resp: any) =>{
       this.card = {
-          id: resp.fkId, 
-          role: resp.role, 
-          name: resp.name, 
-          balance: resp.remain, 
+          id: resp.fkId,
+          role: resp.role,
+          name: resp.name,
+          balance: resp.remain,
           update: (DateTime.fromISO(resp.at)).toFormat('HH:mm')
       }
       this.bgCard = this.bg_card()
@@ -77,7 +77,8 @@ export class QRcodeComponent implements OnInit {
       this.amountTopup = this._topup.getTopUp()
       this.form = this._fb.group({
           amount: this.amountTopup,
-          fkId: this.card.id
+          fkId: this.card.id,
+          location: 'WEB'
           //card: this.fkId
           //card: '123123213'
       })
@@ -94,7 +95,7 @@ export class QRcodeComponent implements OnInit {
           });
       },error =>{
         this._router.navigate(['//top-up/promptpay',this.encodeBase64(this.card.id)])
-        
+
       });
     })
   }
