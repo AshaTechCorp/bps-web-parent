@@ -52,6 +52,8 @@ export class SuccessOrnotComponent implements OnInit {
   data_amount: any;
   success_date: Date = new Date();
   amount: any;
+  topupAmount: number = 0;
+  fee: number = 0;
   form: any;
   //sn: string;
   bgCard!: string;
@@ -94,6 +96,8 @@ export class SuccessOrnotComponent implements OnInit {
           this.success = 2;
         }
 
+        this.topupAmount = resp.topupAmount
+        this.fee = resp.topupAmount * (2.0 / 100)
         this.amount = resp.amount
 
         this._topup.get_family_card().subscribe((resp: any) => {
